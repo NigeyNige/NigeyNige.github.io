@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+    <html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Niall Slater</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <meta name="description" content="Web Development | Niall Slater" />
+        <meta property="og:image" content="/images/portrait_sarah.jpg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>            
+        <div class="headshot">
+            <img src="images/portrait_sarah.jpg">
+        </div>
+        <div class="mainHeading">
+            <h1>Niall Slater</h1>
+            <h2>Writer, coder, blogger</h2>
+        </div>
+        
+        <div class="nav">
+            <nav>
+                <a href="/">Home</a> |
+                <a href="/writing.html">Writing</a> |
+                <a href="/gamedev.html">Game development</a> |
+                <a href="/webdev.html">Web development</a> |
+                <a href="/about.html">About Niall</a> |
+                <a href="/contact.html">Contact</a>
+            </nav>
+        </div>
+        
+        <div class="navMobile">
+            <table>
+                <tr><td>
+                    <a href="/">Home</a>
+                </td></tr>
+                <tr><td>
+                    <a href="/writing.html">Writing</a>
+                </td></tr>
+                <tr><td>
+                    <a href="/gamedev.html">Game dev</a>
+                </td></tr>
+                <tr><td>
+                    <a href="/webdev.html">Web dev</a>
+                </td></tr>
+                <tr><td>
+                    <a href="/about.html">About Niall</a>
+                </td></tr>
+                <tr><td>
+                    <a href="/contact.html">Contact</a>
+                </td></tr>
+            </table>
+        </div>
+        <!--
+            MADE WITH <3 AND JAVASCRIPT
+        -->
+        
+        <div class="introText">
+            <p>
+                Niall is a London-based writer of novels, short stories, tweets and code.
+            </p>
+            <p>
+                He writes in C# for games, Javascript for websites and English for everything else. He recently got sick of printing his novels off and throwing them out windows and signed with <a href="http://unbound.com/books/the-second-death-of-daedalus-mole" target="_blank">Unbound</a>.
+            </p>
+        </div>
+        
+        <div class="promoBox">
+            <div>
+                <h2>Web Development</h2>
+                <p>I'm still learning web development and much of it is confusing and scary to me, but I'm having fun! I've got to grips with HTML and CSS and now I'm mainly using Javascript and JQuery to make interactive pages, including this site to show off! I've got a bit of SQL knowledge but haven't yet figured out how to stitch it together and make a database-driven site. Let me know if you have any tips.</p>
+            </div>
+        </div>
+        
+        <div class="promoBox">
+            <div>
+                <h2>The Horror of Images</h2>
+                <p>I made a site that randomly gives you images it finds on Imgur. LINK</p>
+                <p>It works by generating a random string, appending it to an Imgur URL and fetching the image - there are a couple of 404 checks in there to try and detect when it fails and re-roll for a new image, but I'm still trying to work out all the edge cases where Imgur doesn't return a valid image. As a result it's a bit broken but still fun to muck about with.</p>
+            </div>
+        </div>
+        
+		<div id="footer">
+            
+		<hr />
+            &#169; Niall Slater 2017
+		</div> <!--footer-->
+
+        
+        
+        <!--
+			SCRIPTS
+		-->
+		
+		
+        <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+        <script src='js/MainController.js'></script>
+        
+    </body>
+</html>
