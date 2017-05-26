@@ -117,25 +117,23 @@ b, strong {
 }
 
 .navMobile {
-    margin: auto;
     display: none;
-    background-color:#fff;
     color: #fff;
-    line-height: 1.8em;
     border-style: solid;
     border-width: 4px;
-    margin: 2em;
 }
 .navMobile a{
-    color:#607CA4;
+    color:#fff;
     font-weight:600;
     text-decoration-line: none;
 }
 
-.navMobile table td, table th {
+.navMobile table td, table th table tr {
     border: 1px solid #ddd;
+    background-color: #4ec0ff;
     text-align: center;
-    padding: .2em;
+    padding: .4em 4em;
+    box-shadow: 2px 2px 8px #bbb;
 }
 
 .introText {
@@ -161,19 +159,7 @@ b, strong {
 
 @media only screen and (max-width: 1660px) {
     
-     /* move sidebar and body if screen too narow: */
-    
-    .mainBody {
-        margin-left: 20px;
-        margin-top: 20px;
-        max-width: 800px;
-        transition: 0.6s ease;
-    }
-}
-
-@media only screen and (max-width: 1300px) {
-    
-     /* hide sidebar if screen too narrow: */
+     /* move sidebar and body if screen too narrow: */
     
     .sideBar {
         display: none;
@@ -191,32 +177,39 @@ b, strong {
         
     }
     img {
-        display: none;
+        
     }
     
+    
+    #navMobileExpander {
+        float: left;
+        margin: 8px;
+    }
     blockquote {
         margin: 1em;
     }
     
     .headshot {
-        display: none;
+        float:left;
     }
 
     .nav {
         display: none;
     }
-    .navMobile {
-        display: flex;
-        float: none;
-    } 
 }
 
-
+@media only screen and (min-width: 501px) {
     
-@media only screen and (min-width: 400px) {
+    /* for desktop */
+    
+    #navMobileExpander {
+        display: none;
+    }
+    
     .navMobile {
-        float: left;
+        display: none;
     } 
+    
 }
 
 .promoBox img {

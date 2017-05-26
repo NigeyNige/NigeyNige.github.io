@@ -1,6 +1,8 @@
 var promoBoxes = $('.promoBox');
 var activeBox = 0;
 
+var navDisplaying = false;
+
 
 $(document).ready(function () {
     
@@ -10,8 +12,11 @@ $(document).ready(function () {
     
     $(promoBoxes[activeBox]).show();
     
+    $('.navMobile').hide();
     $('.next').bind("click", CycleNext);
     $('.prev').bind("click", CyclePrev);
+    
+    $('#navMobileExpander').bind("click", ToggleNav);
     
 });
 
@@ -31,4 +36,15 @@ function CyclePrev() {
         activeBox = promoBoxes.length-1;
     }
     $(promoBoxes[activeBox]).delay(200).fadeIn(200);;
+}
+
+function ToggleNav() {
+    if (!navDisplaying) {
+        $('.navMobile').css("display", "block");
+    }
+    else {
+        $('.navMobile').css("display", "none");
+    }
+    
+    navDisplaying = !navDisplaying;
 }
