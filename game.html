@@ -6,11 +6,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Niall Slater</title>
         <link rel="stylesheet" href="css/styles.css">
-        <meta name="description" content="Game Development | Niall Slater" />
+        <meta name="description" content="Game | Niall Slater" />
         <meta property="og:image" content="/images/portrait_sarah.jpg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
-    <body>            
+    <body>
         <div class="mainBody">
         <div class="headshot">
             <img src="images/portrait_sarah.jpg">
@@ -67,37 +67,23 @@
             </p>
         </div>
         
-        <div class="promoBox">
-            <div>
-                <h2>Pizza Crash</h2>
-                <p>A little prototype game about delivering pizzas. I made it mainly to learn about vehicle physics simulation and game flow.</p>
-                <iframe width="600" height="350" src="https://www.youtube.com/embed/xtLki0AkVUo" frameborder="0" allowfullscreen></iframe>
-                <p>It's available to try out on itch.io even if it is a buggy mess. Feel free to muck about with it and have fun!</p>
-                <p><a href="https://niall-slater.itch.io/pizza-crash">Pizza Crash on itch.io</a>.</p>
+        <div class="gameBox">
+            <h1>CYOA test</h1>
+            <p>This is a test of my choose-your-own-adventure engine.</p>
+            
+            <div class="gameWindow">
+                <p class="gameText" id="game_Text">You're in a room. Do you like it?</p>
+                
+                <div class="gameOptions">
+                    <div class="gameButton" id="game_ButtonA">
+                        Yes
+                    </div>
+                    <div class="gameButton" id="game_ButtonB">
+                        No
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="promoBox">
-            <div>
-                <h2>The Spy You Am</h2>
-                <p>I'm working on a game about being a private eye.</p>
-                <iframe width="600" height="350" src="https://www.youtube.com/embed/s1dmgejpRsM" frameborder="0" allowfullscreen></iframe>
-                <p>It's coming along slowly, but there's already a lot of features in there like stealth mechanics, cool gadgets, Pokemon-Snap style photograph challenges and coded messages.</p>
-                <p>There isn't a demo available yet but if you sign up for my mailing list you'll be notified.</p>
-                <form style="padding:3px;text-align:center;" action="https://tinyletter.com/niall-slater" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/niall-slater', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"><p><label for="tlemail">Enter your email address</label></p><p><input type="text" style="width:140px" name="email" id="tlemail" /></p><input type="hidden" value="1" name="embed"/><input type="submit" value="Subscribe" /><p></p></form>
-            </div>
-        </div>
-        
-			
-		<!-->
-		
-
-		<div class="gameBox">
-			<canvas id="gameCanvas" width="600" height="300" style="border:1px solid #aaa; margin:auto;"></canvas>
-		</div>
-
-		<-->
-			
+        </div>			
 		
 			
 		<div id="footer">
@@ -114,7 +100,7 @@
 		
 		
         <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
-        <script src='js/SubPageController.js'></script>
+        <script src='js/CYOAController.js'></script>
         
     </body>
 </html>
