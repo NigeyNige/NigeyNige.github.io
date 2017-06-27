@@ -392,3 +392,28 @@ b, strong {
     padding: 10px;
 }
 
+
+.progressBox {
+    background: #fff;
+    padding: .4em;
+    border-radius: 4px;
+}
+
+.UB_progress {
+    position: relative;
+    display: block;
+    height: 5px;
+    background: #dfdfdf;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.UB_progressBar {
+    background: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
