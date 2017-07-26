@@ -1,7 +1,7 @@
 body {
     background-color: #eee;
     
-    margin: 15px 25%;
+    margin: 15px 25% 140px 25%;
 }
 
 .tileWrapper {
@@ -37,33 +37,50 @@ body {
 /* Colours */
 
 
-
-.sub {
-    font-size: 80%;
+.main {
+    background-color: #eee;
+    color: #456;
+    font-size: 1.4em;
+}
+.contrast {
+    background-color: #cfdaff;
+    color: #555;
+    font-size: 1.4em;
+    text-align: center;
+}
+.accent {
+    background-color: #45a3bf;
 }
 
-.blue6 {
-    background-color: #001c26;
+
+.main h2{
+    color: #456;
+    font-weight: 700;
 }
-.blue5 {
-    background-color: #002D3D;
+.main p{
+    font-size: .75em;
+}
+.main a{
+    color: #45a3bf;
 }
 
-.blue4 {
-    background-color: #005977;
+
+.contrast h3{
+    color: #456;
+    font-weight: 700;
+    line-height: .15em;
 }
-.blue3 {
-    background-color: #0089B7;
+.contrast p{
+    font-size: .75em;
 }
-.blue2 {
-    background-color: #00ace9;
+.contrast a{
+    color: #45a3bf;
 }
-.blue1 {
-    background-color: #00ace9;
+.contrast li{
+    font-size: .75em;
 }
-.blue0 {
-    background-color: #00bcff;
-}
+
+
 
 /* Slabs */
 
@@ -130,7 +147,7 @@ body {
 }
 
 .slab h1 {
-	margin: 4px;
+	margin: .24em;
 	text-align: center;
     font-weight: 600;
 	font-style: italic;
@@ -159,7 +176,7 @@ body {
     position: relative;
     display: block;
     height: 5px;
-    background: #000;
+    background: #ccc;
     border-radius: 5px;
     overflow: hidden;
     margin-left: auto;
@@ -167,7 +184,7 @@ body {
 }
 
 .UB_progressBar {
-    background: #dfdfdf;
+    background: #45a3bf;
     position: absolute;
     top: 0;
     left: 0;
