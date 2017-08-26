@@ -15,6 +15,13 @@
     transition: 0.2s ease;
 }
 
+.tileimg{
+    border-radius: 4px;
+    float: left;
+    width: 40%;
+    margin-right: 12px;
+}
+
 .tile a{
     color: #f6f6e8;
     font-weight: 600;
@@ -164,6 +171,7 @@ hr {
 .slabtile:hover {
     border-color: #fff;
     box-shadow: 0px 0px 8px #000;
+    border-radius: 8px;
 }
 .slabtilewip:hover {
     filter: opacity(.2);
