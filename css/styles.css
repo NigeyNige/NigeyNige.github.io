@@ -71,7 +71,7 @@ hr {
 }
 .main h3{
     color: #fff;
-    font-weight: 400;
+    font-weight: 400    ;
 }
 .main p{
     font-size: .75em;
@@ -108,6 +108,11 @@ hr {
     body {
     
     margin: 15px 5% 140px 5%;
+    }
+    
+    
+    .button a {
+    font-size: 4vw;
     }
 }
 
@@ -251,4 +256,18 @@ hr {
     font-family: 'Montserrat', 'sans-serif';
     text-align:right;
     color: #aaa;
+}
+
+.button {
+    text-align: center;
+    background-color: hsl(189, 96%, 35%);
+    width: 20%;
+    margin: 14px auto;
+    padding: 8px 2px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px #333;
+}
+
+.button a {
+    color: #fff;
 }
