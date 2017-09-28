@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .tileWrapper {
     display: inline-block;
     color: #444;
@@ -270,4 +271,278 @@ hr {
 
 .button a {
     color: #fff;
+=======
+.tileWrapper {
+    display: inline-block;
+    color: #444;
+}
+
+
+/* Growing Tiles */
+
+.tile {
+    color: white;
+    padding: 8px;
+    margin:  8px;
+    font-family: 'Montserrat', 'sans-serif';
+    border-radius: 4px;
+    transition: 0.2s ease;
+}
+
+.tileimg{
+    border-radius: 4px;
+    float: left;
+    width: 40%;
+    margin-right: 12px;
+}
+
+.tile a{
+    color: #f6f6e8;
+    font-weight: 600;
+	text-decoration: none;
+}
+.sub:hover {
+    background-color: white;
+    color: #333;
+}
+.tile:hover .hidden{
+    display: block;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* Colours */
+
+body {
+    background-color: hsl(189, 76%, 88%);
+}
+
+hr {
+    border-color: #2a455c;
+}
+
+.main {
+    background-color: hsl(189, 76%, 18%);
+    color: #ccc;
+    font-size: 1.4em;
+}
+.contrast {
+    background-color: hsl(189, 96%, 35%);
+    color: #fff;
+    font-size: 1.4em;
+    text-align: center;
+}
+.accent {
+    background-color: hsl(27, 100%, 50%);
+}
+
+
+.main h2{
+    color: #fff;
+    font-weight: 700;
+}
+.main h3{
+    color: #fff;
+    font-weight: 400;
+}
+.main p{
+    font-size: .75em;
+}
+.main a{
+    color: hsl(27, 100%, 50%);
+}
+
+
+.contrast h3{
+    color: #fff;
+    font-weight: 700;
+    line-height: .15em;
+}
+.contrast p{
+    font-size: .75em;
+}
+.contrast a{
+    color: #45a3bf;
+}
+.contrast li{
+    font-size: .75em;
+}
+
+
+
+/* Slabs */
+
+@media only screen and (max-width: 600px) {
+	.slab {
+		display: block;
+	}
+    
+    body {
+    
+    margin: 15px 5% 140px 5%;
+    }
+    
+    
+    .button a {
+    font-size: 4vw;
+    }
+}
+
+
+@media only screen and (min-width: 601px) {
+	.slab {
+		display: grid;
+	}
+	
+	.slab h1 {
+		font-size: 3vmin;
+	}
+	
+	.slab p {
+		font-size: 2.5vmin;
+	}
+    body {
+    
+    margin: 15px 25% 140px 25%;
+    }
+}
+
+
+.slab {
+  	grid-template-rows: auto;
+    color: white;
+    padding: 8px;
+    margin:  8px;
+    font-family: 'Montserrat', 'sans-serif';
+    border-radius: 4px;
+    transition: 0.2s ease;
+}
+.slabtile {
+    color: white;
+    padding: 0px;
+    margin:  4px;
+	cursor: pointer;
+    font-family: 'Montserrat', 'sans-serif';
+    transition: 0.2s ease;
+	max-width: 100%;
+	height: auto;
+	background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid transparent;
+}
+.slabtilewip {
+    color: white;
+    padding: 0px;
+    margin:  4px;
+	cursor: pointer;
+    font-family: 'Montserrat', 'sans-serif';
+    transition: 0.2s ease;
+	max-width: 100%;
+	height: auto;
+	background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid transparent;
+    opacity: .4;
+}
+
+.slabtile:hover {
+    border-color: #fff;
+    box-shadow: 0px 0px 8px #000;
+    border-radius: 8px;
+}
+.slabtilewip:hover {
+    filter: opacity(.2);
+}
+
+.slab a {
+	text-decoration: none;
+}
+
+.slab h1 {
+	margin: .24em;
+	text-align: center;
+    font-size: 0.9em;
+    color: white;
+	font-weight: 600;
+	text-shadow: 0px 1px 2px #111;
+}
+
+.slab p {
+	padding: .5em;
+	text-align: center;
+    font-weight: 600;
+	font-style: italic;
+	text-shadow: 0px 0px 3px #111;
+    font-size: 1.5vh;
+}
+
+.hidden {
+    color: transparent;
+}
+.wip:hover .hidden, .wip.hover .hidden { color: #fff;}
+
+
+/* Unbound progress bar */
+
+
+.UB_progress {
+    position: relative;
+    display: block;
+    height: 5px;
+    background: #444;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.UB_progressBar {
+    background: hsl(27, 100%, 50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+
+/* Hidden stuff */
+
+
+.mainNav {
+    display: none;
+    margin: 1em;
+    text-align: center;
+    font-family: 'Montserrat', 'sans-serif';
+    padding: 1em;
+    font-size: 1.2em;
+    color: #aaa;
+}
+
+.mainNav a {
+    color: #00ace9;
+    text-decoration: none;
+}
+
+.footer {
+    display: none;
+    font-family: 'Montserrat', 'sans-serif';
+    text-align:right;
+    color: #aaa;
+}
+
+.button {
+    text-align: center;
+    background-color: hsl(189, 96%, 35%);
+    width: 20%;
+    margin: 14px auto;
+    padding: 8px 2px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px #333;
+}
+
+.button a {
+    color: #fff;
+>>>>>>> origin/master
 }
