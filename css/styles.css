@@ -66,6 +66,7 @@ hr {
 
 
 .main h2{
+    margin-top: 12px;
     color: #fff;
     font-weight: 700;
 }
@@ -80,6 +81,13 @@ hr {
     color: hsl(27, 100%, 50%);
 }
 
+.breadcrumb {
+    font-size: 0.5em;
+}
+
+.breadcrumb a {
+    color: hsl(189, 96%, 35%);
+}
 
 .contrast h3{
     color: #fff;
