@@ -43,7 +43,7 @@ function GenerateTitle()
     To VERB a NOUN: My TIMEPERIOD in the NATIONAL GROUP
     */
     
-    var numberOfFormats = 15;
+    var numberOfFormats = 20;
     var formatSelect = Math.floor(Math.random() * (numberOfFormats - 1));
     
     
@@ -76,7 +76,7 @@ function GenerateTitle()
         result = GetWord(verbs_present_ing) + " with " + GetWord(nouns) + "s: the " + GetWord(celebs) + " Story";
         break;
     case 9:
-        result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Memoir of " + GetWord(celebs) + "\n, Foreword by " + GetWord(celebs);
+        result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Memoir of " + GetWord(celebs) + ", with a foreword by " + GetWord(celebs);
         break;
     case 10:
         result = GetWord(nouns) + "s for " + GetWord(nouns) + "s";
@@ -101,6 +101,12 @@ function GenerateTitle()
         break;
     case 17:
         result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of " + GetWord(nouns);
+        break;
+    case 18:
+        result = "I was a Teenage " + GetWord(nouns);
+        break;
+    case 19:
+        result = "The Curious Incident of the " + GetWord(nouns) + " in the Night-Time";
         break;
     default:
         result = "Gamergate is stupid";
