@@ -18,9 +18,9 @@ $(document).ready(function () {
 });
 
 
-var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "birds", "crows", "escorts", "game", "artist", "wank"];
-var nouns_plural = ["prophecies", "countrysides", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "bottles of wine", "cigarettes", "motorbikes", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament"];
-var nouns_proper = ["brexit", "life", "death", "love", "betrayal", "pain", "suffering", "democracy", "fascism", "art", "vulgarity", "sex", "anger", "frustration", "france", "earth", "meaning", "heaven"];
+var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "bird", "crow", "escort", "game", "artist", "wank"];
+var nouns_plural = ["prophecies", "countrysides", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "cigarettes", "motorbikes", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament"];
+var nouns_proper = ["brexit", "life", "death", "love", "betrayal", "pain", "suffering", "democracy", "fascism", "art", "vulgarity", "sex", "anger", "frustration", "france", "earth", "meaning", "heaven", "wine"];
 var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting"];
 var quests = ["quest", "journey", "trek", "escapade", "road trip", "mission", "suicide mission"];
 var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow", "wank off", "wank over"];
@@ -124,7 +124,7 @@ function GenerateTitle()
         result = "The " + GetWord(nationalities) + GetWord(nouns_proper) + " Affair";
         break;
     case 24:
-        result = "The " + GetWord(nationalities) + GetWord(celebs) + " Affair";
+        result = "The " + GetWord(nationalities) + " " + GetWord(celebs) + " Affair";
         break;
     default:
         result = "Gamergate is stupid";
