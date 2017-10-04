@@ -43,7 +43,7 @@ function GenerateTitle()
     To VERB a NOUN: My TIMEPERIOD in the NATIONAL GROUP
     */
     
-    var numberOfFormats = 20;
+    var numberOfFormats = 21;
     var formatSelect = Math.floor(Math.random() * (numberOfFormats - 1));
     
     
@@ -107,6 +107,9 @@ function GenerateTitle()
         break;
     case 19:
         result = "The Curious Incident of the " + GetWord(nouns) + " in the Night-Time";
+        break;
+    case 20:
+        result = GetWord(nouns) + " Trek";
         break;
     default:
         result = "Gamergate is stupid";
