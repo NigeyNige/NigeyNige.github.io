@@ -25,7 +25,7 @@ var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned",
 var quests = ["quest", "journey", "trek", "escapade", "road trip", "mission", "suicide mission"];
 var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow", "wank off", "wank over"];
 var verbs_present_er = ["kill", "brexit", "kiss", "arraign", "march", "serv", "hit", "shak", "walk", "escort", "fight", "ruin", "destroy", "repair", "birth", "celebrat", "commemorat", "remember", "forgett", "driv", "smok", "regrett", "seduc", "frighten", "cuddl", "follow", "wank"];
-var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "marching", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "fixing", "giving birth", "partying", "drinking", "remembering", "forgetting", "journeying", "seducing", "painting", "wanking"];
+var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "marching", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "giving birth to", "partying", "drinking", "remembering", "forgetting", "journeying", "seducing", "painting", "wanking"];
 var times = ["nanosecond", "second", "minute", "hour", "day", "days", "week", "fortnight", "year", "years", "decade", "lifetime", "bender", "spree", "rampage", "lunchtime", "breakfast", "midnight snack", "interstellar journey"];
 var nationalities = ["Irish", "Romanian", "German", "French", "Scottish", "English", "British", "Welsh", "Polish", "Russian", "Hungarian", "Canadian", "North American", "Australian", "Alien", "Foreign"];
 var groups = ["army", "football team", "navy", "game development studio", "team of journalists", "accounts department", "brexit negotiation team", "publishing industry", "construction firm", "trade union", "government", "underground crab army", "WhatsApp group"];
@@ -46,7 +46,7 @@ function GenerateTitle()
     To VERB a NOUN: My TIMEPERIOD in the NATIONAL GROUP
     */
     
-    var numberOfFormats = 25;
+    var numberOfFormats = 27;
     var formatSelect = Math.floor(Math.random() * (numberOfFormats));
     
     
@@ -125,6 +125,12 @@ function GenerateTitle()
         break;
     case 24:
         result = "The " + GetWord(nationalities) + " " + GetWord(celebs) + " Affair";
+        break;
+    case 25:
+        result = GetWord(verbs_present_ing) + " " + GetWord(celebs);
+        break;
+    case 26:
+        result = "How to " + GetWord(verbs_present) + ", by " + GetWord(celebs);
         break;
     default:
         result = "Gamergate is stupid";
