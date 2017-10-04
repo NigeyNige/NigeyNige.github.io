@@ -18,14 +18,14 @@ $(document).ready(function () {
 });
 
 
-var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "member of parliament", "queen", "treasure"];
+var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure"];
 var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry"];
-var quests = ["quest", "journey", "attempt", "plan"];
-var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "arrange", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget"];
-var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "marching", "serving", "hitting", "shaking", "walking", "fighting", "arranging", "destroying", "fixing", "giving birth", "partying", "drinking", "remembering", "forgetting", "journeying"];
+var quests = ["quest", "journey", "trek", "escapade"];
+var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget"];
+var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "marching", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "fixing", "giving birth", "partying", "drinking", "remembering", "forgetting", "journeying"];
 var times = ["nanosecond", "second", "minute", "hour", "day", "days", "week", "fortnight", "year", "years", "decade", "lifetime", "bender", "spree", "rampage", "lunchtime", "breakfast", "midnight snack"];
 var nationalities = ["Irish", "Romanian", "German", "French", "Scottish", "English", "British", "Welsh", "Polish", "Russian", "Hungarian", "Canadian", "North American", "Australian"];
-var groups = ["army", "football team", "navy", "game development studio", "journalists team", "accounts department", "brexit negotiation team", "construction firm", "trade union"];
+var groups = ["army", "football team", "navy", "game development studio", "journalists team", "accounts department", "brexit negotiation team", "publishing industry", "construction firm", "trade union", "government", "underground crab army"];
 var celebs = ["Margaret Thatcher", "Nigel Farage", "Dwayne 'The Rock' Johnson", "PewdiePie", "Selena Gomez", "Mara Wilson", "The Prime Minister", "Neil Gaiman", "Kim Kardashian"];
 
 
@@ -66,7 +66,7 @@ function GenerateTitle()
         result = "The " + GetWord(nouns) + " with the " + GetWord(adjectives) + " Tattoo";
         break;
     case 6:
-        result = "The " + GetWord(nouns) + " from the Land of " + GetWord(nouns);
+        result = "The " + GetWord(nouns) + " from the Land of " + GetWord(nouns) + "s";
         break;
     case 7:
         result = "City of " + GetWord(nouns) + "s and " + GetWord(nouns) + "s";
