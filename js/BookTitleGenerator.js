@@ -18,13 +18,16 @@ $(document).ready(function () {
 });
 
 
-var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter"];
+var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "member of parliament", "queen", "treasure"];
 var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry"];
 var quests = ["quest", "journey", "attempt", "plan"];
 var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "arrange", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget"];
+var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "marching", "serving", "hitting", "shaking", "walking", "fighting", "arranging", "destroying", "fixing", "giving birth", "partying", "drinking", "remembering", "forgetting", "journeying"];
 var times = ["nanosecond", "second", "minute", "hour", "day", "days", "week", "fortnight", "year", "years", "decade", "lifetime", "bender", "spree", "rampage", "lunchtime", "breakfast", "midnight snack"];
 var nationalities = ["Irish", "Romanian", "German", "French", "Scottish", "English", "British", "Welsh", "Polish", "Russian", "Hungarian", "Canadian", "North American", "Australian"];
 var groups = ["army", "football team", "navy", "game development studio", "journalists team", "accounts department", "brexit negotiation team", "construction firm", "trade union"];
+var celebs = ["Margaret Thatcher", "Nigel Farage", "Dwayne 'The Rock' Johnson", "PewdiePie", "Selena Gomez", "Mara Wilson", "The Prime Minister", "Neil Gaiman", "Kim Kardashian"];
+
 
 function GenerateTitle()
 {
@@ -39,7 +42,7 @@ function GenerateTitle()
     To VERB a NOUN: My TIMEPERIOD in the NATIONAL GROUP
     */
     
-    var numberOfFormats = 5;
+    var numberOfFormats = 10;
     var formatSelect = Math.floor(Math.random() * (numberOfFormats - 1));
     
     
@@ -51,7 +54,7 @@ function GenerateTitle()
         result = "The " + GetWord(nouns) + " with all the " + GetWord(nouns) + "s";
         break;
     case 2:
-        result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of the " + GetWord(nationalities) + " " + GetWord(groups);
+        result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of the " + GetWord(adjectives) + " " + GetWord(groups);
         break;
     case 3:
         result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": My " + GetWord(times) + " in the " + GetWord(nationalities) + " " + GetWord(groups);
@@ -60,7 +63,22 @@ function GenerateTitle()
         result = "The " + GetWord(quests) + " for the " + GetWord(adjectives) + " " + GetWord(nouns);
         break;
     case 5:
-        result = "The " + GetWord(nouns) + " with the " + Get(adjectives) + " Tattoo";
+        result = "The " + GetWord(nouns) + " with the " + GetWord(adjectives) + " Tattoo";
+        break;
+    case 6:
+        result = "The " + GetWord(nouns) + " from the Land of " + GetWord(nouns);
+        break;
+    case 7:
+        result = "City of " + GetWord(nouns) + "s and " + GetWord(nouns) + "s";
+        break;
+    case 8:
+        result = GetWord(verbs_present_ing) + " with " + GetWord(nouns) + "s: the " + GetWord(celebs) + " Story";
+        break;
+    case 9:
+        result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Memoir of " + GetWord(celebs) + "\nForeword by " + GetWord(celebs);
+        break;
+    case 10:
+        result = GetWord(nouns) + " and " + GetWord(nouns);
         break;
     default:
         result = "Gamergate is stupid";
