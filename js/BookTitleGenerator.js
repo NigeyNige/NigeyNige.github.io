@@ -18,8 +18,8 @@ $(document).ready(function () {
 });
 
 
-var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook"];
-var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious"];
+var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair"];
+var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting"];
 var quests = ["quest", "journey", "trek", "escapade", "road trip"];
 var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow"];
 var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "marching", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "fixing", "giving birth", "partying", "drinking", "remembering", "forgetting", "journeying", "seducing", "painting"];
@@ -95,6 +95,12 @@ function GenerateTitle()
         break;
     case 15:
         result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of " + GetWord(forenames) + " " + GetWord(surnames);
+        break;
+    case 16:
+        result = "The Secret " + GetWord(nouns) + " of " + GetWord(nouns);
+        break;
+    case 17:
+        result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of " + GetWord(nouns);
         break;
     default:
         result = "Gamergate is stupid";
