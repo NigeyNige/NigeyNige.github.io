@@ -18,7 +18,7 @@ $(document).ready(function () {
 });
 
 
-var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette"];
+var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook"];
 var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious"];
 var quests = ["quest", "journey", "trek", "escapade", "road trip"];
 var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow"];
@@ -27,7 +27,8 @@ var times = ["nanosecond", "second", "minute", "hour", "day", "days", "week", "f
 var nationalities = ["Irish", "Romanian", "German", "French", "Scottish", "English", "British", "Welsh", "Polish", "Russian", "Hungarian", "Canadian", "North American", "Australian", "Alien", "Foreign"];
 var groups = ["army", "football team", "navy", "game development studio", "journalists team", "accounts department", "brexit negotiation team", "publishing industry", "construction firm", "trade union", "government", "underground crab army", "WhatsApp group"];
 var celebs = ["Margaret Thatcher", "Nigel Farage", "Dwayne 'The Rock' Johnson", "PewdiePie", "Selena Gomez", "Mara Wilson", "The Prime Minister", "Neil Gaiman", "Kim Kardashian", "Daedalus Mole", "Taika Waititi", "Iron Man"];
-
+var forenames = ["Barry", "Keith", "Susan", "Patricia", "Nigel", "Poppy", "Ellen", "Eleanor", "Samia", "Brad", "Joe", "Riz", "Gunther", "Hans"];
+var surnames = ["Ahmed", "Trotter", "Harding", "Cornwell", "Smith", "Shaw", "Blount", "Shah", "Rosen", "Choudhury", "Tang", "Glau", "Blitz"];
 
 function GenerateTitle()
 {
@@ -42,7 +43,7 @@ function GenerateTitle()
     To VERB a NOUN: My TIMEPERIOD in the NATIONAL GROUP
     */
     
-    var numberOfFormats = 10;
+    var numberOfFormats = 15;
     var formatSelect = Math.floor(Math.random() * (numberOfFormats - 1));
     
     
@@ -75,10 +76,25 @@ function GenerateTitle()
         result = GetWord(verbs_present_ing) + " with " + GetWord(nouns) + "s: the " + GetWord(celebs) + " Story";
         break;
     case 9:
-        result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Memoir of " + GetWord(celebs) + "\nForeword by " + GetWord(celebs);
+        result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Memoir of " + GetWord(celebs) + "\n, Foreword by " + GetWord(celebs);
         break;
     case 10:
-        result = GetWord(nouns) + " and " + GetWord(nouns);
+        result = GetWord(nouns) + "s for " + GetWord(nouns) + "s";
+        break;
+    case 11:
+        result = "The " + GetWord(nouns) + " " + GetWord(verbs_present) + "er";
+        break;
+    case 12:
+        result = "The " + GetWord(nouns) + " Thief";
+        break;
+    case 13:
+        result = "The " + GetWord(nouns) + " " + GetWord(verbs_present) + "er";
+        break;
+    case 14:
+        result = GetWord(forenames) + " " + GetWord(surnames) + " and the " + GetWord(nouns) + "'s " + GetWord(nouns);
+        break;
+    case 15:
+        result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of " + GetWord(forenames) + " " + GetWord(surnames);
         break;
     default:
         result = "Gamergate is stupid";
