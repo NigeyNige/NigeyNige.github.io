@@ -121,7 +121,7 @@ function GenerateTitle()
         result = "The " + GetWord(nouns) + " Affair";
         break;
     case 23:
-        result = "The " + GetWord(nationalities) + GetWord(nouns_proper) + " Affair";
+        result = "The " + GetWord(nationalities) + " " + GetWord(nouns_proper) + " Affair";
         break;
     case 24:
         result = "The " + GetWord(nationalities) + " " + GetWord(celebs) + " Affair";
