@@ -48,7 +48,7 @@ function GenerateTitle()
     To VERB a NOUN: My TIMEPERIOD in the NATIONAL GROUP
     */
     
-    var numberOfFormats = 27;
+    var numberOfFormats = 28;
     var formatSelect = Math.floor(Math.random() * (numberOfFormats));
     
     
@@ -133,6 +133,9 @@ function GenerateTitle()
         break;
     case 26:
         result = "How to " + GetWord(verbs_present) + ", by " + GetWord(celebs);
+        break;
+    case 27:
+        result = "Exposed! " + GetWord(celebs) + " is secretly a " + GetWord(nationalities) + " " + GetWord(noun);
         break;
     default:
         result = "Gamergate is stupid";
