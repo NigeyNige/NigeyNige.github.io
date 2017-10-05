@@ -1,16 +1,6 @@
 $(document).ready(function () {
     
-    $('#generateButton').mouseover(function() {
-        $(this).css("background-color", "#fff");
-        $(this).css("color", "#333");
-        
-    });
     
-    $('#generateButton').mouseout(function() {
-        
-        $(this).css("background-color", "");
-        $(this).css("color", "");
-    });
     
     $('#generateButton').click(function() {
         $('#titleField').text(GenerateTitle());
@@ -48,7 +38,7 @@ function GenerateTitle()
     To VERB a NOUN: My TIMEPERIOD in the NATIONAL GROUP
     */
     
-    var numberOfFormats = 28;
+    var numberOfFormats = 29;
     var formatSelect = Math.floor(Math.random() * (numberOfFormats));
     
     
@@ -99,10 +89,10 @@ function GenerateTitle()
         result = GetWord(forenames) + " " + GetWord(surnames) + " and the " + GetWord(nouns) + "'s " + GetWord(nouns);
         break;
     case 15:
-        result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of " + GetWord(forenames) + " " + GetWord(surnames);
+        result = "The " + GetWord(adjectives) + " " + GetWord(nouns_proper) + " of " + GetWord(forenames) + " " + GetWord(surnames);
         break;
     case 16:
-        result = "The Secret " + GetWord(nouns) + " of " + GetWord(nouns_plural);
+        result = "The Secret " + GetWord(nouns_proper) + " of " + GetWord(nouns_plural);
         break;
     case 17:
         result = "The " + GetWord(adjectives) + " " + GetWord(nouns) + " of " + GetWord(nouns_proper);
@@ -136,6 +126,9 @@ function GenerateTitle()
         break;
     case 27:
         result = "Exposed! " + GetWord(celebs) + " is secretly a " + GetWord(nationalities) + " " + GetWord(noun);
+        break;
+    case 28:
+        result = "A Rough Guide to " + GetWord(nouns_proper);
         break;
     default:
         result = "Gamergate is stupid";
