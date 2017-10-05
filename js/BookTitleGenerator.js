@@ -1,9 +1,17 @@
 $(document).ready(function () {
     
-    
+    var bookTitle = "defaultvalue";
     
     $('#generateButton').click(function() {
-        $('#titleField').text(GenerateTitle());
+        
+        bookTitle = GenerateTitle();
+        $('#titleField').text(bookTitle);
+        
+        var tweetUrl = 'https://twitter.com/intent/tweet?text=' +
+        "My next book is called: '" +
+        encodeURIComponent(bookTitle) +
+        "'. Find out yours: http://www.niallslater.com/titles.html @Niall_Slater ";
+        $("#shareButton").attr("href", tweetUrl);
     });
 });
 
