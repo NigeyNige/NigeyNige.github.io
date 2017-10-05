@@ -78,7 +78,7 @@ function GenerateTitle()
         result = "City of " + GetWord(nouns_plural) + " and " + GetWord(nouns_plural);
         break;
     case 8:
-        result = GetWord(verbs_present_ing) + " with " + GetWord(nouns) + "s: the " + GetWord(celebs) + " Story";
+        result = GetWord(verbs_present_ing) + " with " + GetWord(nouns_plural) + ": the " + GetWord(celebs) + " Story";
         break;
     case 9:
         result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Memoir of " + GetWord(celebs) + ", with a foreword by " + GetWord(celebs);
