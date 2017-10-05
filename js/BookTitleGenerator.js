@@ -111,7 +111,7 @@ function GenerateTitle()
         result = "I was a Teenage " + GetWord(nouns);
         break;
     case 19:
-        result = "The Curious Incident of the " + GetWord(nouns) + " in the Night-Time";
+        result = "The " + GetWord(adjectives) + " Incident of the " + GetWord(nouns) + " in the Night-Time";
         break;
     case 20:
         result = GetWord(nouns_proper) + " Trek";
