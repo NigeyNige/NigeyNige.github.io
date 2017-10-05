@@ -176,8 +176,8 @@ $(document).ready(function () {
 });
 
 
-var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "bird", "crow", "escort", "game", "artist", "wank", "word", "creature", "lizard", "blogger", "blog", "professor"];
-var nouns_plural = ["prophecies", "countrysides", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "cigarettes", "motorbikes", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament", "wanks", "words", "birds", "ravens", "vampires", "werewolves", "dinosaurs", "creatures", "bloggers", "blogs"];
+var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "bird", "crow", "escort", "game", "artist", "wank", "word", "creature", "lizard", "blogger", "blog", "professor". "gun"];
+var nouns_plural = ["prophecies", "countrysides", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "cigarettes", "motorbikes", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament", "wanks", "words", "birds", "ravens", "vampires", "werewolves", "dinosaurs", "creatures", "bloggers", "blogs", "guns"];
 var nouns_proper = ["brexit", "life", "death", "love", "betrayal", "pain", "suffering", "democracy", "fascism", "art", "vulgarity", "sex", "anger", "frustration", "france", "earth", "meaning", "heaven", "wine", "cake", "rosemary"];
 var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting", "sad", "unpublishable"];
 var quests = ["quest", "journey", "trek", "escapade", "road trip", "mission", "suicide mission"];
@@ -222,7 +222,7 @@ function GenerateTitle()
         result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": My " + GetWord(times) + " in the " + GetWord(nationalities) + " " + GetWord(groups);
         break;
     case 4:
-        result = "The " + GetWord(quests) + " for the " + GetWord(adjectives) + " " + GetWord(nouns);
+        result = "The " + GetWord(nationalities) + " " + GetWord(nouns);
         break;
     case 5:
         result = "The " + GetWord(nouns) + " with the " + GetWord(adjectives) + " Tattoo";
@@ -249,7 +249,7 @@ function GenerateTitle()
         result = "The " + GetWord(nouns) + " Thief";
         break;
     case 13:
-        result = "The " + GetWord(nouns) + " " + GetWord(verbs_present_er) + "er";
+        result = "The " + GetWord(nouns) + " of " + GetWord(nouns_proper);
         break;
     case 14:
         result = GetWord(forenames) + " " + GetWord(surnames) + " and the " + GetWord(nouns) + "'s " + GetWord(nouns);
@@ -267,7 +267,7 @@ function GenerateTitle()
         result = "I was a Teenage " + GetWord(nouns);
         break;
     case 19:
-        result = "The Curious Incident of the " + GetWord(nouns) + " in the Night-Time";
+        result = "The " + GetWord(adjectives) + " Incident of the " + GetWord(nouns) + " in the Night-Time";
         break;
     case 20:
         result = GetWord(nouns_proper) + " Trek";
