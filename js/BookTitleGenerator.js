@@ -18,20 +18,22 @@ $(document).ready(function () {
 });
 
 
-var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "bird", "crow", "escort", "game", "artist", "wank"];
-var nouns_plural = ["prophecies", "countrysides", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "cigarettes", "motorbikes", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament"];
-var nouns_proper = ["brexit", "life", "death", "love", "betrayal", "pain", "suffering", "democracy", "fascism", "art", "vulgarity", "sex", "anger", "frustration", "france", "earth", "meaning", "heaven", "wine"];
-var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting"];
+var nouns = ["brexit", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "bird", "crow", "escort", "game", "artist", "wank", "word", "creature", "lizard", "blogger", "blog", "professor", "murder", "gamergater", "gate", "promise"];
+var nouns_plural = ["prophecies", "countrysides", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "cigarettes", "motorbikes", "murders", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament", "wanks", "words", "birds", "ravens", "vampires", "werewolves", "dinosaurs", "creatures", "bloggers", "blogs", "promises"];
+var nouns_proper = ["brexit", "life", "death", "love", "betrayal", "pain", "suffering", "democracy", "fascism", "art", "vulgarity", "sex", "anger", "frustration", "france", "earth", "meaning", "heaven", "wine", "cake", "rosemary", "gamergate"];
+var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting", "sad", "unpublishable", "artful"];
 var quests = ["quest", "journey", "trek", "escapade", "road trip", "mission", "suicide mission"];
-var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow", "wank off", "wank over"];
-var verbs_present_er = ["kill", "brexit", "kiss", "arraign", "march", "serv", "hit", "shak", "walk", "escort", "fight", "ruin", "destroy", "repair", "birth", "celebrat", "commemorat", "remember", "forgett", "driv", "smok", "regrett", "seduc", "frighten", "cuddl", "follow", "wank"];
-var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "marching", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "giving birth to", "partying", "drinking", "remembering", "forgetting", "journeying", "seducing", "painting", "wanking"];
+var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow", "wank off", "wank over", "marry", "murder"];
+var verbs_present_er = ["kill", "brexit", "kiss", "arraign", "march", "serv", "hitt", "shak", "walk", "escort", "fight", "ruin", "destroy", "repair", "birth", "celebrat", "commemorat", "remember", "forgett", "driv", "smok", "regrett", "seduc", "frighten", "cuddl", "follow", "wank", "murder"];
+var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "giving birth to", "partying", "drinking", "remembering", "forgetting", "journeying", "seducing", "painting", "wanking", "tinder matching"];
 var times = ["nanosecond", "second", "minute", "hour", "day", "days", "week", "fortnight", "year", "years", "decade", "lifetime", "bender", "spree", "rampage", "lunchtime", "breakfast", "midnight snack", "interstellar journey"];
 var nationalities = ["Irish", "Romanian", "German", "French", "Scottish", "English", "British", "Welsh", "Polish", "Russian", "Hungarian", "Canadian", "North American", "Australian", "Alien", "Foreign"];
-var groups = ["army", "football team", "navy", "game development studio", "team of journalists", "accounts department", "brexit negotiation team", "publishing industry", "construction firm", "trade union", "government", "underground crab army", "WhatsApp group"];
-var celebs = ["Margaret Thatcher", "Nigel Farage", "Dwayne 'The Rock' Johnson", "PewdiePie", "Selena Gomez", "Mara Wilson", "The Prime Minister", "Neil Gaiman", "Kim Kardashian", "Daedalus Mole", "Taika Waititi", "Iron Man"];
+var groups = ["army", "football team", "navy", "game development studio", "team of journalists", "accounts department", "brexit negotiation team", "publishing industry", "construction firm", "trade union", "government", "underground crab army", "WhatsApp group", "men's rights activists"];
+var celebs = ["Margaret Thatcher", "Nigel Farage", "Dwayne 'The Rock' Johnson", "PewdiePie", "Selena Gomez", "Mara Wilson", "The Prime Minister", "Neil Gaiman", "Kim Kardashian", "Daedalus Mole", "Taika Waititi", "Iron Man", "Jonathan Franzen", "Egoraptor", "Richard Spencer", "Jeremy Corbyn"];
 var forenames = ["Barry", "Keith", "Susan", "Patricia", "Nigel", "Poppy", "Ellen", "Eleanor", "Samia", "Brad", "Joe", "Riz", "Gunther", "Hans"];
 var surnames = ["Ahmed", "Trotter", "Harding", "Cornwell", "Smith", "Shaw", "Blount", "Shah", "Rosen", "Choudhury", "Tang", "Glau", "Blitz"];
+var problems = ["Conundrum", "Case", "Affair", "Problem", "Wanking", "Referendum", "Decision", "Ultimatum"];
+
 
 function GenerateTitle()
 {
@@ -118,13 +120,13 @@ function GenerateTitle()
         result = "The Big Book of " + GetWord(nouns_plural);
         break;
     case 22:
-        result = "The " + GetWord(nouns) + " Affair";
+        result = "The " + GetWord(nouns) + " " + GetWord(problems);
         break;
     case 23:
-        result = "The " + GetWord(nationalities) + " " + GetWord(nouns_proper) + " Affair";
+        result = "The " + GetWord(nationalities) + " " + GetWord(nouns_proper) + " " + GetWord(problems);
         break;
     case 24:
-        result = "The " + GetWord(nationalities) + " " + GetWord(celebs) + " Affair";
+        result = "The " + GetWord(nationalities) + " " + GetWord(celebs) + " " + GetWord(problems);
         break;
     case 25:
         result = GetWord(verbs_present_ing) + " " + GetWord(celebs);
