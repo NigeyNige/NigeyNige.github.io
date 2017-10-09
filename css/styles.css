@@ -237,6 +237,7 @@ hr {
 .UB_progressBar {
     background: hsl(27, 100%, 50%);
     position: absolute;
+    transition: 1s ease;
     top: 0;
     left: 0;
     height: 100%;
@@ -309,4 +310,8 @@ hr {
     background-color: #fff;
     cursor: pointer;
     color: #333;
+}
+
+#dataHolder {
+    display: none;
 }

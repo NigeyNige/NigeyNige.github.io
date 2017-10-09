@@ -47,21 +47,23 @@
             <a href="https://unbound.com/books/the-second-death-of-daedalus-mole/" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3 style="text-align:center; margin: 8px;">Novel status: funding</h3>
             </a>
-                <h5 style="text-align:center;font-weight: 100; margin: 4px">82%</h5>
+                <h5 style="text-align:center;font-weight: 100; margin: 4px" id="JS_ProgressTitle">0%</h5>
                 <div class="UB_progress">
-                    <div class="UB_progressBar" style="width:80%;"></div>
+                    <div class="UB_progressBar" style="width:0%;" id="JS_ProgressBar"></div>
                 </div>
-                <h6 style="text-align:center;font-weight: 100; margin: 4px">147 backers</h6>
+                <h6 style="text-align:center;font-weight: 100; margin: 4px" id="JS_Supporters">0 backers</h6>
                 
-            <div class="button">
-              <a href="https://unbound.com/books/the-second-death-of-daedalus-mole/" target="_blank">
-                Pledge
-              </a>
+                <div class="button">
+                    <a href="https://unbound.com/books/the-second-death-of-daedalus-mole/" target="_blank">
+                    Pledge
+                    </a>
+                </div>
+                
             </div>
-            
-            </div>
-        </div>
         
+            <div id="dataHolder">
+
+            </div>
         
 
         <div class="footer">
@@ -74,7 +76,8 @@
 		-->
             
         <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
-        <script src="js/BookTitleGenerator.js?1002"></script>
+        <script src="js/BookTitleGenerator.js?1003"></script>
+        <script src="js/ProgressBar.js?1003"></script>
 		
         <!-- Start of StatCounter Code for Default Guide -->
             <script type="text/javascript">
