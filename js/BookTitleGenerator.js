@@ -19,11 +19,12 @@ $(document).ready(function () {
 var nouns = ["brexit", "bastard", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "bird", "crow", "escort", "game", "artist", "wank", "word", "creature", "lizard", "blogger", "blog", "professor", "murder", "gamergater", "gate", "promise", "gun", "nazi"];
 var nouns_plural = ["prophecies", "bastards", "country houses", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "cigarettes", "motorbikes", "murders", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament", "wanks", "words", "birds", "ravens", "vampires", "werewolves", "dinosaurs", "creatures", "bloggers", "blogs", "promises", "guns", "plumbers", "white nationalists"];
 var nouns_proper = ["brexit", "life", "death", "love", "betrayal", "pain", "suffering", "democracy", "fascism", "art", "vulgarity", "sex", "anger", "frustration", "france", "earth", "meaning", "heaven", "wine", "cake", "rosemary", "gamergate", "racism", "white supremacy", "sexism"];
-var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting", "sad", "unpublishable", "artful"];
+var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting", "sad", "unpublishable", "artful", "rough",];
 var quests = ["quest", "journey", "trek", "escapade", "road trip", "mission", "suicide mission"];
 var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow", "wank off", "wank over", "marry", "murder", "write a novel", "annex", "backpack"];
 var verbs_present_er = ["kill", "brexit", "kiss", "arraign", "march", "serv", "hitt", "shak", "walk", "escort", "fight", "ruin", "destroy", "repair", "birth", "stalk", "hold", "remember", "forgett", "driv", "smok", "regrett", "seduc", "frighten", "cuddl", "follow", "wank", "murder"];
-var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "giving birth to", "partying", "drinking", "remembering", "forgetting", "journeying", "seducing", "painting", "wanking", "tinder matching", "gardening", "baking", "invading France", "programming Twitter bots", "making games", "attending seminars", "posting online", "anger blogging", "getting back at the ex", "voting in referendums", "tanking economies", "making websites", "writing novels", "backpacking across Europe"];
+var verbs_present_ing = ["killing", "brexiting", "kissing", "arraigning", "serving", "hitting", "shaking", "walking", "fighting", "planning", "destroying", "giving birth to", "partying", "drinking", "remembering", "forgetting", "journeying", "seducing", "painting", "wanking", "tinder matching", "gardening", "baking"];
+var verbs_present_ing_with = ["invading France", "programming Twitter bots", "making games", "attending seminars", "posting online", "anger blogging", "getting back at the ex", "voting in referendums", "tanking economies", "making websites", "writing novels", "backpacking across Europe", "foundation repair"];
 var times = ["nanosecond", "second", "minute", "hour", "day", "days", "week", "fortnight", "year", "years", "decade", "lifetime", "bender", "spree", "rampage", "lunchtime", "breakfast", "midnight snack", "interstellar journey", "regrettable period"];
 var nationalities = ["Irish", "Romanian", "German", "French", "Scottish", "English", "British", "Welsh", "Polish", "Russian", "Hungarian", "Canadian", "North American", "Australian", "Alien", "Foreign"];
 var groups = ["army", "football team", "navy", "game development studio", "team of journalists", "accounts department", "brexit negotiation team", "publishing industry", "parks department", "bake-off", "government", "underground crab army", "WhatsApp group", "far-right", "far-left", "special forces", "film industry"];
@@ -127,7 +128,7 @@ function GenerateTitle()
         result = "The " + GetWord(nationalities) + " " + GetWord(celebs) + " " + GetWord(problems);
         break;
     case 25:
-        result = GetWord(verbs_present_ing) + " " + GetWord(celebs);
+        result = GetWord(verbs_present_ing_with) + " with " + GetWord(celebs);
         break;
     case 26:
         result = "How to " + GetWord(verbs_present) + ", by " + GetWord(celebs);
@@ -136,7 +137,10 @@ function GenerateTitle()
         result = "Exposed! " + GetWord(celebs) + " is secretly a " + GetWord(nationalities) + " " + GetWord(noun);
         break;
     case 28:
-        result = "A Rough Guide to " + GetWord(nouns_proper);
+        result = "A " + GetWord(adjectives) + " Guide to " + GetWord(nouns_proper);
+        break;
+    case 29:
+        result = "29 Recipes for " + GetWord(nouns_proper);
         break;
     default:
         result = "Gamergate is stupid";
