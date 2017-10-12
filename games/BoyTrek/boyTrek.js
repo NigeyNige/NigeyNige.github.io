@@ -59,8 +59,10 @@ var walking = true;
 var walkSpeed = 0.02;
 var walkSpeedMultiplier = 64 * 50;
 
+var panelClearTimer = 0;
+
 var reset = function () {
-    
+    ShowMessage("It's not easy leaving home.", 5);
 };
 
 
@@ -78,6 +80,12 @@ var update = function (modifier) {
     	distanceTravelled += walkSpeed;
 	}
     
+    if (panelClearTimer > 0)
+        panelClearTimer -= modifier;
+    else {
+        panelClearTimer = 0;
+        ClearPanel();
+    }
 };
 
 // Draw everything
@@ -99,10 +107,10 @@ var render = function () {
 
 function renderUI() {
 	
-    // Score
+    // Score    
 	
     ctx.fillStyle = "#000";
-    ctx.font = "8px pixeled";
+    ctx.font = "12px courier new";
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.fillText(Math.round(distanceTravelled) + "M FROM HOME", 2, 4);
@@ -110,9 +118,9 @@ function renderUI() {
     
 	if (panelReady) {
 		ctx.drawImage(panelImage, panel.x, panel.y);
-        ctx.fillText(panel.text1, panel.x + 6, panel.y);
-        ctx.fillText(panel.text2, panel.x + 6, panel.y + 16);
-        ctx.fillText(panel.text3, panel.x + 6, panel.y + 32);
+        ctx.fillText(panel.text1, panel.x + 6, panel.y + 6);
+        ctx.fillText(panel.text2, panel.x + 6, panel.y + 16 + 6);
+        ctx.fillText(panel.text3, panel.x + 6, panel.y + 32 + 6);
 	}
 }
 
@@ -131,7 +139,6 @@ var main = function () {
 };
 
 function Eat() {
-    
 }
 
 function Rest() {
@@ -151,6 +158,22 @@ function Rest() {
 function Write() {
     
 }
+
+function ClearPanel() {
+    panel.text1 = "";
+    panel.text2 = "";
+    panel.text3 = "";
+}
+
+function ShowMessage(messageToShow, timeout) {
+    messageToShow = messageToShow.toUpperCase();
+    panel.text1 = messageToShow.substr(0, 30);
+    panel.text2 = messageToShow.substr(30, 60);
+    panel.text3 = messageToShow.substr(60, 90);
+    
+    panelClearTimer = timeout;
+}
+
 
 // Cross-browser support for requestAnimationFrame
 var w = window;
