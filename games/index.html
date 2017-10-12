@@ -29,9 +29,14 @@
             
             <div class="tile main">
                 <h3>BoyTrek</h3>
-                <canvas id="Canvas_BoyTrek" width="256" height="64" style="background-color:#fff; margin: auto 40px; border:1px solid #aaa;"></canvas>
+                <p>A game about a journey.</p>
+                <canvas id="Canvas_BoyTrek" width="256" height="200" style="background-color:#fff; margin: auto 40px; border:1px solid #aaa;"></canvas>
                 <script src="BoyTrek/boyTrek.js"></script>
-                <p>A game about walking and getting stronger.</p>
+                <div style="margin: 0px 40px 20px 40px;">
+                    <button id="btn_Eat" onclick="Eat()">Eat</button>
+                    <button id="btn_Rest" onclick="Rest()">Rest</button>
+                    <button id="btn_Write" onclick="Write()">Write</button>
+                </div>
             </div>
             
             

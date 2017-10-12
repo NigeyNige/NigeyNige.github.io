@@ -315,3 +315,8 @@ hr {
 #dataHolder {
     display: none;
 }
+
+@font-face {
+    font-family: 'VCR';
+    src: url('../css/font_VCR.ttf');
+}
