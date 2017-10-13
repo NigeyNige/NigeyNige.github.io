@@ -3,6 +3,11 @@ var ctx = canvas.getContext("2d");
 
 var canvasScale = 2; //magic number
 
+var states = {play:0, end:1};
+var state = states.play;
+
+var resetTimer = 0;
+
 //Rock Image
 var rockReady = false;
 var rockImage = new Image();
@@ -125,6 +130,7 @@ var reset = function () {
 	ship.x = 5;
 	ship.y = (canvas.height/2) - (shipImage.height/2);
 	difficulty = 1;
+	state = states.play;
 };
 
 //INPUT HANDLERS
@@ -206,6 +212,20 @@ function getTouchPos(canvasDom, touchEvent) {
 //UPDATE FUNCTION
 var update = function (modifier) {
 	
+	switch (state) {
+		case states.play:
+			updatePlay(modifier);
+			break;
+		case states.end:
+			updateEnd(modifier);
+			break;
+		default:
+			break;
+	 }
+};
+
+var updatePlay = function(modifier) {
+	
 	difficulty += modifier/10;
     
 	//UPDATE INPUT
@@ -257,7 +277,8 @@ var update = function (modifier) {
 		
 		if (Math.abs(asteroids[i].x - ship.x) < 8 && Math.abs(asteroids[i].y - ship.y) < 8) {
 			//HIT
-			reset();
+			resetTimer = 5;
+			state = states.end;
 		}
 	}
 	
@@ -294,6 +315,15 @@ var update = function (modifier) {
 	}
 };
 
+var updateEnd = function(modifier) {
+	
+	if (resetTimer > 0)
+		resetTimer -= modifier;
+	else
+		reset();
+	
+};
+
 // Draw everything
 var render = function () {
 	
@@ -322,7 +352,23 @@ var render = function () {
 		}
 	}
 	
+	
 	//RENDER UI
+	switch (state) {
+		case states.play:
+			renderPlay();
+			break;
+		case states.end:
+			renderEnd();
+			break;
+		default:
+			break;
+	 }
+	
+	
+};
+
+var renderPlay = function () {
 	
 	ctx.font = "4px";
     ctx.textAlign = "left";
@@ -330,6 +376,19 @@ var render = function () {
     ctx.fillStyle = "#fff";
 	ctx.fillText("BOYS RESCUED: " + ship.rescues, 4, 4);
 	ctx.fillText("BOYS LOST: " + ship.losses, 4, 114);
+};
+
+var renderEnd = function () {
+	
+	ctx.fillStyle = "rgba(0,0,0,0.6)";
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+	
+	ctx.font = "4px";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    ctx.fillStyle = "#fff";
+	ctx.fillText("GAME OVER. BOYS RESCUED: " + ship.rescues, canvas.width/2, canvas.height/2);
+	ctx.fillText("RESTARTING IN: " + Math.ceil(resetTimer), canvas.width/2, canvas.height/2 + 14);
 };
 
 // The main game loop
