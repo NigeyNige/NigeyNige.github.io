@@ -244,7 +244,7 @@ var render = function () {
 	}
 	if (rockReady) {
 		for (i = 0; i < asteroids.length; i++) {
-			xctx.drawImage(rockImage, asteroids[i].x - rockImage.width/2, asteroids[i].y - rockImage.height/2);
+			ctx.drawImage(rockImage, asteroids[i].x - rockImage.width/2, asteroids[i].y - rockImage.height/2);
 		}
 	}
 	
