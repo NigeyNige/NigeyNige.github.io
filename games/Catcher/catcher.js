@@ -202,17 +202,6 @@ function getTouchPos(canvasDom, touchEvent) {
   };
 }
 
-// Prevent scrolling when touching the canvas
-document.body.addEventListener("touchstart", function (e) {
-		e.preventDefault();
-}, false);
-document.body.addEventListener("touchend", function (e) {
-		e.preventDefault();
-}, false);
-document.body.addEventListener("touchmove", function (e) {
-		e.preventDefault();
-}, false);
-
 
 //UPDATE FUNCTION
 var update = function (modifier) {
@@ -365,6 +354,24 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // Let's play this game!
 var then = Date.now();
 reset();
+
+// Prevent scrolling when touching the canvas
+document.body.addEventListener("touchstart", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
+document.body.addEventListener("touchend", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
+document.body.addEventListener("touchmove", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
+
 main();
 
 
