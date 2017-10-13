@@ -8,7 +8,7 @@ rockImage.onload = function ()
 {
 	rockReady = true;
 };
-rockImage.src = "catcher/img_rock.png";
+rockImage.src = "Catcher/img_rock.png";
 
 
 //Ship Image
@@ -18,7 +18,7 @@ shipImage.onload = function ()
 {
 	shipReady = true;
 };
-shipImage.src = "catcher/img_ship.png";
+shipImage.src = "Catcher/img_ship.png";
 
 
 //Boy Image
@@ -28,7 +28,7 @@ boyImage.onload = function ()
 {
 	boyReady = true;
 };
-boyImage.src = "catcher/img_boy.png";
+boyImage.src = "Catcher/img_boy.png";
 
 //Stars Images
 var stars_brightReady = false;
@@ -37,14 +37,14 @@ stars_brightImage.onload = function ()
 {
 	stars_brightReady = true;
 };
-stars_brightImage.src = "catcher/img_stars_bright.png";
+stars_brightImage.src = "Catcher/img_stars_bright.png";
 var stars_dimReady = false;
 var stars_dimImage = new Image();
 stars_dimImage.onload = function ()
 {
 	stars_dimReady = true;
 };
-stars_dimImage.src = "catcher/img_stars_dim.png";
+stars_dimImage.src = "Catcher/img_stars_dim.png";
 
 
 // GAME OBJECTS
@@ -244,7 +244,7 @@ var render = function () {
 	}
 	if (rockReady) {
 		for (i = 0; i < asteroids.length; i++) {
-			ctx.drawImage(rockImage, asteroids[i].x - rockImage.width/2, asteroids[i].y - rockImage.height/2);
+			xctx.drawImage(rockImage, asteroids[i].x - rockImage.width/2, asteroids[i].y - rockImage.height/2);
 		}
 	}
 	
