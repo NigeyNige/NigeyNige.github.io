@@ -3,42 +3,37 @@
 .tileWrapper {
     display: inline-block;
     color: #444;
-}
-
-
-/* Growing Tiles */
-
-.tile {
-    color: white;
-    padding: 0px;
-    margin:  0px;
     font-family: 'Montserrat', 'sans-serif';
-    border-radius: 0px;
+	padding: auto;
+	width: 100%;
+	margin: auto;
+}
+
+/* Game canvases */
+
+.gameWrapper {
+	padding: 5px;
+    color: white;
     transition: 0.2s ease;
+	border-radius: 2px;
 }
 
-.tileimg{
-    border-radius: 4px;
-    float: left;
-    width: 40%;
-    margin-right: 12px;
+.game {
+	background-color: #000;
+	width: 95%;
 }
 
-.tile a{
+a{
     color: #f6f6e8;
     font-weight: 600;
 	text-decoration: none;
 }
-.sub:hover {
-    background-color: white;
-    color: #333;
-}
-.tile:hover .hidden{
-    display: block;
-}
 
-img {
-	max-width: 100%;
+h5 {
+	/*TOP SCORE*/
+	font-size: 1.2em;
+	margin-top: .1em;
+	margin-bottom: 1em;
 }
 
 /* Colours */
@@ -145,80 +140,9 @@ hr {
     }
 }
 
-
-.slab {
-  	grid-template-rows: auto;
-    color: white;
-    padding: 8px;
-    margin:  8px;
-    font-family: 'Montserrat', 'sans-serif';
-    border-radius: 4px;
-    transition: 0.2s ease;
-}
-.slabtile {
-    color: white;
-    padding: 0px;
-    margin:  4px;
-	cursor: pointer;
-    font-family: 'Montserrat', 'sans-serif';
-    transition: 0.2s ease;
-	max-width: 100%;
-	height: auto;
-	background-size: cover;
-    background-repeat: no-repeat;
-    border: 2px solid transparent;
-}
-.slabtilewip {
-    color: white;
-    padding: 0px;
-    margin:  4px;
-	cursor: pointer;
-    font-family: 'Montserrat', 'sans-serif';
-    transition: 0.2s ease;
-	max-width: 100%;
-	height: auto;
-	background-size: cover;
-    background-repeat: no-repeat;
-    border: 2px solid transparent;
-    opacity: .4;
-}
-
-.slabtile:hover {
-    border-color: #fff;
-    box-shadow: 0px 0px 8px #000;
-    border-radius: 8px;
-}
-.slabtilewip:hover {
-    filter: opacity(.2);
-}
-
-.slab a {
-	text-decoration: none;
-}
-
-.slab h1 {
-	margin: .24em;
-	text-align: center;
-    font-size: 0.9em;
-    color: white;
-	font-weight: 600;
-	text-shadow: 0px 1px 2px #111;
-}
-
-.slab p {
-	padding: .5em;
-	text-align: center;
-    font-weight: 600;
-	font-style: italic;
-	text-shadow: 0px 0px 3px #111;
-    font-size: 1.5vh;
-}
-
 .hidden {
     color: transparent;
 }
-.wip:hover .hidden, .wip.hover .hidden { color: #fff;}
-
 
 /* Unbound progress bar */
 

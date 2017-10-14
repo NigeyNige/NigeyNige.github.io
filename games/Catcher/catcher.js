@@ -1,14 +1,15 @@
 var canvas = document.getElementById("Canvas_Catcher");
 var ctx = canvas.getContext("2d");
 
-var canvasScale = 2; //magic number
+var style = window.getComputedStyle(canvas);
+var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
 
 var states = {play:0, end:1};
 var state = states.play;
 
 var resetTimer = 0;
 
-//Rock Image
+//Rock Images
 var rockReady = false;
 var rockImage = new Image();
 rockImage.onload = function ()
@@ -16,6 +17,22 @@ rockImage.onload = function ()
 	rockReady = true;
 };
 rockImage.src = "Catcher/img_rock.png";
+
+var rock1Ready = false;
+var rock1Image = new Image();
+rock1Image.onload = function ()
+{
+	rock1Ready = true;
+};
+rock1Image.src = "Catcher/img_rock1.png";
+
+var rock2Ready = false;
+var rock2Image = new Image();
+rock2Image.onload = function ()
+{
+	rock2Ready = true;
+};
+rock2Image.src = "Catcher/img_rock2.png";
 
 
 //Ship Image
@@ -81,12 +98,26 @@ var asteroid_Interval = 50;
 
 function Asteroid()
 {
+	this.sprite = getRandomRockImage();
     this.width = rockImage.width;
     this.height = rockImage.height;
     this.x = canvas.width + rockImage.width + Math.random() * asteroid_Interval;
     this.y = Math.random() * canvas.height;
     this.speed = 32 + ((Math.random()-0.5) * 30);
 	this.wander = (Math.random() - 0.5) * 32/2;
+	this.spin = (Math.random() - 0.5) * 20;
+	this.rotation = ToRadians((Math.random() * 360));
+}
+
+function getRandomRockImage() {
+	var result = Math.random();
+	
+	if (result < 0.3)
+		return rockImage;
+	if (result >= 0.3 && result < 0.6)
+		return rock1Image;
+	if (result >= 0.6)
+		return rock2Image;
 }
 
 var num_Boys = 10;
@@ -112,6 +143,18 @@ for (i = 0; i < num_Asteroids; i++) {
 // Spawn boys
 for (i = 0; i < num_Boys; i++) {
 	boys[i] = new Boy(boy_Interval * i + Math.random() * 100 - 50);
+}
+
+window.onload = function() {
+	
+	var highscore = getCookie("highScore_catcher");
+	
+	if (highscore == null) {
+		document.cookie = "highScore_catcher=" + 0 + ";expires=Wed, 1 Jan 2031 12:00:00 UTC";
+		highscore = 0;
+	}
+	var holder = document.getElementById("HSDcatcher");
+	holder.textContent = highscore + " Boys Rescued";
 }
 
 // RESET GAME
@@ -212,6 +255,10 @@ function getTouchPos(canvasDom, touchEvent) {
 //UPDATE FUNCTION
 var update = function (modifier) {
 	
+	//update scaling in case window has been resized
+	style = window.getComputedStyle(canvas);
+	canvasScale = parseInt(style.getPropertyValue("width")) / 256;
+	
 	switch (state) {
 		case states.play:
 			updatePlay(modifier);
@@ -269,6 +316,7 @@ var updatePlay = function(modifier) {
 	for (i = 0; i < asteroids.length; i++) {
 		asteroids[i].x -= modifier * asteroids[i].speed * difficulty;
 		asteroids[i].y -= modifier * asteroids[i].wander * difficulty;
+		asteroids[i].rotation += modifier * asteroids[i].spin;
 		
 		if (asteroids[i].x < -10 || asteroids[i].y < -10 ||  asteroids[i].y > canvas.height + 10 ) {
 			asteroids[i] = new Asteroid();
@@ -277,7 +325,19 @@ var updatePlay = function(modifier) {
 		
 		if (Math.abs(asteroids[i].x - ship.x) < 8 && Math.abs(asteroids[i].y - ship.y) < 8) {
 			//HIT
-			resetTimer = 5;
+			resetTimer = 3;
+			
+			if (getCookie("highScore_catcher") != null) {
+				if (ship.rescues > parseInt(getCookie("highScore_catcher"))) {
+					document.cookie = "highScore_catcher=" + ship.rescues + ";expires=Wed, 1 Jan 2031 12:00:00 UTC";
+					
+					//Updating the highscore as below makes the game crash - getelementbyId returns null, probably because the element doesn't exist?
+					
+					//var holder = document.getElementById("HSDcatcher");
+					//holder.textContent = highscore + " Boys Rescued";
+				}
+			}
+			
 			state = states.end;
 		}
 	}
@@ -319,8 +379,9 @@ var updateEnd = function(modifier) {
 	
 	if (resetTimer > 0)
 		resetTimer -= modifier;
-	else
+	else {
 		reset();
+	}
 	
 };
 
@@ -348,7 +409,7 @@ var render = function () {
 	}
 	if (rockReady) {
 		for (i = 0; i < asteroids.length; i++) {
-			ctx.drawImage(rockImage, asteroids[i].x - rockImage.width/2, asteroids[i].y - rockImage.height/2);
+			drawImageCenter(asteroids[i].sprite, asteroids[i].x, asteroids[i].y, 4, 4, 1, asteroids[i].rotation);
 		}
 	}
 	
@@ -434,7 +495,29 @@ document.body.addEventListener("touchmove", function (e) {
 main();
 
 
+//UTILITY FUNCTIONS
 
 
 
+function drawImageCenter(image, x, y, cx, cy, scale, rotation){
+    ctx.setTransform(scale, 0, 0, scale, x, y); // sets scale and origin
+    ctx.rotate(rotation);
+    ctx.drawImage(image, -cx, -cy);
+	ctx.resetTransform();
+}
 
+function ToRadians(deg)
+{
+	return deg * (Math.PI/180);
+}
+
+function ToDegrees(rad)
+{
+	return rad * (180/Math.PI);
+}
+
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
