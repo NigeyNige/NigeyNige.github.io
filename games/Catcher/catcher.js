@@ -9,6 +9,8 @@ var state = states.play;
 
 var resetTimer = 0;
 
+var difficultyAcceleration = 0.04;
+
 //Rock Images
 var rockReady = false;
 var rockImage = new Image();
@@ -90,7 +92,7 @@ var stars = {
 	brightSpeed: 2
 };
 
-var difficulty = 1;
+var difficulty = .5;
 
 var num_Asteroids = 10;
 var asteroids = [num_Asteroids];
@@ -273,7 +275,7 @@ var update = function (modifier) {
 
 var updatePlay = function(modifier) {
 	
-	difficulty += modifier/10;
+	difficulty += modifier*difficultyAcceleration;
     
 	//UPDATE INPUT
 	
