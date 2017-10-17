@@ -16,12 +16,14 @@
     color: white;
     transition: 0.2s ease;
 	border-radius: 2px;
+    margin: 0px 0px 1.5em 0px;
 }
 
 .game {
 	background-color: #000;
 	width: 95%;
-max-width: 512px;
+    max-width: 512px;
+    margin: auto;
 }
 
 a{
@@ -90,13 +92,14 @@ hr {
 .contrast h3{
     color: #fff;
     font-weight: 700;
-    line-height: .15em;
+    line-height: .15em; 
 }
 .contrast p{
     font-size: .75em;
 }
 .contrast a{
-    color: #45a3bf;
+    color: hsl(27, 100%, 50%);
+    text-shadow: 1px 1px 0px #5c391c;
 }
 .contrast li{
     font-size: .75em;
