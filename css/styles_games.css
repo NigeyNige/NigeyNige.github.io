@@ -18,6 +18,10 @@
 	border-radius: 2px;
     margin: 0px 0px 1.5em 0px;
 }
+.gameWrapper img {
+	width: 80%;
+	max-width: 512px;
+}
 
 .game {
 	background-color: #000;
