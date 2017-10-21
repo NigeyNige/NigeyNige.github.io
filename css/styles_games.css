@@ -30,6 +30,15 @@
     margin: auto;
 }
 
+/* unity containers */
+#gameContainer {
+	margin: 0px auto;
+	width: 512px;
+	height: 512px;
+	display: inline-block;
+	text-align: center;
+}
+
 a{
     color: #f6f6e8;
     font-weight: 600;
@@ -261,3 +270,4 @@ canvas, img {
     image-rendering: pixelated;
 }
 canvas#Canvas_mls4 { width: 512px; height: 256px; } /* 4 * 64 = 256 */
+
