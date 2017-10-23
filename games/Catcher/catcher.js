@@ -4,12 +4,33 @@ var ctx = canvas.getContext("2d");
 var style = window.getComputedStyle(canvas);
 var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
 
-var states = {play:0, end:1};
-var state = states.play;
+var states = {menu:0, play:1, end:2};
+var state = states.menu;
+
+var buttonTimer = 1;
+var renderButton = false;
 
 var resetTimer = 0;
 
 var difficultyAcceleration = 0.04;
+
+//Menu image
+var menuReady = false;
+var menuImage = new Image();
+menuImage.onload = function ()
+{
+	menuReady = true;
+};
+menuImage.src = "title_screen.png";
+
+//Button image
+var buttonReady = false;
+var buttonImage = new Image();
+buttonImage.onload = function ()
+{
+	buttonReady = true;
+};
+buttonImage.src = "title_button.png";
 
 //Rock Images
 var rockReady = false;
@@ -262,6 +283,9 @@ var update = function (modifier) {
 	canvasScale = parseInt(style.getPropertyValue("width")) / 256;
 	
 	switch (state) {
+        case states.menu:
+            updateMenu(modifier);
+            break;
 		case states.play:
 			updatePlay(modifier);
 			break;
@@ -272,6 +296,23 @@ var update = function (modifier) {
 			break;
 	 }
 };
+
+
+var updateMenu = function(modifier) {
+    
+    if (buttonTimer > 0) {
+        buttonTimer -= modifier;
+    } else {
+        buttonTimer = 1;
+        renderButton = !renderButton;
+    }
+    
+	if (pressing) {
+        state = states.play;
+        reset();
+	}
+    
+}
 
 var updatePlay = function(modifier) {
 	
@@ -418,6 +459,9 @@ var render = function () {
 	
 	//RENDER UI
 	switch (state) {
+		case states.menu:
+			renderMenu();
+			break;
 		case states.play:
 			renderPlay();
 			break;
@@ -429,6 +473,15 @@ var render = function () {
 	 }
 	
 	
+};
+
+var renderMenu = function () {
+	ctx.clearRect(0,0, canvas.width,canvas.height);
+    
+    ctx.drawImage(menuImage, 0, 0); 
+    
+    if (renderButton)
+        ctx.drawImage(buttonImage, 0, 0);
 };
 
 var renderPlay = function () {
@@ -475,7 +528,7 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 // Let's play this game!
 var then = Date.now();
-reset();
+//reset();
 
 // Prevent scrolling when touching the canvas
 document.body.addEventListener("touchstart", function (e) {
