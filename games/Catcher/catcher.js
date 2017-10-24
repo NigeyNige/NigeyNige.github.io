@@ -4,15 +4,18 @@ var ctx = canvas.getContext("2d");
 var style = window.getComputedStyle(canvas);
 var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
 
-var states = {menu:0, play:1, end:2};
+var states = {menu:0, play:1, end:2, advance:3};
 var state = states.menu;
 
 var buttonTimer = 1;
 var renderButton = false;
 
 var resetTimer = 0;
+var advanceTimer = 0;
 
-var difficultyAcceleration = 0.04;
+//debug disables asteroid collision and ramps up the speed to 15
+var debug = false;
+
 
 //Menu image
 var menuReady = false;
@@ -113,11 +116,18 @@ var stars = {
 	brightSpeed: 2
 };
 
-var difficulty = .5;
+var startingDifficulty = 1;
+var difficulty = startingDifficulty;
 
 var num_Asteroids = 10;
 var asteroids = [num_Asteroids];
 var asteroid_Interval = 50;
+
+	
+if (debug) {
+    startingDifficulty = 15;
+}
+    
 
 function Asteroid()
 {
@@ -143,7 +153,7 @@ function getRandomRockImage() {
 		return rock2Image;
 }
 
-var num_Boys = 50;
+var num_Boys = 10;
 var boys = [num_Boys];
 var boy_Interval = 100;
 
@@ -182,7 +192,7 @@ window.onload = function() {
 
 // RESET GAME
 var reset = function () {
-	
+    
 	for (i = 0; i < num_Asteroids; i++) {
 		asteroids[i] = new Asteroid();
 	}
@@ -195,9 +205,26 @@ var reset = function () {
 	ship.losses = 0;
 	ship.x = 5;
 	ship.y = (canvas.height/2) - (shipImage.height/2);
-	difficulty = 1;
+	difficulty = startingDifficulty;
 	state = states.play;
 };
+
+// ADVANCE GAME
+var advanceDifficulty = function () {
+	
+    
+	for (i = 0; i < num_Asteroids; i++) {
+		asteroids[i] = new Asteroid();
+	}
+	// Spawn boys
+	for (i = 0; i < num_Boys; i++) {
+		boys[i] = new Boy(boy_Interval * i + Math.random() * 100 - 50);
+	}
+	
+	difficulty += 1;
+	state = states.play;
+};
+
 
 //INPUT HANDLERS
 
@@ -292,6 +319,9 @@ var update = function (modifier) {
 		case states.end:
 			updateEnd(modifier);
 			break;
+		case states.advance:
+			updateAdvance(modifier);
+			break;
 		default:
 			break;
 	 }
@@ -316,7 +346,7 @@ var updateMenu = function(modifier) {
 
 var updatePlay = function(modifier) {
 	
-	difficulty += modifier*difficultyAcceleration;
+	//difficulty += modifier*difficultyAcceleration;
     
 	//UPDATE INPUT
 	
@@ -355,7 +385,7 @@ var updatePlay = function(modifier) {
 	if (ship.y > canvas.height) {ship.y = canvas.height;}
 	
 	//UPDATE ROCKS
-	
+    
 	for (i = 0; i < asteroids.length; i++) {
 		asteroids[i].x -= modifier * asteroids[i].speed * difficulty;
 		asteroids[i].y -= modifier * asteroids[i].wander * difficulty;
@@ -366,46 +396,58 @@ var updatePlay = function(modifier) {
 			continue;
 		}
 		
-		if (Math.abs(asteroids[i].x - ship.x) < 8 && Math.abs(asteroids[i].y - ship.y) < 8) {
-			//HIT
-			resetTimer = 3;
-			
-			if (getCookie("highScore_catcher") != null) {
-				if (ship.rescues > parseInt(getCookie("highScore_catcher"))) {
-					document.cookie = "highScore_catcher=" + ship.rescues + ";expires=Wed, 1 Jan 2031 12:00:00 UTC";
-					
-					//Updating the highscore as below makes the game crash - getelementbyId returns null, probably because the element doesn't exist?
-					
-					//var holder = document.getElementById("HSDcatcher");
-					//holder.textContent = highscore + " Boys Rescued";
-				}
-			}
-			
-			state = states.end;
-		}
+        if (!debug) {
+            if (Math.abs(asteroids[i].x - ship.x) < 8 && Math.abs(asteroids[i].y - ship.y) < 8) {
+                //HIT
+                resetTimer = 3;
+
+                if (getCookie("highScore_catcher") != null) {
+                    if (ship.rescues > parseInt(getCookie("highScore_catcher"))) {
+                        document.cookie = "highScore_catcher=" + ship.rescues + ";expires=Wed, 1 Jan 2031 12:00:00 UTC";
+
+                        //Updating the highscore live as below makes the game crash - getelementbyId returns null, probably because the element doesn't exist?
+
+                        //var holder = document.getElementById("HSDcatcher");
+                        //holder.textContent = highscore + " Boys Rescued";
+                    }
+                }
+
+                state = states.end;
+            }
+        }
 	}
 	
 	//UPDATE BOYS
 	
+    var boysInPlay = boys.length;
+    
 	for (i = 0; i < boys.length; i++) {
 		boys[i].x -= modifier * boys[i].speed * difficulty;
 		
-		
+		//remove lost boys
 		if (boys[i].x < -10 || boys[i].y < -10 ||  boys[i].y > canvas.height + 10 ) {
 			boys.splice(i,1);
 			ship.losses++;
+            boysInPlay--;
 			continue;
 		}
-		
+        
+        //remove rescued boys		
 		if (Math.abs(boys[i].x - ship.x) < 8 && Math.abs(boys[i].y - ship.y) < 8) {
 			//RESCUE
 			boys.splice(i,1);
 			ship.rescues++;
+            boysInPlay--;
 		}
-		
 	}
 	
-	
+
+    //advance if all boys gone
+    if (boysInPlay <= 0) {
+        state = states.advance;
+        advanceTimer = 3;
+    }
+
 	//UPDATE BACKGROUND STARS
 	
 	stars.brightx -= modifier * stars.brightSpeed * difficulty;
@@ -428,7 +470,18 @@ var updateEnd = function(modifier) {
 	
 };
 
-// Draw everything
+var updateAdvance = function(modifier) {
+	
+	if (advanceTimer > 0)
+		advanceTimer -= modifier;
+	else {
+		advanceDifficulty();
+	}
+	
+};
+
+
+// RENDER FUNCTION
 var render = function () {
 	
 	ctx.clearRect(0,0, canvas.width,canvas.height);
@@ -468,6 +521,9 @@ var render = function () {
 		case states.end:
 			renderEnd();
 			break;
+		case states.advance:
+			renderAdvance();
+			break;
 		default:
 			break;
 	 }
@@ -502,9 +558,22 @@ var renderEnd = function () {
 	ctx.font = "4px";
     ctx.textAlign = "center";
     ctx.textBaseline = "bottom";
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#f33";
 	ctx.fillText("GAME OVER. BOYS RESCUED: " + ship.rescues, canvas.width/2, canvas.height/2);
 	ctx.fillText("RESTARTING IN: " + Math.ceil(resetTimer), canvas.width/2, canvas.height/2 + 14);
+};
+
+var renderAdvance = function () {
+	
+	ctx.fillStyle = "rgba(0,0,0,0.6)";
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+	
+	ctx.font = "4px";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    ctx.fillStyle = "#3f3";
+	ctx.fillText("SIGNAL LOST. BOYS RESCUED: " + ship.rescues, canvas.width/2, canvas.height/2);
+	ctx.fillText("JUMP TO NEXT SECTOR IN " + Math.ceil(advanceTimer), canvas.width/2, canvas.height/2 + 14);
 };
 
 // The main game loop
