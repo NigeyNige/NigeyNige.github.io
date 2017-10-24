@@ -13,6 +13,8 @@ var renderButton = false;
 var resetTimer = 0;
 var advanceTimer = 0;
 
+var difficultyAcceleration = 0.007;
+
 //debug disables asteroid collision and ramps up the speed to 15
 var debug = false;
 
@@ -116,7 +118,7 @@ var stars = {
 	brightSpeed: 2
 };
 
-var startingDifficulty = 1;
+var startingDifficulty = 2;
 var difficulty = startingDifficulty;
 
 var num_Asteroids = 10;
@@ -346,7 +348,7 @@ var updateMenu = function(modifier) {
 
 var updatePlay = function(modifier) {
 	
-	//difficulty += modifier*difficultyAcceleration;
+	difficulty += modifier*difficultyAcceleration;
     
 	//UPDATE INPUT
 	
