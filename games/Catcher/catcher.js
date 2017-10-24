@@ -13,8 +13,6 @@ var renderButton = false;
 var resetTimer = 0;
 var advanceTimer = 0;
 
-var difficultyAcceleration = 0.007;
-
 //debug disables asteroid collision and ramps up the speed to 15
 var debug = false;
 
@@ -118,8 +116,11 @@ var stars = {
 	brightSpeed: 2
 };
 
-var startingDifficulty = 2;
+var startingDifficulty = 1.25;
 var difficulty = startingDifficulty;
+var difficultyAdvanceAmount = .25;
+var difficultyAcceleration = 0.02;
+var currentLevelDifficulty;
 
 var num_Asteroids = 10;
 var asteroids = [num_Asteroids];
@@ -208,12 +209,17 @@ var reset = function () {
 	ship.x = 5;
 	ship.y = (canvas.height/2) - (shipImage.height/2);
 	difficulty = startingDifficulty;
+    currentLevelDifficulty = difficulty;
 	state = states.play;
 };
 
 // ADVANCE GAME
 var advanceDifficulty = function () {
+    
+    currentLevelDifficulty = currentLevelDifficulty + difficultyAdvanceAmount;
 	
+	ship.x = 5;
+	ship.y = (canvas.height/2) - (shipImage.height/2);
     
 	for (i = 0; i < num_Asteroids; i++) {
 		asteroids[i] = new Asteroid();
@@ -223,7 +229,7 @@ var advanceDifficulty = function () {
 		boys[i] = new Boy(boy_Interval * i + Math.random() * 100 - 50);
 	}
 	
-	difficulty += 1;
+	difficulty = currentLevelDifficulty;
 	state = states.play;
 };
 
@@ -352,16 +358,16 @@ var updatePlay = function(modifier) {
     
 	//UPDATE INPUT
 	
-    if (37 in keysDown) { // Player holding left
+    if (37 in keysDown || 65 in keysDown) { // Player holding left or A
 		ship.x -= modifier * ship.speed;
 	}
-	if (38 in keysDown) { // Player holding up
+	if (38 in keysDown || 87 in keysDown) { // Player holding up or W
 		ship.y -= modifier * ship.speed;
 	}
-    if (39 in keysDown) { // Player holding right
+    if (39 in keysDown || 68 in keysDown) { // Player holding right or D
 		ship.x += modifier * ship.speed;
 	}
-	if (40 in keysDown) { // Player holding down
+	if (40 in keysDown || 83 in keysDown) { // Player holding down or S
 		ship.y += modifier * ship.speed;
 	}
 	if (32 in keysDown) { // Player holding space
