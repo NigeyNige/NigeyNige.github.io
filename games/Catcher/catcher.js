@@ -4,7 +4,7 @@ var ctx = canvas.getContext("2d");
 var style = window.getComputedStyle(canvas);
 var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
 
-var states = {menu:0, play:1, end:2, advance:3};
+var states = {menu:0, play:1, end:2, advance:3, pregame:4};
 var state = states.menu;
 
 var buttonTimer = 1;
@@ -12,6 +12,14 @@ var renderButton = false;
 
 var resetTimer = 0;
 var advanceTimer = 0;
+var gameStartTimer = 0;
+
+var currentSector = "ZESTLIFE";
+
+var sectorNames = ["ZESTLIFE", "JOYZONE", "FUNDIRECTION", "BACKSTREETLADS", "VSYNC", "JONASCOUSINS", "BOYZ-2-BOYZ"];
+var sectorNumbers = ["16B", "12X", "19JO", "1D", "8BD", "69LOL", "420", "60HZ", "404", "123", "666"];
+
+var boysThisSector = 0;
 
 //debug disables asteroid collision and ramps up the speed to 15
 var debug = false;
@@ -62,13 +70,25 @@ rock2Image.src = "img_rock2.png";
 
 
 //Ship Image
-var shipReady = false;
-var shipImage = new Image();
-shipImage.onload = function ()
+var ship0Ready = false;
+var ship0Image = new Image();
+ship0Image.onload = function ()
 {
-	shipReady = true;
+	ship0Ready = true;
 };
-shipImage.src = "img_ship.png";
+ship0Image.src = "img_ship_frame0.png";
+
+var ship1Ready = false;
+var ship1Image = new Image();
+ship1Image.onload = function ()
+{
+	ship1Ready = true;
+};
+ship1Image.src = "img_ship_frame1.png";
+
+var shipAnimTimer = 0;
+var shipAnimInterval = 0.1;
+var shipFrame2 = true;
 
 
 //Boy Image
@@ -102,10 +122,10 @@ stars_dimImage.src = "img_stars_dim.png";
 var ship = {
     rescues: 0,
 	losses: 0,
-    width: shipImage.width,
-    height: shipImage.height,
+    width: ship0Image.width,
+    height: ship0Image.height,
     x: 5,
-    y: (canvas.height/2) - (shipImage.height/2),
+    y: (canvas.height/2) - (ship0Image.height/2),
     speed: 64
 };
 
@@ -190,27 +210,30 @@ window.onload = function() {
 		highscore = 0;
 	}
 	var holder = document.getElementById("HSDcatcher");
-	holder.textContent = highscore + " Boys Rescued";
+	holder.textContent = highscore + " Boys Picked Up";
 }
 
 // RESET GAME
 var reset = function () {
+    
+    currentSector = sectorNames[Math.floor(Math.random()*sectorNames.length)] + " " + sectorNumbers[Math.floor(Math.random()*sectorNumbers.length)];
     
 	for (i = 0; i < num_Asteroids; i++) {
 		asteroids[i] = new Asteroid();
 	}
 	// Spawn boys
 	for (i = 0; i < num_Boys; i++) {
-		boys[i] = new Boy(boy_Interval * i + Math.random() * 100 - 50);
+		boys[i] = new Boy(boy_Interval * i + Math.random() * 100);
 	}
 	
 	ship.rescues = 0;
 	ship.losses = 0;
 	ship.x = 5;
-	ship.y = (canvas.height/2) - (shipImage.height/2);
+	ship.y = (canvas.height/2) - (ship0Image.height/2);
 	difficulty = startingDifficulty;
     currentLevelDifficulty = difficulty;
-	state = states.play;
+    
+    boysThisSector = 0;
 };
 
 // ADVANCE GAME
@@ -219,7 +242,7 @@ var advanceDifficulty = function () {
     currentLevelDifficulty = currentLevelDifficulty + difficultyAdvanceAmount;
 	
 	ship.x = 5;
-	ship.y = (canvas.height/2) - (shipImage.height/2);
+	ship.y = (canvas.height/2) - (ship0Image.height/2);
     
 	for (i = 0; i < num_Asteroids; i++) {
 		asteroids[i] = new Asteroid();
@@ -230,7 +253,8 @@ var advanceDifficulty = function () {
 	}
 	
 	difficulty = currentLevelDifficulty;
-	state = states.play;
+	state = states.pregame;
+    gameStartTimer = 2;
 };
 
 
@@ -330,6 +354,9 @@ var update = function (modifier) {
 		case states.advance:
 			updateAdvance(modifier);
 			break;
+		case states.pregame:
+			updatePregame(modifier);
+			break;
 		default:
 			break;
 	 }
@@ -346,7 +373,8 @@ var updateMenu = function(modifier) {
     }
     
 	if (pressing) {
-        state = states.play;
+        state = states.pregame;
+        gameStartTimer = 2;
         reset();
 	}
     
@@ -383,6 +411,7 @@ var updatePlay = function(modifier) {
 			ship.y += modifier * ship.speed;
 		if (mousePos.y < ship.y * canvasScale)
 			ship.y -= modifier * ship.speed;
+        
 	}
 	
 	//KEEP PLAYER WITHIN BOUNDS
@@ -445,6 +474,7 @@ var updatePlay = function(modifier) {
 			//RESCUE
 			boys.splice(i,1);
 			ship.rescues++;
+            boysThisSector++;
             boysInPlay--;
 		}
 	}
@@ -466,6 +496,14 @@ var updatePlay = function(modifier) {
 	if (stars.dimx < - stars_dimImage.width) {
 		stars.dimx = 0;
 	}
+    
+    if (shipAnimTimer > 0) {
+        shipAnimTimer -= modifier;
+    }
+    else {
+        shipAnimTimer = shipAnimInterval;
+        shipFrame2 = !shipFrame2;        
+    }
 };
 
 var updateEnd = function(modifier) {
@@ -473,6 +511,8 @@ var updateEnd = function(modifier) {
 	if (resetTimer > 0)
 		resetTimer -= modifier;
 	else {
+        state = states.pregame;
+        gameStartTimer = 2;
 		reset();
 	}
 	
@@ -485,6 +525,72 @@ var updateAdvance = function(modifier) {
 	else {
 		advanceDifficulty();
 	}
+	
+};
+
+var updatePregame = function(modifier) {
+	
+	if (gameStartTimer > 0)
+		gameStartTimer -= modifier;
+	else {
+        state = states.play;
+	}
+    
+    
+	//UPDATE INPUT
+	
+    if (37 in keysDown || 65 in keysDown) { // Player holding left or A
+		ship.x -= modifier * ship.speed;
+	}
+	if (38 in keysDown || 87 in keysDown) { // Player holding up or W
+		ship.y -= modifier * ship.speed;
+	}
+    if (39 in keysDown || 68 in keysDown) { // Player holding right or D
+		ship.x += modifier * ship.speed;
+	}
+	if (40 in keysDown || 83 in keysDown) { // Player holding down or S
+		ship.y += modifier * ship.speed;
+	}
+	if (32 in keysDown) { // Player holding space
+		
+	}
+	
+	if (pressing) {
+		if (mousePos.x > ship.x * canvasScale)
+			ship.x += modifier * ship.speed;
+		if (mousePos.x < ship.x * canvasScale)
+			ship.x -= modifier * ship.speed;
+		if (mousePos.y > ship.y * canvasScale)
+			ship.y += modifier * ship.speed;
+		if (mousePos.y < ship.y * canvasScale)
+			ship.y -= modifier * ship.speed;
+	}
+	
+	//KEEP PLAYER WITHIN BOUNDS
+	
+	if (ship.x < 0) {ship.x = 0;}
+	if (ship.x > canvas.width) {ship.x = canvas.width;}
+	if (ship.y < 0) {ship.y = 0;}
+	if (ship.y > canvas.height) {ship.y = canvas.height;}
+
+	//UPDATE BACKGROUND STARS
+	
+	stars.brightx -= modifier * stars.brightSpeed * difficulty;
+	stars.dimx -= modifier * stars.dimSpeed * difficulty;
+	if (stars.brightx < - stars_brightImage.width) {
+		stars.brightx = 0;
+	}
+	if (stars.dimx < - stars_dimImage.width) {
+		stars.dimx = 0;
+	}
+    
+    if (shipAnimTimer > 0) {
+        shipAnimTimer -= modifier;
+    }
+    else {
+        shipAnimTimer = shipAnimInterval;
+        shipFrame2 = !shipFrame2;
+    }
 	
 };
 
@@ -508,8 +614,14 @@ var render = function () {
 		}
 	}
 
-	if (shipReady) {
-		ctx.drawImage(shipImage, ship.x - shipImage.width/2, ship.y - shipImage.height/2);
+	if (ship0Ready && ship1Ready) {
+        if (shipFrame2) {
+		  ctx.drawImage(ship1Image, ship.x - ship0Image.width/2, ship.y - ship0Image.height/2);
+        }
+        else {
+		  ctx.drawImage(ship0Image, ship.x - ship0Image.width/2, ship.y - ship0Image.height/2);
+        }
+            
 	}
 	if (rockReady) {
 		for (i = 0; i < asteroids.length; i++) {
@@ -531,6 +643,9 @@ var render = function () {
 			break;
 		case states.advance:
 			renderAdvance();
+			break;
+		case states.pregame:
+			renderPregame();
 			break;
 		default:
 			break;
@@ -554,8 +669,8 @@ var renderPlay = function () {
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.fillStyle = "#fff";
-	ctx.fillText("BOYS RESCUED: " + ship.rescues, 4, 4);
-	ctx.fillText("BOYS LOST: " + ship.losses, 4, 114);
+	ctx.fillText("BOYS PICKED UP: " + ship.rescues, 4, 4);
+	ctx.fillText("BOYS GOT AWAY: " + ship.losses, 4, 114);
 };
 
 var renderEnd = function () {
@@ -563,12 +678,33 @@ var renderEnd = function () {
 	ctx.fillStyle = "rgba(0,0,0,0.6)";
 	ctx.fillRect(0,0,canvas.width,canvas.height);
 	
+    var judgeText = "DON'T BEAT YOURSELF UP";
+    
+    if (boysThisSector > 0)
+        judgeText = "YOU ONLY NEED ONE";
+    if (boysThisSector > 1)
+        judgeText = "TWO BOYS? NICE";
+    if (boysThisSector > 2)
+        judgeText = "THREE BOYS? OOOH";
+    if (boysThisSector > 3)
+        judgeText = "NICE PICKING";
+    if (boysThisSector > 5)
+        judgeText = "NOT BAD AT ALL";
+    if (boysThisSector > 7)
+        judgeText = "NICE PICKING";
+    if (boysThisSector > 9)
+        judgeText = "YOU BROUGHT ALL THE BOYS TO THE YARD";
+    
 	ctx.font = "4px";
     ctx.textAlign = "center";
     ctx.textBaseline = "bottom";
     ctx.fillStyle = "#f33";
-	ctx.fillText("GAME OVER. BOYS RESCUED: " + ship.rescues, canvas.width/2, canvas.height/2);
-	ctx.fillText("RESTARTING IN: " + Math.ceil(resetTimer), canvas.width/2, canvas.height/2 + 14);
+	ctx.fillText("GAME OVER. BOYS PICKED UP: " + boysThisSector, canvas.width/2, canvas.height/2 - 12);
+    ctx.fillStyle = "#3f3";
+	ctx.fillText(judgeText, canvas.width/2, canvas.height/2);
+    ctx.fillStyle = "#f33";
+	ctx.fillText("TOTAL BOYS: "  + ship.rescues, canvas.width/2, canvas.height/2 + 12);
+	ctx.fillText("RESTARTING IN: " + Math.ceil(resetTimer), canvas.width/2, canvas.height/2 + 24);
 };
 
 var renderAdvance = function () {
@@ -579,10 +715,22 @@ var renderAdvance = function () {
 	ctx.font = "4px";
     ctx.textAlign = "center";
     ctx.textBaseline = "bottom";
-    ctx.fillStyle = "#3f3";
-	ctx.fillText("SIGNAL LOST. BOYS RESCUED: " + ship.rescues, canvas.width/2, canvas.height/2);
-	ctx.fillText("JUMP TO NEXT SECTOR IN " + Math.ceil(advanceTimer), canvas.width/2, canvas.height/2 + 14);
+    ctx.fillStyle = "#3f3";    
+	ctx.fillText("SIGNAL LOST. BOYS PICKED UP: " + boysThisSector, canvas.width/2, canvas.height/2 - 12);
+	ctx.fillText("TOTAL BOYS: "  + ship.rescues, canvas.width/2, canvas.height/2);
+	ctx.fillText("JUMP TO NEXT SECTOR IN: " + Math.ceil(advanceTimer), canvas.width/2, canvas.height/2 + 12);
 };
+
+var renderPregame = function () {
+		
+	ctx.font = "4px";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    ctx.fillStyle = "#3f3";
+	ctx.fillText("ARRIVED IN SECTOR: " + currentSector, canvas.width/2, canvas.height/2 - 8);
+	ctx.fillText("BOYS DETECTED. LET'S GET 'EM.", canvas.width/2, canvas.height/2 + 8);
+};
+
 
 // The main game loop
 var main = function () {
@@ -605,7 +753,6 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 // Let's play this game!
 var then = Date.now();
-//reset();
 
 // Prevent scrolling when touching the canvas
 document.body.addEventListener("touchstart", function (e) {
@@ -624,12 +771,12 @@ document.body.addEventListener("touchmove", function (e) {
 	}
 }, false);
 
+
+//RUNGAME
 main();
 
 
 //UTILITY FUNCTIONS
-
-
 
 function drawImageCenter(image, x, y, cx, cy, scale, rotation){
     ctx.setTransform(scale, 0, 0, scale, x, y); // sets scale and origin
