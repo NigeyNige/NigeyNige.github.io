@@ -18,14 +18,16 @@
 
     </head>
     
-    <body>
+    <body style="
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    position: fixed;"> <!-- this css prevents scrolling -->
         
         <div class="tileWrapper">
 
             <div class="gameWrapper main">
                 <div class="breadcrumb"><a href="/">Home</a> > <a href="/games">Games</a> > Picking up Boys</div>
-                
-                <a href="../"><h2>Games</h2></a>
             </div>
             
             <div class="gameWrapper contrast">
@@ -38,19 +40,6 @@
 				<h5 id="HSDcatcher">Loading highscore from cookie...</h5>
             </div>
             
-			<!-- MAILING LIST TILE -->
-            
-            <div class="gameWrapper main">
-                <form style="text-align:center;" action="https://tinyletter.com/niall-slater" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/niall-slater', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
-                    <p><label for="tlemail">Want an email when I've got a new game out?</label></p>
-                    <p><label for="tlemail">Enter email address:</label></p>
-                    <p><input type="text" style="width:200px" name="email" id="tlemail" /></p>
-                    <input type="hidden" value="1" name="embed"/>
-                    <input type="submit" value="Subscribe" />
-                </form>
-     
-                 
-            </div>
 
         </div>
         

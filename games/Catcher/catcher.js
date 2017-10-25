@@ -4,9 +4,6 @@ var ctx = canvas.getContext("2d");
 var debugText = "";
 
 // Prevent scrolling when touching the canvas
-$(canvas).on("touchmove", function (e) {
-    e.preventDefault();
-}, false);
 
 
 var style = window.getComputedStyle(canvas);
