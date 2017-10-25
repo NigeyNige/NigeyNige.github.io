@@ -7,7 +7,6 @@ var debugText = "";
 document.body.addEventListener("touchstart", function (e) {
 	if (e.target == canvas) {
 		e.preventDefault();
-        debugText = "yep it's canvas";
 	}
 }, false);
 document.body.addEventListener("touchend", function (e) {
@@ -672,7 +671,8 @@ var render = function () {
 			break;
 	 }
 	
-	ctx.fillText("debug: " + debugText, canvas.width/2 -12, canvas.height - 14);
+    if (debug)
+	   ctx.fillText("debug: " + debugText, canvas.width/2 -12, canvas.height - 14);
 };
 
 var renderMenu = function () {
