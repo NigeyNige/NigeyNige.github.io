@@ -3,6 +3,24 @@ var ctx = canvas.getContext("2d");
 
 var debugText = "";
 
+// Prevent scrolling when touching the canvas
+document.body.addEventListener("touchstart", function (e) {
+    debugText = e.target;
+	if (e.target == canvas) {
+        debugText = "yep it's canvas";
+		e.preventDefault();
+	}
+}, false);
+document.body.addEventListener("touchend", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
+document.body.addEventListener("touchmove", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
 
 var style = window.getComputedStyle(canvas);
 var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
