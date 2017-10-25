@@ -1,6 +1,30 @@
 var canvas = document.getElementById("Canvas_Catcher");
 var ctx = canvas.getContext("2d");
 
+
+
+// Prevent scrolling when touching the canvas
+document.body.addEventListener("touchstart", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
+document.body.addEventListener("touchend", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
+document.body.addEventListener("touchmove", function (e) {
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
+}, false);
+
+
+
+
+
+
 var style = window.getComputedStyle(canvas);
 var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
 
@@ -665,7 +689,7 @@ var renderMenu = function () {
 
 var renderPlay = function () {
 	
-	ctx.font = "4px";
+	ctx.font = "17px sm";
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.fillStyle = "#fff";
@@ -695,7 +719,7 @@ var renderEnd = function () {
     if (boysThisSector > 9)
         judgeText = "YOU BROUGHT ALL THE BOYS TO THE YARD";
     
-	ctx.font = "4px";
+	ctx.font = "17px sm";
     ctx.textAlign = "center";
     ctx.textBaseline = "bottom";
     ctx.fillStyle = "#f33";
@@ -712,7 +736,7 @@ var renderAdvance = function () {
 	ctx.fillStyle = "rgba(0,0,0,0.6)";
 	ctx.fillRect(0,0,canvas.width,canvas.height);
 	
-	ctx.font = "4px";
+	ctx.font = "17px sm";
     ctx.textAlign = "center";
     ctx.textBaseline = "bottom";
     ctx.fillStyle = "#3f3";    
@@ -723,7 +747,7 @@ var renderAdvance = function () {
 
 var renderPregame = function () {
 		
-	ctx.font = "4px";
+	ctx.font = "17px sm";
     ctx.textAlign = "center";
     ctx.textBaseline = "bottom";
     ctx.fillStyle = "#3f3";
@@ -753,25 +777,6 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 // Let's play this game!
 var then = Date.now();
-
-// Prevent scrolling when touching the canvas
-document.body.addEventListener("touchstart", function (e) {
-	if (e.target == canvas) {
-		e.preventDefault();
-	}
-}, false);
-document.body.addEventListener("touchend", function (e) {
-	if (e.target == canvas) {
-		e.preventDefault();
-	}
-}, false);
-document.body.addEventListener("touchmove", function (e) {
-	if (e.target == canvas) {
-		e.preventDefault();
-	}
-}, false);
-
-
 //RUNGAME
 main();
 

@@ -261,6 +261,10 @@ hr {
     font-family: 'pixeled';
     src: url('../css/font_pixeled.ttf');
 }
+@font-face {
+    font-family: 'sm';
+    src: url('../css/font_sm.ttf');
+}
 
 canvas, img {
     image-rendering: optimizeSpeed;
