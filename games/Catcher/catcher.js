@@ -1,10 +1,11 @@
 var canvas = document.getElementById("Canvas_Catcher");
 var ctx = canvas.getContext("2d");
 
-
+var debugText = "";
 
 // Prevent scrolling when touching the canvas
 document.body.addEventListener("touchstart", function (e) {
+    debugText = e.target;
 	if (e.target == canvas) {
 		e.preventDefault();
 	}
@@ -19,10 +20,6 @@ document.body.addEventListener("touchmove", function (e) {
 		e.preventDefault();
 	}
 }, false);
-
-
-
-
 
 
 var style = window.getComputedStyle(canvas);
@@ -675,7 +672,7 @@ var render = function () {
 			break;
 	 }
 	
-	
+	ctx.fillText("debug: " + debugText, canvas.width/2, canvas.height - 8);
 };
 
 var renderMenu = function () {
