@@ -3,8 +3,6 @@ var ctx = canvas.getContext("2d");
 
 var debugText = "";
 
-// Prevent scrolling when touching the canvas
-
 
 var style = window.getComputedStyle(canvas);
 var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
@@ -21,7 +19,7 @@ var gameStartTimer = 0;
 
 var currentSector = "ZESTLIFE";
 
-var sectorNames = ["ZESTLIFE", "JOYZONE", "FUNDIRECTION", "BACKSTREETLADS", "VSYNC", "JONASCOUSINS", "BOYZ-2-BOYZ"];
+var sectorNames = ["ZESTLIFE", "JOYZONE", "FUNDIRECTION", "BACKSTREETLADS", "V*SYNC", "JONASCOUSINS", "BOYZ-2-BOYZ"];
 var sectorNumbers = ["16B", "12X", "19JO", "1D", "8BD", "69LOL", "420", "60HZ", "404", "123", "666"];
 
 var boysThisSector = 0;
@@ -329,6 +327,7 @@ canvas.addEventListener("touchmove", function (e) {
   canvas.dispatchEvent(mouseEvent);
 }, false);
 
+
 // Get the position of a touch relative to the canvas
 function getTouchPos(canvasDom, touchEvent) {
   var rect = canvasDom.getBoundingClientRect();
@@ -525,8 +524,9 @@ var updateEnd = function(modifier) {
 
 var updateAdvance = function(modifier) {
 	
-	if (advanceTimer > 0)
+	if (advanceTimer > 0) {
 		advanceTimer -= modifier;
+    }
 	else {
 		advanceDifficulty();
 	}
@@ -535,8 +535,9 @@ var updateAdvance = function(modifier) {
 
 var updatePregame = function(modifier) {
 	
-	if (gameStartTimer > 0)
-		gameStartTimer -= modifier;
+	if (gameStartTimer > 0) {
+        gameStartTimer -= modifier;
+    }
 	else {
         state = states.play;
 	}
@@ -656,8 +657,9 @@ var render = function () {
 			break;
 	 }
 	
-    if (debug)
+    if (debug) {
 	   ctx.fillText("debug: " + debugText, canvas.width/2 -12, canvas.height - 14);
+    }
 };
 
 var renderMenu = function () {
