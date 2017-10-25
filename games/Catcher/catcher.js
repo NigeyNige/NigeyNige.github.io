@@ -3,25 +3,6 @@ var ctx = canvas.getContext("2d");
 
 var debugText = "";
 
-// Prevent scrolling when touching the canvas
-document.body.addEventListener("touchstart", function (e) {
-    debugText = e.target;
-	if (e.target == canvas) {
-        debugText = "yep it's canvas";
-		e.preventDefault();
-	}
-}, false);
-document.body.addEventListener("touchend", function (e) {
-	if (e.target == canvas) {
-		e.preventDefault();
-	}
-}, false);
-document.body.addEventListener("touchmove", function (e) {
-	if (e.target == canvas) {
-		e.preventDefault();
-	}
-}, false);
-
 var style = window.getComputedStyle(canvas);
 var canvasScale = parseInt(style.getPropertyValue("width")) / 256;
 
@@ -302,15 +283,18 @@ addEventListener("keyup", function (e) {
 var pressing = false;
 var mousePos = { x:0, y:0 };
 var lastPos = mousePos;
+
 canvas.addEventListener("mousedown", function (e) {
         pressing = true;
-  lastPos = getMousePos(canvas, e);
+        lastPos = getMousePos(canvas, e);
 }, false);
+
 canvas.addEventListener("mouseup", function (e) {
-  pressing = false;
+        pressing = false;
 }, false);
+
 canvas.addEventListener("mousemove", function (e) {
-  mousePos = getMousePos(canvas, e);
+        mousePos = getMousePos(canvas, e);
 }, false);
 
 // Get the position of the mouse relative to the canvas
@@ -322,7 +306,7 @@ function getMousePos(canvasDom, mouseEvent) {
   };
 }
 
-//mouse listener
+//touch listener
 canvas.addEventListener("touchstart", function (e) {
         mousePos = getTouchPos(canvas, e);
   var touch = e.touches[0];
@@ -342,6 +326,9 @@ canvas.addEventListener("touchmove", function (e) {
     clientX: touch.clientX,
     clientY: touch.clientY
   });
+	if (e.target == canvas) {
+		e.preventDefault();
+	}
   canvas.dispatchEvent(mouseEvent);
 }, false);
 
