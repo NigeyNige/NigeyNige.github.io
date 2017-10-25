@@ -5,10 +5,9 @@ var debugText = "";
 
 // Prevent scrolling when touching the canvas
 document.body.addEventListener("touchstart", function (e) {
-    debugText = e.target;
 	if (e.target == canvas) {
-        debugText = "yep it's canvas";
 		e.preventDefault();
+        debugText = "yep it's canvas";
 	}
 }, false);
 document.body.addEventListener("touchend", function (e) {
