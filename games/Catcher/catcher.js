@@ -70,6 +70,15 @@ rock2Image.onload = function ()
 };
 rock2Image.src = "img_rock2.png";
 
+var rockNeonReady = false;
+var rockNeonImage = new Image();
+rockNeonImage.onload = function ()
+{
+	rockNeonReady = true;
+};
+rockNeonImage.src = "img_rockNeon.png";
+
+
 
 //Ship Image
 var ship0Ready = false;
@@ -148,6 +157,8 @@ var num_Asteroids = 10;
 var asteroids = [num_Asteroids];
 var asteroid_Interval = 50;
 
+var asteroidsNeon = [];
+
 	
 if (debug) {
     startingDifficulty = 15;
@@ -166,6 +177,19 @@ function Asteroid()
 	this.spin = (Math.random() - 0.5) * 20;
 	this.rotation = ToRadians((Math.random() * 360));
 }
+
+var timerNeon;
+
+function AsteroidNeon()
+{
+	this.sprite = rockNeonImage;
+    this.width = rockNeonImage.width;
+    this.height = rockNeonImage.height;
+    this.x = 50 + (Math.random() * (canvas.width/2));
+    this.y = -16;
+    this.speed = 32 + ((Math.random()-0.5) * 30);
+}
+
 
 function getRandomRockImage() {
 	var result = Math.random();
@@ -197,6 +221,7 @@ function Boy(x_modifier)
 for (i = 0; i < num_Asteroids; i++) {
 	asteroids[i] = new Asteroid();
 }
+timerNeon = Math.random()*10 + 5;
 
 // Spawn boys
 for (i = 0; i < num_Boys; i++) {
@@ -227,7 +252,8 @@ var reset = function () {
 	for (i = 0; i < num_Boys; i++) {
 		boys[i] = new Boy(boy_Interval * i + Math.random() * 100);
 	}
-	
+	asteroidsNeon = [];
+    
 	ship.rescues = 0;
 	ship.losses = 0;
 	ship.x = 5;
@@ -257,6 +283,8 @@ var advanceDifficulty = function () {
 	difficulty = currentLevelDifficulty;
 	state = states.pregame;
     gameStartTimer = 2;
+    
+    timerNeon = Math.random()*10 + 5;
 };
 
 
@@ -462,6 +490,45 @@ var updatePlay = function(modifier) {
             }
         }
 	}
+    
+    
+    //Spawn neon rocks every so often)
+    
+    for (i = 0; i < asteroidsNeon.length; i++) {
+        asteroidsNeon[i].x -= modifier * 2 * difficulty;
+        asteroidsNeon[i].y += modifier * 82 * difficulty;
+        
+        if (!debug) {
+            if (Math.abs(asteroidsNeon[i].x - ship.x) < 12 && Math.abs(asteroidsNeon[i].y - ship.y) < 12) {
+                //HIT
+                resetTimer = 3;
+
+                if (getCookie("highScore_catcher") != null) {
+                    if (ship.rescues > parseInt(getCookie("highScore_catcher"))) {
+                        document.cookie = "highScore_catcher=" + ship.rescues + ";expires=Wed, 1 Jan 2031 12:00:00 UTC";
+
+                        //Updating the highscore live as below makes the game crash - getelementbyId returns null, probably because the element doesn't exist?
+
+                        //var holder = document.getElementById("HSDcatcher");
+                        //holder.textContent = highscore + " Boys Rescued";
+                    }
+                }
+
+                state = states.end;
+            }
+        }
+    }
+    
+    if (timerNeon > 0) {
+        timerNeon -= modifier;
+    }
+    else  {
+        
+        //Spawn neonrock!
+	    asteroidsNeon[asteroidsNeon.length] = new AsteroidNeon();
+        
+        timerNeon = ((Math.random()*10)/difficulty) + 5;
+    }
 	
 	//UPDATE BOYS
 	
@@ -637,6 +704,12 @@ var render = function () {
 	if (rockReady) {
 		for (i = 0; i < asteroids.length; i++) {
 			drawImageCenter(asteroids[i].sprite, asteroids[i].x, asteroids[i].y, 4, 4, 1, asteroids[i].rotation);
+		}
+	}
+	
+	if (rockNeonReady) {
+		for (i = 0; i < asteroidsNeon.length; i++) {
+			drawImageCenter(asteroidsNeon[i].sprite, asteroidsNeon[i].x, asteroidsNeon[i].y, 4, 4, 1);
 		}
 	}
 	
