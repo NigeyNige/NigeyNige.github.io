@@ -221,7 +221,7 @@ function Boy(x_modifier)
 for (i = 0; i < num_Asteroids; i++) {
 	asteroids[i] = new Asteroid();
 }
-timerNeon = Math.random()*10 + 5;
+timerNeon = 1;// Math.random()*10 + 5;
 
 // Spawn boys
 for (i = 0; i < num_Boys; i++) {
@@ -495,8 +495,8 @@ var updatePlay = function(modifier) {
     //Spawn neon rocks every so often)
     
     for (i = 0; i < asteroidsNeon.length; i++) {
-        asteroidsNeon[i].x -= modifier * 2 * difficulty;
-        asteroidsNeon[i].y += modifier * 82 * difficulty;
+        asteroidsNeon[i].x -= modifier * 124;
+        asteroidsNeon[i].y += modifier * 124 * difficulty;
         
         if (!debug) {
             if (Math.abs(asteroidsNeon[i].x - ship.x) < 12 && Math.abs(asteroidsNeon[i].y - ship.y) < 12) {
