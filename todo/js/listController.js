@@ -3,6 +3,8 @@ var listObject = document.getElementById('mainList');
 
 var cookieName = "todolistcookie";
 
+var addingItem = false;
+
 $(document).ready(function () {
     document.cookie = "";
     //Load existing todolist from cookie
@@ -16,25 +18,21 @@ $(document).ready(function () {
     else {
         var newList = [];
         for (i = 0; i < listItems.length; i++) {
-            newList.push(addLoadedItemToList(listItems[i].title, listItems[i].desc, listItems[i].complete));
+            newList.push(addLoadedItemToList(listItems[i].title, listItems[i].desc, listItems[i].complete, i));
         }
     }
     
-    //alert(document.cookie);
-    
-    //TODO: Reloading the page (so, saving or loading or both) causes editing of the array to not work.
-    //      This means there's some problem in the saving or loading, maybe the data-id hack, which breaks
-    //      ticking and deleting of todolist items.
-    
-    
-    //DEBUG: use this code to clear the cookie.
-    listItems = [];
-    saveListToCookie();
+    //TODO: there's a problem where data-id is often one higher than it should be. Ctrl+F '-1' to find and fix once problem is resolved.
     
 });
 
 
 function addItemToList() {
+    
+    if (addingItem)
+        return;
+    else
+        addingItem = true;
     
     var itemToAdd = document.createElement("DIV");
     
@@ -85,7 +83,7 @@ function addItemToList() {
 	setTimeout(function() { itemToAdd.style.height = "50px";}, 1)
 }
 
-function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete) {
+function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete, arrayPosition) {
     
     var itemToAdd = document.createElement("DIV");
     
@@ -108,7 +106,7 @@ function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete) {
         childBox.setAttribute("src", "./images/ui_boxTicked.png");
     }
     
-    childConfirm.setAttribute("onclick", "deleteItem(this.parentElement)");
+    childConfirm.setAttribute("onclick", "deleteItem(this)");
     
 	childConfirm.style.background = "url(./images/ui_cross.png)";
 	childConfirm.style.backgroundSize = "contain";
@@ -117,7 +115,7 @@ function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete) {
     childDesc.textContent = loadedDesc;
     
     //Give the HTML element an ID so we can look it up in the array later
-    itemToAdd.setAttribute("data-id", listItems.length);
+    itemToAdd.setAttribute("data-id", arrayPosition);
     
     itemToAdd.appendChild(childBox);
     itemToAdd.appendChild(childTitle);
@@ -146,13 +144,19 @@ function tickItem(item) {
     
     item.childNodes[0].src=('./images/ui_boxTicked.png');
     
-    listItems[parseInt(item.getAttribute("data-id"))].complete = true;
+    var itemIndex = parseInt(item.getAttribute("data-id"));
+    
+    console.log("item index is " + itemIndex + " and object at index is " + listItems[itemIndex]);
+    
+    listItems[itemIndex].complete = true;
     saveListToCookie();
 }
 
 function confirmItem(item) {
     //User wants to confirm the creation of a new task.
     //Convert the input fields to text fields and change the confirm button to a delete button.
+    
+    addingItem = false;
     
     var holder = item.parentElement;
     
@@ -169,7 +173,7 @@ function confirmItem(item) {
     holder.children[1].replaceWith(newTitle);
     holder.children[2].replaceWith(newDesc);
     
-    item.setAttribute("onclick", "deleteItem(this.parentElement)");
+    item.setAttribute("onclick", "deleteItem(this)");
 	item.style.background = "url(./images/ui_cross.png)";
 	item.style.backgroundSize = "contain";
     
@@ -186,13 +190,34 @@ function confirmItem(item) {
 
 function deleteItem(item) {
     
-    item.style.display = "none";    
-    var index = parseInt(item.getAttribute("data-id"));        
+    if (addingItem)
+        return;
+    
+    var index = parseInt(item.getAttribute("data-id"));
+    
+    item.parentElement.style.display = "none";
     listItems.splice(index, 1);
+    
+    //Starting from the item that replaced the item we removed, subtract one from every larger ID.
+    //This shifts all the IDs down to make up for the missing one.
+    
+    for (i = index; i < listItems.length-1; i++) {
+        
+        console.log("id thing is " + listItems[i].element);
+        
+        //This line crashes sometimes if the item being deleted is at position 0 AND the list has more than 2 items in. WHY?
+        //Uncaught TypeError: listItems[i].element.getAttribute is not a function
+        var oldID = parseInt(listItems[i].element.getAttribute("data-id"));
+        
+        listItems[i].element.setAttribute("data-id", "" + oldID-1);
+    }
+        
+        
 	saveListToCookie();
 }
 
 function loadListFromCookie() {
+    
     var savedList = null;
     
     savedList = getCookie('todo');
@@ -219,10 +244,9 @@ function saveListToCookie() {
         so that it corresponds to their position in the array.
     */
     
-    
     for (i = 0; i < listItems.length; i++) {
-        //alert("id is " + listItems[i].element.getAttribute("data-id"));
-        listItems[i].element.setAttribute("data-id", "" + i);
+        //console.log("item " + i + " is " + listItems[i].element.ty);
+        //listItems[i].element.setAttribute("data-id", i);
     }
     
     var json_str = JSON.stringify(listItems);
@@ -258,4 +282,9 @@ function getCookie(cookieName) {
     }
     
     return null;
+}
+
+function clearCookie() {
+    listItems = [];
+    saveListToCookie();
 }
