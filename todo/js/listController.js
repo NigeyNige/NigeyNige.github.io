@@ -50,7 +50,7 @@ function addItemToList() {
     childDesc.classList.add("itemDesc");
     childConfirm.classList.add("itemConfirm");
     
-    childBox.setAttribute("src", "../images/ui_box.png");
+    childBox.setAttribute("src", "./images/ui_box.png");
     childConfirm.setAttribute("onclick", "confirmItem(this)");
     
     //Give the HTML element an ID so we can look it up in the array later
@@ -102,15 +102,15 @@ function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete) {
     childConfirm.classList.add("itemConfirm");
     
     if (!loadedComplete) {
-        childBox.setAttribute("src", "../images/ui_box.png");
+        childBox.setAttribute("src", "./images/ui_box.png");
         childBox.setAttribute("onclick", "tickItem(this.parentElement)");
     } else {
-        childBox.setAttribute("src", "../images/ui_boxTicked.png");
+        childBox.setAttribute("src", "./images/ui_boxTicked.png");
     }
     
     childConfirm.setAttribute("onclick", "deleteItem(this.parentElement)");
     
-	childConfirm.style.background = "url(../images/ui_cross.png)";
+	childConfirm.style.background = "url(./images/ui_cross.png)";
 	childConfirm.style.backgroundSize = "contain";
     
     childTitle.textContent = loadedTitle;
@@ -144,7 +144,7 @@ function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete) {
 
 function tickItem(item) {
     
-    item.childNodes[0].src=('../images/ui_boxTicked.png');
+    item.childNodes[0].src=('./images/ui_boxTicked.png');
     
     listItems[parseInt(item.getAttribute("data-id"))].complete = true;
     saveListToCookie();
@@ -170,7 +170,7 @@ function confirmItem(item) {
     holder.children[2].replaceWith(newDesc);
     
     item.setAttribute("onclick", "deleteItem(this.parentElement)");
-	item.style.background = "url(../images/ui_cross.png)";
+	item.style.background = "url(./images/ui_cross.png)";
 	item.style.backgroundSize = "contain";
     
     //Now find the associated item in the array using the attribute we set earlier.
