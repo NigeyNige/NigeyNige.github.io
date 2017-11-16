@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>To-Do List App</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <meta name="description" content="A handy little page to help keep track of your daily tasks."/>
+        <meta name="keywords" content="Niall,Slater,todo list">
+        <meta name="author" content="Niall Slater">
+        <meta property="og:image" content="images/author_pic.jpg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
+		
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    </head>
+    
+    <body>
+        
+        <button class="addItemButton" onclick="addItemToList()">+ New Task</button>
+        <div class="listObject" id="mainList">
+            <h1>To-Do</h1>
+        </div>
+        
+        <!--
+			SCRIPTS
+		-->
+        
+        <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+        <script src='js/listController.js'></script>
+		
+    </body>
+</html>

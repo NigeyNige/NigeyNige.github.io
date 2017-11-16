@@ -1,0 +1,86 @@
+/* BEGINNING OF CODE, IF THIS APPEARS HALFWAY DOWN THE DOCUMENT THEN GITHUB HAS BALLSED IT UP AGAIN */
+
+/* Colours */
+
+body {
+    background-color: hsl(189, 76%, 88%);
+    font-family: 'Montserrat', 'sans-serif';
+}
+
+h1 {
+    margin-left: 12px;
+}
+
+.listObject {
+	margin: 50px auto;
+	border-radius: 4px;
+	padding: 12px;
+    width: 50%;
+	background-color: aliceblue;
+	transition: 0.2s ease;
+}
+
+.listItem {
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 12px;
+	border: 1px solid #ddf;
+    display: flex;
+	justify-content: flex-start;
+	flex-flow: row nowrap;
+    overflow: hidden;
+	margin: auto;
+}
+
+.itemBox {
+    width: 32px;
+    height: 32px;
+	margin: 4px;
+}
+.itemTitle {
+    color: #333;
+    font-weight: 800;
+	margin: 12px;
+}
+
+.itemDesc {
+    color: black;
+	margin: 12px;
+}
+.itemConfirm {
+    width: 32px;
+    height: 32px;
+	margin: 4px;
+	margin-left: auto;
+}
+
+.addItemButton {
+    font-size: 1.8em;
+    margin-left: 15px;
+    border-radius: 4px;
+    background-color: aliceblue;
+    color: #333;
+    cursor: pointer;
+}
+
+
+/* MEDIA QUERIES */
+
+/*For mobile*/
+
+@media only screen and (max-width: 1024px) {
+	
+	.listObject {
+		width: 95%;
+		padding: 4px;
+		margin: 12px auto;
+        font-size: 1.2em;
+	}
+
+    .listItem {
+        flex-flow: row;
+        padding: 8px 4px 32px 4px;
+        margin: 4px;
+    }
+
+}
