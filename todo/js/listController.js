@@ -108,7 +108,7 @@ function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete, arrayPosit
         childBox.setAttribute("src", "./images/ui_boxTicked.png");
     }
     
-    childConfirm.setAttribute("onclick", "deleteItem(this)");
+    childConfirm.setAttribute("onclick", "deleteItem(this.parentElement)");
     
 	childConfirm.style.background = "url(./images/ui_cross.png)";
 	childConfirm.style.backgroundSize = "contain";
@@ -175,7 +175,7 @@ function confirmItem(item) {
     holder.children[1].replaceWith(newTitle);
     holder.children[2].replaceWith(newDesc);
     
-    item.setAttribute("onclick", "deleteItem(this)");
+    item.setAttribute("onclick", "deleteItem(this.parentElement)");
 	item.style.background = "url(./images/ui_cross.png)";
 	item.style.backgroundSize = "contain";
     
@@ -198,15 +198,16 @@ function deleteItem(item) {
     
     var index = parseInt(item.getAttribute("data-id"));
     
-    item.parentElement.style.display = "none";
+    console.log ("deleting " + item + " at index " + index);
+    
+    item.style.display = "none";
     listItems.splice(index, 1);
     
     //Starting from the item that replaced the item we removed, subtract one from every larger ID.
     //This shifts all the IDs down to make up for the missing one.
     
-    for (i = index; i < listItems.length-1; i++) {
-        
-        console.log("id thing is " + listItems[i].element);
+    
+    for (i = index; i < listItems.length; i++) {
         
         //This line crashes sometimes if the item being deleted is at position 0 AND the list has more than 2 items in. WHY?
         //Uncaught TypeError: listItems[i].element.getAttribute is not a function
