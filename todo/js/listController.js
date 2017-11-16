@@ -81,6 +81,8 @@ function addItemToList() {
     
     itemToAdd.style.height = "1px";
 	setTimeout(function() { itemToAdd.style.height = "50px";}, 1)
+    
+    childTitle.focus();
 }
 
 function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete, arrayPosition) {
@@ -186,6 +188,7 @@ function confirmItem(item) {
     
 	saveListToCookie();
     
+    document.getElementById("button_AddItem").focus();
 }
 
 function deleteItem(item) {

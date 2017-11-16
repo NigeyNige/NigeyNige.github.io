@@ -32,6 +32,16 @@ h1 {
 	margin: auto;
 }
 
+.listItem input {
+    /*
+    max-width: 30%;
+    margin-left: 1px;
+    margin-right: 1px;
+    */
+    
+    width: 20vw;
+}
+
 .itemBox {
     width: 32px;
     height: 32px;
