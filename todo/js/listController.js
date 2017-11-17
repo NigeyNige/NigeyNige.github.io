@@ -22,8 +22,6 @@ $(document).ready(function () {
         }
     }
     
-    //TODO: there's a problem where data-id is often one higher than it should be. Ctrl+F '-1' to find and fix once problem is resolved.
-    
 });
 
 
