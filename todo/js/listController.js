@@ -148,13 +148,12 @@ function tickItem(item) {
     
     var itemIndex = parseInt(item.getAttribute("data-id"));
     
-    console.log("item index is " + itemIndex + " and object at index is " + listItems[itemIndex]);
-    
     listItems[itemIndex].complete = true;
     saveListToCookie();
 }
 
 function confirmItem(item) {
+	
     //User wants to confirm the creation of a new task.
     //Convert the input fields to text fields and change the confirm button to a delete button.
     
@@ -198,25 +197,22 @@ function deleteItem(item) {
     
     var index = parseInt(item.getAttribute("data-id"));
     
-    console.log ("deleting " + item + " at index " + index);
-    
     item.style.display = "none";
     listItems.splice(index, 1);
     
-    //Starting from the item that replaced the item we removed, subtract one from every larger ID.
-    //This shifts all the IDs down to make up for the missing one.
-    
-    
-    for (i = index; i < listItems.length; i++) {
-        
-        //This line crashes sometimes if the item being deleted is at position 0 AND the list has more than 2 items in. WHY?
-        //Uncaught TypeError: listItems[i].element.getAttribute is not a function
-        var oldID = parseInt(listItems[i].element.getAttribute("data-id"));
-        
-        listItems[i].element.setAttribute("data-id", "" + oldID-1);
+    //For some reason we have to re-assign the HTML elements here - not sure when they're getting dropped but they are!
+	
+    for (i = 0; i < listItems.length; i++) {
+        listItems[i].element = document.getElementsByClassName("listItem")[i];
+		console.log("element is " + listItems[i].element.getAttribute("data-id"));
     }
-        
-        
+	
+    //Shift all the IDs down by 1 to make up for the missing one.
+	
+    for (i = index; i < listItems.length; i++) {
+        listItems[i].element.setAttribute("data-id", "" + index);
+    }
+
 	saveListToCookie();
 }
 
@@ -240,19 +236,7 @@ function loadListFromCookie() {
 }
 
 function saveListToCookie() {
-    
-    //alert("created cookie: " + document.cookie);
-    
-    /*
-        Keep track of the DOM elements in the array by reassigning every element's 'data-id' attribute
-        so that it corresponds to their position in the array.
-    */
-    
-    for (i = 0; i < listItems.length; i++) {
-        //console.log("item " + i + " is " + listItems[i].element.ty);
-        //listItems[i].element.setAttribute("data-id", i);
-    }
-    
+	
     var json_str = JSON.stringify(listItems);
     createCookie('todo', json_str, 7);
 }

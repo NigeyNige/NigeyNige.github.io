@@ -30,6 +30,7 @@ h1 {
 	flex-flow: row nowrap;
     overflow: hidden;
 	margin: auto;
+	transition: .2s ease;
 }
 
 .listItem input {
