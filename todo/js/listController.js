@@ -3,10 +3,16 @@ var listObject = document.getElementById('mainList');
 
 var cookieName = "todolistcookie";
 
+//Is the user currently adding an item to the list?
 var addingItem = false;
 
+//How many little animated bees have spawned?
+var beeCount = 0;
+
 $(document).ready(function () {
+    
     document.cookie = "";
+    
     //Load existing todolist from cookie
     listItems = loadListFromCookie();
     
@@ -14,6 +20,7 @@ $(document).ready(function () {
     if (listItems == null) {
         listItems = [];
     }
+    
     //Otherwise, use the loaded array to generate a list
     else {
         var newList = [];
@@ -148,6 +155,8 @@ function tickItem(item) {
     
     listItems[itemIndex].complete = true;
     saveListToCookie();
+    
+    spawnBee();
 }
 
 function confirmItem(item) {
@@ -199,10 +208,12 @@ function deleteItem(item) {
     listItems.splice(index, 1);
     
     //For some reason we have to re-assign the HTML elements here - not sure when they're getting dropped but they are!
+    
+    //Bug: if you delete an item the last item takes on the wrong data-ID - it's one too high.
 	
     for (i = 0; i < listItems.length; i++) {
         listItems[i].element = document.getElementsByClassName("listItem")[i];
-		console.log("element is " + listItems[i].element.getAttribute("data-id"));
+		//console.log("element is " + listItems[i].element.getAttribute("data-id"));
     }
 	
     //Shift all the IDs down by 1 to make up for the missing one.
@@ -273,4 +284,31 @@ function getCookie(cookieName) {
 function clearCookie() {
     listItems = [];
     saveListToCookie();
+}
+
+function spawnBee() {
+    
+    //Give the bee an ID so we can have multiple bees flying at once.
+    beeCount++;
+    var beeID = beeCount;
+    
+    var beeElement = document.createElement("IMG");
+    beeElement.innerHTML = "<img />";
+    beeElement.src = "images/bee.png";
+    beeElement.classList.add("animated");
+    beeElement.classList.add("pixelatedImage");
+    beeElement.id = "beeSpawn" + beeID;
+    
+    var modifier = Math.round(Math.random() * 20);
+    
+    beeElement.style.top = "" + 5 + modifier + "px";
+    beeElement.style.width = "32px";
+    beeElement.style.height = "32px";
+    beeElement.style.right = "-100px";
+    
+    $("#mainList").prepend(beeElement);
+    
+    var width = "+=" + $(document).width();
+    
+    $("#beeSpawn" + beeID).animate({right: width}, 2000, "linear", function() {beeElement.parentNode.removeChild(beeElement);});
 }

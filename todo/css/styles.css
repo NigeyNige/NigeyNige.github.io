@@ -3,6 +3,11 @@
 body {
     background-color: hsl(189, 76%, 88%);
     font-family: 'Montserrat', 'sans-serif';
+    
+    /* This is so that elements appearing offscreen (like the bees which slide in)
+    don't trigger the horizontal scrollbar.
+    */
+    overflow-x: hidden;
 }
 
 h1 {
@@ -75,7 +80,6 @@ h1 {
 	right:24px;
 }
 
-
 .breadcrumb {
     font-size: 1em;
 }
@@ -85,6 +89,16 @@ h1 {
 	font-weight: 600;
 }
 
+.pixelatedImage {
+    image-rendering: pixelated;
+}
+
+.animated {
+    position: absolute;
+    right: -80px;
+    transition: linear;
+    z-index: 99;
+}
 
 /* MEDIA QUERIES */
 
