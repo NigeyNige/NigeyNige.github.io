@@ -108,10 +108,10 @@ function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete, arrayPosit
     
     if (!loadedComplete) {
         childBox.setAttribute("src", "./images/ui_box.png");
-        childBox.setAttribute("onclick", "tickItem(this.parentElement)");
     } else {
         childBox.setAttribute("src", "./images/ui_boxTicked.png");
     }
+	childBox.setAttribute("onclick", "tickItem(this.parentElement)");
     
     childConfirm.setAttribute("onclick", "deleteItem(this.parentElement)");
     
@@ -148,15 +148,32 @@ function addLoadedItemToList(loadedTitle, loadedDesc, loadedComplete, arrayPosit
 }
 
 function tickItem(item) {
-    
-    item.childNodes[0].src=('./images/ui_boxTicked.png');
-    
+	
     var itemIndex = parseInt(item.getAttribute("data-id"));
     
-    listItems[itemIndex].complete = true;
-    saveListToCookie();
-    
-    spawnBee();
+    var isCompleteAlready = listItems[itemIndex].complete;
+	
+	if (isCompleteAlready) {
+		
+		//User has ticked a box that was already ticked. They probably want to revert it.
+		
+		console.log("untick");
+		
+		listItems[itemIndex].complete = false;
+    	item.childNodes[0].src=('./images/ui_box.png');
+    	saveListToCookie();
+		
+	}
+	else {
+		
+		console.log("tick");
+		
+		listItems[itemIndex].complete = true;
+		item.childNodes[0].src=('./images/ui_boxTicked.png');
+		saveListToCookie();
+
+		spawnBee();
+	}
 }
 
 function confirmItem(item) {
@@ -204,22 +221,20 @@ function deleteItem(item) {
     
     var index = parseInt(item.getAttribute("data-id"));
     
-    item.style.display = "none";
+	item.parentElement.removeChild(item);
+	
     listItems.splice(index, 1);
     
     //For some reason we have to re-assign the HTML elements here - not sure when they're getting dropped but they are!
-    
-    //Bug: if you delete an item the last item takes on the wrong data-ID - it's one too high.
 	
     for (i = 0; i < listItems.length; i++) {
         listItems[i].element = document.getElementsByClassName("listItem")[i];
-		//console.log("element is " + listItems[i].element.getAttribute("data-id"));
     }
 	
     //Shift all the IDs down by 1 to make up for the missing one.
 	
     for (i = index; i < listItems.length; i++) {
-        listItems[i].element.setAttribute("data-id", "" + index);
+        listItems[i].element.setAttribute("data-id", i);
     }
 
 	saveListToCookie();
