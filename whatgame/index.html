@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>What Game Should I Play?</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <meta name="description" content="Let the machine tell you what game to play." />
+        <meta name="keywords" content="Niall,Slater,games">
+        <meta name="author" content="Niall Slater">
+        <meta property="og:image" content="../images/author_pic.jpg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
+		
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    </head>
+    
+    <body>
+		
+		
+		<div class="breadcrumb">
+			<a href="../index.html">Home</a> > WhatGame
+        </div>
+		
+		<div class="box">
+			<h1>What Game Should I Play?</h1>
+			<button class="button" onclick="getNewGame()">GIVE ME A GAME</button>
+			<div id="gameResult" class="gameResult">
+				<p id="gameTitle" class="gameTitle" >Click the image to check out the game.</p>
+                <a id="gameLink" target="_blank">
+                    <img id="gameImage" class="gameImage" src="../images/game_pizza.jpg"/>
+                </a>
+				<p id="gameDescription" class="gameDescription">Click the button to get a suggestion.</p>
+			</div>
+		</div>
+
+        <!--
+			SCRIPTS
+		-->
+        
+        <script src='js/whatGame.js'></script>
+		
+        
+    </body>
+</html>
