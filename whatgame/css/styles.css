@@ -64,3 +64,16 @@ body {
 	right: 12px;
 	bottom: 12px;
 }
+
+
+/* MEDIA QUERIES */
+
+/*For mobile*/
+
+@media only screen and (max-width: 1024px) {
+	
+    .box {
+        width: 80%;
+    }
+
+}
