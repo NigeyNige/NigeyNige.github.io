@@ -77,8 +77,8 @@ function getNewGame() {
     //Display the loading gif while the new image is loaded
     hideImage();
     
-    //Sneaky! It doesn't take 300 ms to load but swapping the gif and delaying -feels- faster than displaying nothing for a shorter time
-    var delay = 300;
+    //Sneaky! It doesn't take this long to load but swapping the gif and delaying -feels- faster than displaying nothing for a shorter time
+    var delay = 800;
     
     setTimeout(displayImage, delay);
     setTimeout(gameImage.setAttribute("src", imageSRC), delay);
