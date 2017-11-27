@@ -133,4 +133,3 @@ function showNotification(text, duration) {
 
 function hideNotification() {
     notification.innerHTML = "";
-}
