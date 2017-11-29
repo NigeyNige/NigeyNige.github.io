@@ -13,7 +13,8 @@ elements.push(victimDate);
 var JSONURL = "https://thecountedapi.com/api/counted";
 
 var selector = 0;
-var interval = 1400;
+var interval = 1500;
+var minimumInterval = 100;
 var timer = 0;
 var rawData;
 
@@ -46,4 +47,8 @@ function displayVictim() {
 function tickDisplay() {
     selector = Math.floor(Math.random() * rawData.length);
     setTimeout(displayVictim, interval);
+    
+    if (interval > minimumInterval) {
+        interval -= 25;
+    }
 }
