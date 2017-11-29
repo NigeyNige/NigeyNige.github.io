@@ -9,18 +9,26 @@ $(document).ready(function () {
     var supporterCount = $('#JS_Supporters');
     
     
-    var data = $.getJSON(
-        'http://anyorigin.com/go?url=https%3A//unbound.com/books/the-second-death-of-daedalus-mole/supporters&callback=?', 
+    var attempt = $.getJSON(
+        'https://unbound.com/books/the-second-death-of-daedalus-mole/supporters.hta', 
         function(data){
             $('#dataHolder').html($(data.contents).find("strong").text().substr(33));
             var result = $('#dataHolder').text();
             progress = parseInt(result.substr(0,2));
             supporters = parseInt(result.substr(3));
-   
             percentageTitle.text(progress + "%");
             percentageBar.width(progress + "%");
             supporterCount.text(supporters + " backers");
         });
+    
+    
+    setTimeout(function() {
+        attempt.abort();
+        console.log("Couldn't grab live numbers from Unbound.");
+        percentageTitle.text("87%");
+        percentageBar.width("87%");
+        supporterCount.text("157 backers");
+    }, 2000);
     
 });
 
