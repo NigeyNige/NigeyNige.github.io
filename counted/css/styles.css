@@ -45,18 +45,22 @@ h2 a {
 
 #victimName {
     font-size: 1.3em;
+    opacity: 0;
 }
 
 #victimAge {
     font-size: 1em;
+    opacity: 0;
 }
 
 #victimCause {
     font-size: 1.2em;
+    opacity: 0;
 }
 
 #victimDate {
     font-size: .7em;
+    opacity: 0;
 }
 
 .footer {
