@@ -1,6 +1,6 @@
 var faceURL = "../images/transparentNige.png";
 
-var timer = 6000;
+var timer = 5000;
 
 var nigeImage;
 
@@ -11,14 +11,14 @@ function spawnNige() {
     var img = new Image();
     img.src = faceURL;
     img.style.position = "fixed";
-    img.style.left = "0";
-    img.style.bottom = "-100";
+    img.style.left = "-20px";
+    img.style.bottom = "-200px";
     
     img.onload = function() {
         document.body.appendChild(img);
         $(img).animate({
-            bottom: -40
-        }, 2000, function() {
+            bottom: "-20px"
+        }, 400, function() {
         });
         nigeImage = img;
     
@@ -26,13 +26,13 @@ function spawnNige() {
             href: 'http://unbound.com/books/the-second-death-of-daedalus-mole/',
             target: '_blank'
         }));
-        setTimeout(hideNige, 5000);
+        setTimeout(hideNige, 4000);
     };
 }
 
 function hideNige() {
     $(nigeImage).animate({
-        bottom: -500
-    }, 2000, function() {
+        bottom: "-200px"
+    }, 800, function() {
     });
 }
