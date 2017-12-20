@@ -187,7 +187,7 @@ function AsteroidNeon()
     this.height = rockNeonImage.height;
     this.x = 50 + (Math.random() * (canvas.width/2));
     this.y = -16;
-    this.speed = 32 + ((Math.random()-0.5) * 30);
+    this.speed = 16 + ((Math.random()-0.5) * 30);
 }
 
 
