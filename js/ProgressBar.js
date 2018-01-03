@@ -21,6 +21,10 @@ $(document).ready(function () {
         percentageTitle.text(progress + "%");
         percentageBar.width(progress + "%");
         supporterCount.text(supporters + " backers");
+		
+		if (progress >= 100) {
+			document.getElementById("novelStatus").innerHTML = "Novel status: funded";
+		}
 	});
 	
 });
