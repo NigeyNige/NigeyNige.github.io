@@ -14,7 +14,7 @@ $(document).ready(function () {
         result = result.substr(result.indexOf('%')-3, 7);
         
         progress = parseInt(result.substr(0,3));
-        supporters = parseInt(result.substr(3));
+        supporters = parseInt(result.substr(4));
         
         console.log("String obtained from Unbound is: " + result);
         
@@ -23,7 +23,6 @@ $(document).ready(function () {
         supporterCount.text(supporters + " backers");
 		
 		if (progress >= 100) {
-			console.log("Done it!");
 			document.getElementById("novelStatus").innerHTML = "Novel status: funded";
 		}
 	});
