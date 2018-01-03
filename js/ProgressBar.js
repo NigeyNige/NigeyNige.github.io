@@ -11,7 +11,7 @@ $(document).ready(function () {
 	function(data){
         var result = $(data.contents).find("strong").text();
         
-        result = result.substr(result.indexOf('%')-3, 6);
+        result = result.substr(result.indexOf('%')-3, 7);
         
         progress = parseInt(result.substr(0,3));
         supporters = parseInt(result.substr(3));
