@@ -20,6 +20,8 @@ var ship = {
     sname_Navigator: "Magellan",
     fname_Security: "Danai",
     sname_Security: "Michigan",
+	
+	reachedDestination: false,
     
     //Parse a JSON object to change some ship data.
     effectChange: function(effect) {
@@ -33,15 +35,31 @@ var ship = {
         
         if (effect.resource_fuel != null) {
             ship.fuel += effect.resource_fuel;
+			
+			if (ship.fuel <= 0) {
+				playState.lose();
+			}
         }
         if (effect.resource_crew != null) {
             ship.crew += effect.resource_crew;
+			
+			if (ship.crew <= 0) {
+				playState.lose();
+			}
         }
         if (effect.resource_happiness != null) {
             ship.happiness += effect.resource_happiness;
+			
+			if (ship.happiness <= 0) {
+				playState.lose();
+			}
         }
         if (effect.resource_hull != null) {
             ship.hull += effect.resource_hull;
+			
+			if (ship.hull <= 0) {
+				playState.lose();
+			}
         }
     }
 };
@@ -102,6 +120,10 @@ var playState = {
         groupShip.scale.set(scale);
 		
         this.initUI();
+		
+		if (mapData.systems[mapData.shipPosition].isDestination) {
+			playState.win();
+		}
         
         if (ship.day > 1) {
             this.JSONtest();
@@ -201,17 +223,53 @@ var playState = {
 					
 					var response = "Response not set!";
                     var effect = "Effect not set!";
+					var effectText = "";
 					
 					if (Math.random() < selectedOption.winChance) {
 						//win! :)
 						response = selectedOption.win.response;
 						effect = selectedOption.win.effect;
+						
+						effectText = JSON.stringify(effect);
+						effectText = effectText.substr(effectText.indexOf('_')+1);
+						effectText = effectText.replace('":',": ");
+						effectText = effectText.replace('}',"");
+						
+						if (effectText.includes(',')) {
+							var effectText2 = effectText.substr(effectText.indexOf(',')+1);
+							effectText = effectText.substr(0,effectText.indexOf(','));
+							effectText2 = effectText2.substr(effectText2.indexOf('_')+1);
+							effectText2 = effectText2.replace('":',": ");
+							effectText2 = effectText2.replace('}',"");
+							
+							effectText += "\n" + effectText2;
+						}
+						
+						response += "\n\n" + effectText;
+						
                         ship.effectChange(effect);
 						
 					} else {
 						//fail! :(
 						response = selectedOption.fail.response;
 						effect = selectedOption.fail.effect;
+						
+						effectText = JSON.stringify(effect);
+						effectText = effectText.substr(effectText.indexOf('_')+1);
+						effectText = effectText.replace('":',": ");
+						effectText = effectText.replace('}',"");
+						
+						if (effectText.includes(',')) {
+							var effectText2 = effectText.substr(effectText.indexOf(',')+1);
+							effectText = effectText.substr(0,effectText.indexOf(','));
+							effectText2 = effectText2.substr(effectText2.indexOf('_')+1);
+							effectText2 = effectText2.replace('":',": ");
+							effectText2 = effectText2.replace('}',"");
+							effectText += "\n" + effectText2;
+						}
+						
+						response += "\n\n" + effectText;
+						
                         ship.effectChange(effect);
 					}
 					
@@ -249,9 +307,13 @@ var playState = {
 	/* TESTING FOR THE JSON INTERPRETER */
 	
 	JSONtest: function() {
-		var data_encounters = game.cache.getJSON('data_encounters');
+		
+		data_encounters = game.cache.getJSON('data_encounters');
+		
 		var selector = Math.floor(Math.random() * data_encounters.length);
+		
 		var encounter = data_encounters[selector];
+		
 		console.log("Encounter: " + encounter.name);
 		
 		this.displayMessage(encounter.title, encounter.content, encounter.options);
@@ -292,6 +354,14 @@ var playState = {
         statusPanel.add(new SlickUI.Element.Text(32 * scale, 12 * scale, "Crew complement: " + ship.crew));
         statusPanel.add(new SlickUI.Element.Text(164 * scale, 2 * scale, "Happiness index: " + ship.happiness + "%"));
         statusPanel.add(new SlickUI.Element.Text(164 * scale, 12 * scale, "Hull integrity: " + ship.hull + "%"));
-    }
+    },
+	
+	win: function() {
+		console.log("WIN");
+	},
+	
+	lose: function() {
+		console.log("LOSE");
+	}
 	
 };
