@@ -12,6 +12,7 @@ var ship = {
 	crew: 129,
 	happiness: 100,
 	hull: 100,
+    needsRecharge: false,
     fname_Pilot: "Sasha",
     sname_Pilot: "Walker",
     fname_Engineer: "Frank",
@@ -19,7 +20,7 @@ var ship = {
     fname_Navigator: "Nasir",
     sname_Navigator: "Magellan",
     fname_Security: "Danai",
-    sname_Security: "Michigan",
+    sname_Security: "Michaels",
 	
 	reachedDestination: false,
     
@@ -120,13 +121,33 @@ var playState = {
         groupShip.scale.set(scale);
 		
         this.initUI();
-		
-		if (mapData.systems[mapData.shipPosition].isDestination) {
+
+        var systemObject = mapData.systems[mapData.shipPosition];
+        
+		if (systemObject.isDestination) {
 			playState.win();
 		}
         
+        var currentDanger = undefined;
+        
+		if (systemObject.danger !== null) {
+			currentDanger = systemObject.danger;
+		}
+        
         if (ship.day > 1) {
-            this.JSONtest();
+            
+            //TODO: if we've just landed in a system with a danger, fire a danger event
+            
+            if (ship.needsRecharge) {
+                //The ship just jumped and needs to recharge. Display some system welcome text, and maybe a danger event.
+                if (currentDanger !== undefined) {
+                    this.fireEvent_Danger(currentDanger);
+                }
+                
+            } else {
+                //The ship just spent a night recharging its jump drive. We haven't changed systems - fire a story event.
+                this.fireEvent_Story();
+            }
         }
 	},
 	
@@ -292,7 +313,7 @@ var playState = {
 					panel.destroy();
 					
 					if (!option.final) {
-						//option.final is just a flag to note whether this is the last dialog box.
+						//option.final is just a flag to note whether this is the last dialog box in a sequence.
 						playState.displayMessageNoChoice(messageBox.title, option.response);
 					}
                     
@@ -307,6 +328,26 @@ var playState = {
 	/* TESTING FOR THE JSON INTERPRETER */
 	
 	JSONtest: function() {
+		data_encounters = game.cache.getJSON('data_encounters');
+		console.log(data_encounters);
+	},
+    
+    /* Events loaded from JSON data */
+    
+    fireEvent_Danger: function(danger) {
+        
+		console.log("Firing danger event " + danger);
+        ship.needsRecharge = true;
+        
+        //Danger events are system-dependent, so pull the event from a JSON file,
+        //looking it up by the tag attached to the mapData object. E.g. "danger": "ASTEROIDS" or "danger": "MILITARY"
+        //Actually, thinking about it, the danger events could be procedurally generated while the story events are written.
+        
+        //Danger events, when complete, require you to recharge your jump drive before you can jump again.
+        //Recharging should play a visual effect (like jumping does - or will, rather) and then fire a story event.
+    },
+    
+    fireEvent_Story: function() {
 		
 		data_encounters = game.cache.getJSON('data_encounters');
 		
@@ -314,10 +355,17 @@ var playState = {
 		
 		var encounter = data_encounters[selector];
 		
-		console.log("Encounter: " + encounter.name);
+		console.log("Firing story event: " + encounter.name);
 		
 		this.displayMessage(encounter.title, encounter.content, encounter.options);
-	},
+        
+        //Story events, when complete, allow you to jump to another system.
+    },
+    
+    recharge: function() {
+        ship.needsRecharge = false;
+        playState.fireEvent_Story();
+    },
     
     swapNames: function(text) {
         
@@ -347,11 +395,17 @@ var playState = {
         slickUI.add(statusPanel = new SlickUI.Element.Panel(barX, barY, game.width, game.height));
         
         statusPanel.add(new SlickUI.Element.Text(4 * scale, 2 * scale, "DAY " + ship.day));
+        
         var mapButton = statusPanel.add(new SlickUI.Element.Button(2 * scale, 12 * scale, 24 * scale, 10 * scale));
 		mapButton.add(new SlickUI.Element.Text(0, 0, "Map")).center();
         mapButton.events.onInputUp.add(function () {game.state.start('map');});
+        
+        var rechargeButton = statusPanel.add(new SlickUI.Element.Button(31 * scale, 12 * scale, 84 * scale, 10 * scale));
+		rechargeButton.add(new SlickUI.Element.Text(0, 0, "Recharge Jump Drive")).center();
+        rechargeButton.events.onInputUp.add(this.recharge);
+        
         statusPanel.add(new SlickUI.Element.Text(32 * scale, 2 * scale, "Fuel reserves: " + ship.fuel + " kilotonnes"));
-        statusPanel.add(new SlickUI.Element.Text(32 * scale, 12 * scale, "Crew complement: " + ship.crew));
+        //statusPanel.add(new SlickUI.Element.Text(32 * scale, 12 * scale, "Crew complement: " + ship.crew));
         statusPanel.add(new SlickUI.Element.Text(164 * scale, 2 * scale, "Happiness index: " + ship.happiness + "%"));
         statusPanel.add(new SlickUI.Element.Text(164 * scale, 12 * scale, "Hull integrity: " + ship.hull + "%"));
     },
