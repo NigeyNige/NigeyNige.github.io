@@ -2,6 +2,8 @@
 
 var scale = 3;
 
+var messageActive = false;
+
 //Scenery & Objects
 var ship = {
 	sprite: null,
@@ -65,6 +67,11 @@ var ship = {
     }
 };
 
+var warnings = {
+	sprite_driveCharge: null,
+	sprite_driveReady: null
+};
+
 var bg = {
 	sprite0: null,
 	sprite1: null,
@@ -100,7 +107,8 @@ var playState = {
 		slickUI.load('res/ui/kenney/kenney.json');
 		
 		//Data
-		game.load.json("data_encounters", "res/data/data_encounters.json");
+		game.load.json("data_eventsStory", "res/data/data_eventsStory.json");
+		game.load.json("data_eventsDanger", "res/data/data_eventsDanger.json");
 	},
 
 	create: function () {
@@ -109,11 +117,24 @@ var playState = {
 		bg.sprite0 = groupBackground.create(bg.posX, 0, 'bg_starField');
 		bg.sprite1 = groupBackground.create(bg.posX + bg.sprite0.width, 0, 'bg_starField');
 		
-        ship.sprite = groupShip.create(ship.posX, ship.posY, 'img_ship');
+        ship.sprite = groupShip.create(ship.posX, ship.posY, 'anim_ship');
+        var animIdle = ship.sprite.animations.add('anim_ship_idle', [0,1,2,3,4,5,6,7]);
+        var animJump = ship.sprite.animations.add('anim_ship_jump', [8,9,10,11]);
         
-		for (i = 0; i < 5; i++) {
-			var newPlanet;
-			newPlanet = groupPlanets.create(15 + i*50, Math.random() * 150, 'img_planet');
+        ship.sprite.animations.play('anim_ship_idle', 8, true);
+        
+        animJump.onComplete.add(playState.goToMap, this);
+        
+        
+		//Warning lights on HUD
+		warnings.sprite_driveCharge = game.add.sprite(14, 14, 'hud_driveCharge');
+		warnings.sprite_driveCharge.visible = false;
+		warnings.sprite_driveReady = game.add.sprite(14, 14, 'hud_driveReady');
+		warnings.sprite_driveReady.visible = false;
+		
+        
+		for (var i = 0; i < 5; i++) {
+			groupPlanets.create(15 + i*50, Math.random() * 150, 'img_planet');
 		}
 		
         groupPlanets.scale.set(scale);
@@ -121,7 +142,7 @@ var playState = {
         groupShip.scale.set(scale);
 		
         this.initUI();
-
+        
         var systemObject = mapData.systems[mapData.shipPosition];
         
 		if (systemObject.isDestination) {
@@ -135,18 +156,17 @@ var playState = {
 		}
         
         if (ship.day > 1) {
-            
-            //TODO: if we've just landed in a system with a danger, fire a danger event
-            
+           
             if (ship.needsRecharge) {
                 //The ship just jumped and needs to recharge. Display some system welcome text, and maybe a danger event.
+				
+				warnings.sprite_driveReady.visible = false;
+				warnings.sprite_driveCharge.visible = true;
+				
                 if (currentDanger !== undefined) {
                     this.fireEvent_Danger(currentDanger);
                 }
                 
-            } else {
-                //The ship just spent a night recharging its jump drive. We haven't changed systems - fire a story event.
-                this.fireEvent_Story();
             }
         }
 	},
@@ -207,6 +227,8 @@ var playState = {
     
     createMessageBox: function() {
 		
+		messageActive = true;
+		
 		//Set bounds and instantiate panel
         var x = 84 * scale;
         var y = 7 * scale;
@@ -220,7 +242,7 @@ var playState = {
         panel.add(new SlickUI.Element.Text(2 * scale, 12 * scale, messageBox.content));
         
 		//Add buttons
-		for (i = 0; i < messageBox.options.length; i++) {
+		for (var i = 0; i < messageBox.options.length; i++) {
 			var button;
 			var option = messageBox.options[i];
 			
@@ -295,6 +317,8 @@ var playState = {
 					}
 					
 					panel.destroy();
+					
+					messageActive = false;
                     
                     response = playState.swapNames(response);
                     
@@ -312,6 +336,8 @@ var playState = {
 					
 					panel.destroy();
 					
+					messageActive = false;
+					
 					if (!option.final) {
 						//option.final is just a flag to note whether this is the last dialog box in a sequence.
 						playState.displayMessageNoChoice(messageBox.title, option.response);
@@ -328,8 +354,8 @@ var playState = {
 	/* TESTING FOR THE JSON INTERPRETER */
 	
 	JSONtest: function() {
-		data_encounters = game.cache.getJSON('data_encounters');
-		console.log(data_encounters);
+		data_eventsStory = game.cache.getJSON('data_eventsStory');
+		console.log(data_eventsStory);
 	},
     
     /* Events loaded from JSON data */
@@ -341,19 +367,42 @@ var playState = {
         
         //Danger events are system-dependent, so pull the event from a JSON file,
         //looking it up by the tag attached to the mapData object. E.g. "danger": "ASTEROIDS" or "danger": "MILITARY"
-        //Actually, thinking about it, the danger events could be procedurally generated while the story events are written.
         
         //Danger events, when complete, require you to recharge your jump drive before you can jump again.
         //Recharging should play a visual effect (like jumping does - or will, rather) and then fire a story event.
+		
+		/*
+		
+		Danger events happen immediately after landing in a system. They present some dangerous situation the player has to
+		try and resolve, using logic and reasoning.
+		
+		Story events happen the day after, under the assumption that the crew has slept while the jump drive recharged. They
+		present moral challenges, which the player must deal with on an emotional level. (Hopefully.)
+		
+		Danger events should make good use of dice rolls and chance, whereas story events should have persistent effects on
+		the future of the game.
+		
+		*/
+		
+		data_eventsDanger = game.cache.getJSON('data_eventsDanger');
+		
+		var selector = Math.floor(Math.random() * data_eventsDanger.length);
+		
+		var encounter = data_eventsDanger[selector];
+		
+		console.log("Firing danger event: " + encounter.name);
+		
+		this.displayMessage(encounter.title, encounter.content, encounter.options);
+        
     },
     
     fireEvent_Story: function() {
 		
-		data_encounters = game.cache.getJSON('data_encounters');
+		data_eventsStory = game.cache.getJSON('data_eventsStory');
 		
-		var selector = Math.floor(Math.random() * data_encounters.length);
+		var selector = Math.floor(Math.random() * data_eventsStory.length);
 		
-		var encounter = data_encounters[selector];
+		var encounter = data_eventsStory[selector];
 		
 		console.log("Firing story event: " + encounter.name);
 		
@@ -363,8 +412,44 @@ var playState = {
     },
     
     recharge: function() {
+		
+		if (!ship.needsRecharge) {
+			console.log("JUMP DRIVE ALREADY CHARGED");
+			return;
+		}
+		
+		if (messageActive) {
+			console.log("CANNOT RECHARGE - STUFF IS HAPPENING");
+			return;
+		}
+		
         ship.needsRecharge = false;
+		
+		warnings.sprite_driveReady.visible = true;
+		warnings.sprite_driveCharge.visible = false;
+		
         playState.fireEvent_Story();
+    },
+    
+	jump: function() {
+		
+		if (ship.needsRecharge) {
+			console.log("CANNOT JUMP - JUMP DRIVE DRAINED");
+			return;
+		}
+		
+		if (messageActive) {
+			console.log("CANNOT JUMP - STUFF IS HAPPENING");
+			return;
+		}
+		
+        ship.sprite.animations.play('anim_ship_jump', 16, false);
+        
+		
+	},
+	
+    goToMap: function() {
+        game.state.start('map');
     },
     
     swapNames: function(text) {
@@ -396,9 +481,9 @@ var playState = {
         
         statusPanel.add(new SlickUI.Element.Text(4 * scale, 2 * scale, "DAY " + ship.day));
         
-        var mapButton = statusPanel.add(new SlickUI.Element.Button(2 * scale, 12 * scale, 24 * scale, 10 * scale));
-		mapButton.add(new SlickUI.Element.Text(0, 0, "Map")).center();
-        mapButton.events.onInputUp.add(function () {game.state.start('map');});
+        var jumpButton = statusPanel.add(new SlickUI.Element.Button(2 * scale, 12 * scale, 24 * scale, 10 * scale));
+		jumpButton.add(new SlickUI.Element.Text(0, 0, "Jump")).center();
+        jumpButton.events.onInputUp.add(this.jump);
         
         var rechargeButton = statusPanel.add(new SlickUI.Element.Button(31 * scale, 12 * scale, 84 * scale, 10 * scale));
 		rechargeButton.add(new SlickUI.Element.Text(0, 0, "Recharge Jump Drive")).center();

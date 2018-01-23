@@ -1,4 +1,5 @@
-var data_encounters;
+var data_eventsStory;
+var data_eventsDanger;
 var encounterCounter;
 
 var loadState = {
@@ -15,6 +16,9 @@ var loadState = {
 		game.load.image('img_ship', 'res/ships/img_ship.png');
         game.load.image('img_planet', 'res/scenery/img_planet.png');
 		
+        game.load.image('hud_driveReady', 'res/ui/hud_driveReady.png');
+        game.load.image('hud_driveCharge', 'res/ui/hud_driveCharge.png');
+		
         //Map screen
         game.load.image('bg_map', 'res/ui/bg_map.png');
         for (var i = 0; i < 6; i++) {
@@ -28,12 +32,16 @@ var loadState = {
 		
         game.load.image('icon_asteroids', 'res/ui/icon_asteroids.png');
         
+        //Animations
+        game.load.spritesheet('anim_ship', 'res/ships/anim_ship_32x16.png', 32, 16);
+        
         //Slick UI library
         slickUI = game.plugins.add(Phaser.Plugin.SlickUI);
         slickUI.load('res/ui/kenney/kenney.json');
 		
 		//Data
-		game.load.json("data_encounters", "res/data/data_encounters.json");		//TODO: randomise encounter list at start of game and iterate through to prevent repetition
+		game.load.json("data_eventsStory", "res/data/data_eventsStory.json");		//TODO: randomise encounter list at start of game and iterate through to prevent repetition
+		game.load.json("data_eventsDanger", "res/data/data_eventsDanger.json");		//TODO: randomise encounter list at start of game and iterate through to prevent repetition
 		game.load.json("data_map", "res/data/data_map.json");
         
         mapData = {
