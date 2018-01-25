@@ -15,14 +15,14 @@ var ship = {
 	happiness: 100,
 	hull: 100,
     needsRecharge: false,
-    fname_Pilot: "Sasha",
-    sname_Pilot: "Walker",
-    fname_Engineer: "Frank",
-    sname_Engineer: "Nemo",
-    fname_Navigator: "Nasir",
-    sname_Navigator: "Magellan",
-    fname_Security: "Danai",
-    sname_Security: "Michaels",
+    fname_Pilot: "Kim",
+    sname_Pilot: "Slipples",
+    fname_Engineer: "Grace",
+    sname_Engineer: "Walker",
+    fname_Navigator: "Becca",
+    sname_Navigator: "Waters",
+    fname_Security: "Rosie",
+    sname_Security: "Milligan",
 	
 	reachedDestination: false,
     
@@ -120,11 +120,27 @@ var playState = {
         ship.sprite = groupShip.create(ship.posX, ship.posY, 'anim_ship');
         var animIdle = ship.sprite.animations.add('anim_ship_idle', [0,1,2,3,4,5,6,7]);
         var animJump = ship.sprite.animations.add('anim_ship_jump', [8,9,10,11]);
+        var animLand = ship.sprite.animations.add('anim_ship_land', [11,10,9,8]);
+        var animCharge = ship.sprite.animations.add('anim_ship_charge', [12,13,14,15]);
         
         ship.sprite.animations.play('anim_ship_idle', 8, true);
         
-        animJump.onComplete.add(playState.goToMap, this);
-        
+        animJump.onComplete.add(function() {			
+        	game.state.start('map');
+		});
+		
+        animLand.onComplete.add(function() {
+			ship.sprite.animations.play('anim_ship_idle', 8, true);
+				
+			if (currentDanger !== undefined) {
+				playState.fireEvent_Danger(currentDanger);
+			}
+		});
+		
+        animCharge.onComplete.add(function(){
+			ship.sprite.animations.play('anim_ship_idle', 8, true);
+        	playState.fireEvent_Story();
+		});
         
 		//Warning lights on HUD
 		warnings.sprite_driveCharge = game.add.sprite(14, 14, 'hud_driveCharge');
@@ -132,11 +148,14 @@ var playState = {
 		warnings.sprite_driveReady = game.add.sprite(14, 14, 'hud_driveReady');
 		warnings.sprite_driveReady.visible = false;
 		
-        
+        /*
 		for (var i = 0; i < 5; i++) {
 			groupPlanets.create(15 + i*50, Math.random() * 150, 'img_planet');
 		}
+        */
 		
+        groupPlanets.create(130, 50, 'img_planet0');
+        
         groupPlanets.scale.set(scale);
         groupBackground.scale.set(scale);
         groupShip.scale.set(scale);
@@ -162,11 +181,8 @@ var playState = {
 				
 				warnings.sprite_driveReady.visible = false;
 				warnings.sprite_driveCharge.visible = true;
-				
-                if (currentDanger !== undefined) {
-                    this.fireEvent_Danger(currentDanger);
-                }
                 
+				ship.sprite.animations.play('anim_ship_land', 16, false);
             }
         }
 	},
@@ -197,7 +213,7 @@ var playState = {
 		bg.sprite0.x = bg.posX;
 		bg.sprite1.x = bg.posX + bg.sprite0.width;
 		
-		groupPlanets.x -= backgroundMovement * 45;
+		groupPlanets.x -= backgroundMovement * 1;
 		
 		if (groupPlanets.x < - 250 * scale)
 			groupPlanets.x = 250 * scale;
@@ -251,7 +267,7 @@ var playState = {
             } else {
                 panel.add(button = new SlickUI.Element.Button(0, 50 * scale + i * 14 * scale, 164 * scale, 14 * scale));
             }
-			button.add(new SlickUI.Element.Text(0,0, option.choice)).center();
+			button.add(new SlickUI.Element.Text(0,0, playState.swapNames(option.choice))).center();
 			
 			//Make the buttons do different stuff depending on what the JSON data says.
 			
@@ -362,7 +378,6 @@ var playState = {
     
     fireEvent_Danger: function(danger) {
         
-		console.log("Firing danger event " + danger);
         ship.needsRecharge = true;
         
         //Danger events are system-dependent, so pull the event from a JSON file,
@@ -388,11 +403,27 @@ var playState = {
 		
 		var selector = Math.floor(Math.random() * data_eventsDanger.length);
 		
-		var encounter = data_eventsDanger[selector];
+		var relevantEvents = [];
+		var j = 0;
 		
-		console.log("Firing danger event: " + encounter.name);
+		for (var i = 0; i < data_eventsDanger.length; i++) {
 		
-		this.displayMessage(encounter.title, encounter.content, encounter.options);
+			var encounter = data_eventsDanger[i];
+			
+			if (encounter.dangerType == danger) {
+				relevantEvents[j] = encounter;
+				j++;
+			}
+			
+		}
+		
+		var selector = Math.floor(Math.random() * relevantEvents.length);
+		
+		var eventToFire = relevantEvents[selector];
+		
+		console.log("Firing danger event: " + eventToFire.name);
+		
+		this.displayMessage(eventToFire.title, eventToFire.content, eventToFire.options);
         
     },
     
@@ -428,7 +459,7 @@ var playState = {
 		warnings.sprite_driveReady.visible = true;
 		warnings.sprite_driveCharge.visible = false;
 		
-        playState.fireEvent_Story();
+		ship.sprite.animations.play('anim_ship_charge', 16, false);
     },
     
 	jump: function() {
@@ -447,10 +478,6 @@ var playState = {
         
 		
 	},
-	
-    goToMap: function() {
-        game.state.start('map');
-    },
     
     swapNames: function(text) {
         

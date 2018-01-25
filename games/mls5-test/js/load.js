@@ -14,10 +14,14 @@ var loadState = {
 		//Scenery & Objects
 		game.load.image('bg_starField', 'res/scenery/bg_starField.png');
 		game.load.image('img_ship', 'res/ships/img_ship.png');
-        game.load.image('img_planet', 'res/scenery/img_planet.png');
 		
         game.load.image('hud_driveReady', 'res/ui/hud_driveReady.png');
         game.load.image('hud_driveCharge', 'res/ui/hud_driveCharge.png');
+        
+        
+        for (var i = 0; i < 1; i++) {
+            game.load.image('img_planet' + i, 'res/scenery/planets/img_planet' + i + '.png');
+        }
 		
         //Map screen
         game.load.image('bg_map', 'res/ui/bg_map.png');
@@ -31,6 +35,8 @@ var loadState = {
         game.load.image('warning_noFuel', 'res/ui/warning_noFuel.png');
 		
         game.load.image('icon_asteroids', 'res/ui/icon_asteroids.png');
+        game.load.image('icon_military', 'res/ui/icon_military.png');
+        game.load.image('icon_ion', 'res/ui/icon_ion.png');
         
         //Animations
         game.load.spritesheet('anim_ship', 'res/ships/anim_ship_32x16.png', 32, 16);
