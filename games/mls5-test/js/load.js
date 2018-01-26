@@ -19,8 +19,8 @@ var loadState = {
         game.load.image('hud_driveCharge', 'res/ui/hud_driveCharge.png');
         
         
-        for (var i = 0; i < 1; i++) {
-            game.load.image('img_planet' + i, 'res/scenery/planets/img_planet' + i + '.png');
+        for (var i = 0; i < 6; i++) {
+            game.load.image('img_scenery_' + i, 'res/scenery/img_scenery_' + i + '.png');
         }
 		
         //Map screen
@@ -41,9 +41,16 @@ var loadState = {
         //Animations
         game.load.spritesheet('anim_ship', 'res/ships/anim_ship_32x16.png', 32, 16);
         
+		/* AUDIO */
+		game.load.audio('music_thinkingOutLoud', 'res/audio/Thinking Out Loud.mp3');
+		
+		/* UI */
+		
         //Slick UI library
         slickUI = game.plugins.add(Phaser.Plugin.SlickUI);
         slickUI.load('res/ui/kenney/kenney.json');
+		
+		/* DATA */
 		
 		//Data
 		game.load.json("data_eventsStory", "res/data/data_eventsStory.json");		//TODO: randomise encounter list at start of game and iterate through to prevent repetition
