@@ -15,14 +15,10 @@ var ship = {
 	happiness: 100,
 	hull: 100,
     needsRecharge: false,
-    fname_Pilot: "Kim",
-    sname_Pilot: "Slipples",
-    fname_Engineer: "Grace",
-    sname_Engineer: "Walker",
-    fname_Navigator: "Becca",
-    sname_Navigator: "Waters",
-    fname_Security: "Rosie",
-    sname_Security: "Milligan",
+    name_Pilot: "Slipples",
+    name_Engineer: "Walker",
+    name_Navigator: "Waters",
+    name_Security: "Milligan",
 	
 	reachedDestination: false,
     
@@ -153,12 +149,6 @@ var playState = {
 				}, 300);
 		});
         
-		//Warning lights on HUD
-		warnings.sprite_driveCharge = game.add.sprite(14, 14, 'hud_driveCharge');
-		warnings.sprite_driveCharge.visible = false;
-		warnings.sprite_driveReady = game.add.sprite(14, 14, 'hud_driveReady');
-		warnings.sprite_driveReady.visible = false;
-        
         var systemObject = mapData.systems[mapData.shipPosition];
 		
         groupPlanets.create(0, 0, 'img_scenery_' + systemObject.spriteIndex);
@@ -179,14 +169,16 @@ var playState = {
 			currentDanger = systemObject.danger;
 		}
         
+        warning_current = warnings.sprite_driveReady;
+        playState.setWarning(warnings.sprite_driveReady);
+
         if (ship.day > 1) {
            
             if (ship.needsRecharge) {
                 //The ship just jumped and needs to recharge. Display some system welcome text, and maybe a danger event.
 				
-				warnings.sprite_driveReady.visible = false;
-				warnings.sprite_driveCharge.visible = true;
-                
+                playState.setWarning(warnings.sprite_driveCharge);
+		
 				ship.sprite.animations.play('anim_ship_land', 16, false);
 				sound_land.play();
             }
@@ -213,6 +205,8 @@ var playState = {
 		
 		bg.posX -= backgroundMovement;
 		
+        //TODO: The loop is based on the starfield image width - change the starfield width to match the scenery sprite or something
+        
 		if (bg.posX < 0 - bg.sprite0.width)
 			bg.posX = 0;
 		
@@ -450,6 +444,12 @@ var playState = {
         //Story events, when complete, allow you to jump to another system.
     },
     
+    setWarning: function(warning) {
+        warning_current.visible = false;
+        warning_current = warning;
+        warning_current.visible = true;
+    },
+    
     recharge: function() {
 		
 		if (!ship.needsRecharge) {
@@ -466,8 +466,7 @@ var playState = {
 		
         ship.needsRecharge = false;
 		
-		warnings.sprite_driveReady.visible = true;
-		warnings.sprite_driveCharge.visible = false;
+        playState.setWarning(warnings.sprite_driveReady);
 		
 		ship.sprite.animations.play('anim_ship_charge', 16, false);
         sound_beam.play();
@@ -492,22 +491,30 @@ var playState = {
 		
 	},
     
+	engineer: function() {
+        
+        sound_selectFail.play();
+		
+	},
+    
+	manageCrew: function() {
+        
+        sound_selectFail.play();
+		
+	},
+    
     swapNames: function(text) {
         
         //Swap out the nametags in a string with the player-set character names (or defaults)
-        //Positions are in the format FNAME_JOBTITLE and SNAME_JOBTITLE
+        //Positions are in the format NAME_JOBTITLE
         //Jobtitles are PILOT, NAVIGATOR, ENGINEER, SECURITY
         
         var result = text;
         
-        result = result.replace("[FNAME_PILOT]", ship.fname_Pilot);
-        result = result.replace("[SNAME_PILOT]", ship.sname_Pilot);
-        result = result.replace("[FNAME_ENGINEER]", ship.fname_Engineer);
-        result = result.replace("[SNAME_ENGINEER]", ship.sname_Engineer);
-        result = result.replace("[FNAME_NAVIGATOR]", ship.fname_Navigator);
-        result = result.replace("[SNAME_NAVIGATOR]", ship.sname_Navigator);
-        result = result.replace("[FNAME_SECURITY]", ship.fname_Security);
-        result = result.replace("[SNAME_SECURITY]", ship.sname_Security);
+        result = result.replace("[NAME_PILOT]", ship.name_Pilot);
+        result = result.replace("[NAME_ENGINEER]", ship.name_Engineer);
+        result = result.replace("[NAME_NAVIGATOR]", ship.name_Navigator);
+        result = result.replace("[NAME_SECURITY]", ship.name_Security);
         
         return result;
     },
@@ -518,21 +525,54 @@ var playState = {
         var barX = 0;
         var barY = 99 * scale;
         slickUI.add(statusPanel = new SlickUI.Element.Panel(barX, barY, game.width, game.height));
+
+        var hudPanel;
+        statusPanel.add(hudPanel = new SlickUI.Element.DisplayObject(3 * scale, 1 * scale, game.make.sprite(0, 0, 'hud_panel')));
         
-        statusPanel.add(new SlickUI.Element.Text(4 * scale, 2 * scale, "DAY " + ship.day));
+		//Warning lights on HUD panel
+		slickUI.add(warnings.sprite_driveCharge = new SlickUI.Element.DisplayObject(barX + 16, barY + 10, game.make.sprite(0, 0, 'hud_driveCharge')));
+		slickUI.add(warnings.sprite_driveReady = new SlickUI.Element.DisplayObject(barX + 16, barY + 10, game.make.sprite(0, 0, 'hud_driveReady')));
+		warnings.sprite_driveCharge.visible = false;
+		warnings.sprite_driveReady.visible = false;
         
-        var jumpButton = statusPanel.add(new SlickUI.Element.Button(2 * scale, 12 * scale, 24 * scale, 10 * scale));
-		jumpButton.add(new SlickUI.Element.Text(0, 0, "Jump")).center();
+        var jumpButton = statusPanel.add(new SlickUI.Element.Button(31 * scale, 2 * scale, 24 * scale, 10 * scale));
+		jumpButton.add(new SlickUI.Element.Text(0, 0, "JUMP")).center();
         jumpButton.events.onInputUp.add(this.jump);
         
-        var rechargeButton = statusPanel.add(new SlickUI.Element.Button(31 * scale, 12 * scale, 84 * scale, 10 * scale));
-		rechargeButton.add(new SlickUI.Element.Text(0, 0, "Recharge Jump Drive")).center();
+        var rechargeButton = statusPanel.add(new SlickUI.Element.Button(31 * scale, 13 * scale, 24 * scale, 10 * scale));
+		rechargeButton.add(new SlickUI.Element.Text(0, 0, "CHRG")).center();
         rechargeButton.events.onInputUp.add(this.recharge);
         
-        statusPanel.add(new SlickUI.Element.Text(32 * scale, 2 * scale, "Fuel reserves: " + ship.fuel + " kilotonnes"));
-        //statusPanel.add(new SlickUI.Element.Text(32 * scale, 12 * scale, "Crew complement: " + ship.crew));
-        statusPanel.add(new SlickUI.Element.Text(164 * scale, 2 * scale, "Happiness index: " + ship.happiness + "%"));
-        statusPanel.add(new SlickUI.Element.Text(164 * scale, 12 * scale, "Hull integrity: " + ship.hull + "%"));
+        var engineerButton = statusPanel.add(new SlickUI.Element.Button(58 * scale, 2 * scale, 24 * scale, 10 * scale));
+		engineerButton.add(new SlickUI.Element.Text(0, 0, "ENGI")).center();
+        engineerButton.events.onInputUp.add(this.engineer);
+        
+        var crewButton = statusPanel.add(new SlickUI.Element.Button(58 * scale, 13 * scale, 24 * scale, 10 * scale));
+		crewButton.add(new SlickUI.Element.Text(0, 0, "CREW")).center();
+        crewButton.events.onInputUp.add(this.manageCrew);
+        
+        var mineButton = statusPanel.add(new SlickUI.Element.Button(85 * scale, 2 * scale, 24 * scale, 10 * scale));
+		mineButton.add(new SlickUI.Element.Text(0, 0, "MINE")).center();
+        mineButton.events.onInputUp.add(this.engineer);
+        
+        var scanButon = statusPanel.add(new SlickUI.Element.Button(85 * scale, 13 * scale, 24 * scale, 10 * scale));
+		scanButon.add(new SlickUI.Element.Text(0, 0, "SCAN")).center();
+        scanButon.events.onInputUp.add(this.manageCrew);
+        
+        var feckButton = statusPanel.add(new SlickUI.Element.Button(112 * scale, 2 * scale, 24 * scale, 10 * scale));
+		feckButton.add(new SlickUI.Element.Text(0, 0, "FECK")).center();
+        feckButton.events.onInputUp.add(this.engineer);
+        
+        var arseButton = statusPanel.add(new SlickUI.Element.Button(112 * scale, 13 * scale, 24 * scale, 10 * scale));
+		arseButton.add(new SlickUI.Element.Text(0, 0, "ARSE")).center();
+        arseButton.events.onInputUp.add(this.manageCrew);
+
+        
+        statusPanel.add(new SlickUI.Element.Text(199 * scale, 0 * scale, "STAT"));
+        statusPanel.add(new SlickUI.Element.Text(164 * scale, 8 * scale, "FUEL: " + ship.fuel + "KT"));
+        statusPanel.add(new SlickUI.Element.Text(164 * scale, 14 * scale, "CREW: " + ship.crew));
+        statusPanel.add(new SlickUI.Element.Text(208 * scale, 8 * scale, "HAPP: " + ship.happiness + "%"));
+        statusPanel.add(new SlickUI.Element.Text(208 * scale, 14 * scale, "HULL: " + ship.hull + "%"));
     },
 	
 	win: function() {
