@@ -1,0 +1,77 @@
+body {
+	font-family: Montserrat, sans-serif;
+	background-color: #eaf9ff;
+    background-image: url("../img/london.jpg");
+    background-position: center;
+}
+
+.breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.card {
+    width: 50%;
+    background-color: #ffffff;
+    margin: 8% auto;
+    padding: .5em 2em;
+    transition: .3s ease;
+}
+
+.card h1 {
+    font-size: 2.5em;
+    font-weight: 1200;
+}
+
+.card h2 {
+    font-size: 1.5em;
+    font-weight: 800;
+    width: 60%;
+    line-height: 1.5em;
+}
+
+.imageStrip {
+    display: flex;
+    width: 90%;
+    margin: auto;
+}
+
+.imageStrip img {
+    margin: 4px;
+    width: 30%;
+    height: 30%;
+}
+
+.slant{
+    top:0;
+    z-index:1;
+    position:absolute;
+    border-style:solid;
+    border-width:400px 0 0 100px;
+    border-color:rgba(223, 50, 50, 0) transparent transparent #06A763;
+}
+
+.footer {
+	position: absolute;
+	right: 12px;
+	bottom: 12px;
+}
+
+
+/* MEDIA QUERIES */
+
+/*For mobile*/
+
+@media only screen and (max-width: 1024px) {
+	
+    .card {
+        width: 80%;
+    }
+    
+    .card h2 {
+        font-size: 1.2em;
+        width: 80%;
+    }
+
+}

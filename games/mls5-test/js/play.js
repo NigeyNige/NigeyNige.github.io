@@ -4,6 +4,11 @@ var scale = 3;
 
 var messageActive = false;
 
+//Event testing
+
+var testing = false;
+var eventToTest = "story_spaceWalk";
+
 //Scenery & Objects
 var ship = {
 	sprite: null,
@@ -31,7 +36,7 @@ var ship = {
         resource_happiness +-
         resource_hull +=
         */
-        
+		
         if (effect.resource_fuel != null) {
             ship.fuel += effect.resource_fuel;
 			
@@ -60,12 +65,9 @@ var ship = {
 				playState.lose();
 			}
         }
+		
+		playState.refreshStatusPanel();
     }
-};
-
-var warnings = {
-	sprite_driveCharge: null,
-	sprite_driveReady: null
 };
 
 var bg = {
@@ -82,6 +84,18 @@ var groupShip;
 var statusBar = {
 	bgSprite: null
 };
+
+var warnings = {
+	sprite_driveCharge: null,
+	sprite_driveReady: null
+};
+
+var label_STAT;
+var label_FUEL;
+var label_CREW;
+var label_HAPP;
+var label_HULL;
+
 var messageBox = {
 	title: "MESSAGETITLE",
 	content: "MESSAGECONTENT",
@@ -124,20 +138,14 @@ var playState = {
         ship.sprite.animations.play('anim_ship_idle', 8, true);
         
         animJump.onComplete.add(function() {
-        	setTimeout(function() {
-				game.state.start('map');
-			}, 300);
+			game.state.start('map');
 		});
 		
         animLand.onComplete.add(function() {
 			ship.sprite.animations.play('anim_ship_idle', 8, true);
 				
-			
 			if (currentDanger !== undefined) {
-				
-				setTimeout(function() {
-					playState.fireEvent_Danger(currentDanger);
-				}, 300);
+				playState.fireEvent_Danger(currentDanger);
 			}
 		});
 		
@@ -204,8 +212,6 @@ var playState = {
 		var backgroundMovement = 0.001 * game.time.elapsed * scale;
 		
 		bg.posX -= backgroundMovement;
-		
-        //TODO: The loop is based on the starfield image width - change the starfield width to match the scenery sprite or something
         
 		if (bg.posX < 0 - bg.sprite0.width)
 			bg.posX = 0;
@@ -215,8 +221,8 @@ var playState = {
 		
 		groupPlanets.x -= backgroundMovement * 6;
 		
-		if (groupPlanets.x < - 250 * scale)
-			groupPlanets.x = 250 * scale;
+		if (groupPlanets.x < - bg.sprite0.width * 3)	//The planet scenery image will always be the same width as the background starfield.
+			groupPlanets.x = bg.sprite0.width * 2;
 	},
 	
 	/* UI MANAGEMENT */
@@ -230,9 +236,9 @@ var playState = {
         this.createMessageBox();
     },
     
-    displayMessageNoChoice: function(title, content) {
+    displayMessageNoChoice: function(title, content, choiceText) {
         
-		var continueJourney = [{choice: "Continue the journey", diceRoll: false, final: true}];
+		var continueJourney = [{choice: choiceText, diceRoll: false, final: true}];
         
         messageBox.title = title;
         messageBox.content = content;
@@ -241,15 +247,50 @@ var playState = {
         this.createMessageBox();
     },
     
+    displayMessageEndgame: function(title, content, choiceText) {
+        
+		var continueJourney = [{choice: choiceText, diceRoll: false, final: true}];
+        
+        messageBox.title = title;
+        messageBox.content = content;
+		messageBox.options = continueJourney;
+        
+        this.createMessageBoxEndgame();
+    },
+    
+	parseEffectText: function(text, effect) {
+		
+		//TODO: at the moment only supports two effects - increase to four
+		
+		var result = text;
+		
+		result = JSON.stringify(effect);
+		result = result.substr(result.indexOf('_')+1);
+		result = result.replace('":',": ");
+		result = result.replace('}',"");
+
+		if (result.includes(',')) {
+			var effectText2 = result.substr(result.indexOf(',')+1);
+			result = result.substr(0,result.indexOf(','));
+			effectText2 = effectText2.substr(effectText2.indexOf('_')+1);
+			effectText2 = effectText2.replace('":',": ");
+			effectText2 = effectText2.replace('}',"");
+
+			result += ", " + effectText2;
+		}
+		
+		return result;
+	},
+	
     createMessageBox: function() {
 		
 		messageActive = true;
 		
 		//Set bounds and instantiate panel
         var x = 84 * scale;
-        var y = 7 * scale;
+        var y = 2 * scale;
         var panel;
-        slickUI.add(panel = new SlickUI.Element.Panel(x, y, 164 * scale, 84 * scale));
+        slickUI.add(panel = new SlickUI.Element.Panel(x, y, 168 * scale, 96 * scale));
 		
         messageBox.content = playState.swapNames(messageBox.content);
         
@@ -258,6 +299,132 @@ var playState = {
         panel.add(new SlickUI.Element.Text(2 * scale, 12 * scale, messageBox.content));
         
 		//Add buttons
+		for (var i = 0; i < messageBox.options.length; i++) {
+			
+			//This is an anonymous wrapper which lets us save the value of i as e - this value will be saved for the callback later
+			
+			(function(e) {
+				
+				var button;
+				var option = messageBox.options[i];
+
+				if (messageBox.options.length == 1) {
+					panel.add(button = new SlickUI.Element.Button(0, 64 * scale + i * 14 * scale + 50, 164 * scale, 14 * scale));	//If there's only one button, shift it to the bottom of the panel.
+				} else if (messageBox.options.length == 2) {
+					panel.add(button = new SlickUI.Element.Button(0, 64 * scale + i * 14 * scale, 164 * scale, 14 * scale));
+				} else if (messageBox.options.length == 3) {
+					panel.add(button = new SlickUI.Element.Button(0, (48 * scale) + (i * 14 * scale), 164 * scale, 14 * scale));
+				}
+				button.add(new SlickUI.Element.Text(0,0, playState.swapNames(option.choice))).center();
+
+				//Make the buttons do different stuff depending on what the JSON data says.
+				
+				if (option.diceRoll) {
+
+					//Save the option for use in the callback later.
+					var selectedOption = messageBox.options[e];
+
+					button.events.onInputUp.add(function () {
+
+						//This event requires a roll of the dice to see the outcome.
+						//We grab the probability and the win/lose responses from the JSON data
+
+						sound_select.play();
+						var response = "Response not set!";
+						var effect = "Effect not set!";
+						var effectText = "";
+
+						if (Math.random() < selectedOption.winChance) {
+							//win!
+							response = selectedOption.win.response;
+							effect = selectedOption.win.effect;
+
+						} else {
+							//fail!
+							response = selectedOption.fail.response;
+							effect = selectedOption.fail.effect;
+						}
+
+						//Parse some JSON:
+						effectText = playState.parseEffectText(effectText, effect);
+
+						response += "\n\n" + effectText;
+						ship.effectChange(effect);
+
+						panel.destroy();					
+						messageActive = false;
+
+						response = playState.swapNames(response);
+
+						playState.displayMessageNoChoice(messageBox.title, response, "Continue the journey");
+
+						//Update the UI with the changes
+						playState.refreshStatusPanel();
+					});
+
+				} else {
+					
+					var selectedOption = messageBox.options[e];
+
+					button.events.onInputUp.add(function () {
+
+						sound_select.play();
+
+						//There's no dice roll needed here. 
+
+						panel.destroy();
+
+						messageActive = false;
+						
+						var response = "Response not set!";
+						var effect = "Effect not set!";
+						var effectText = "";
+	
+						messageActive = false;
+
+						response = playState.swapNames(response);
+
+						effect = selectedOption.effect;
+						
+						if (effect != null) {
+							//Parse some JSON:
+							effectText = playState.parseEffectText(effectText, effect);
+
+							response += "\n\n" + effectText;
+
+							ship.effectChange(effect);
+						}
+						
+						
+						if (!option.final) {
+							//option.final is just a flag to note whether this is the last dialog box in a sequence.
+							playState.displayMessageNoChoice(messageBox.title, option.response, "Continue the journey");
+						}
+
+						//Update the UI with the changes
+						playState.refreshStatusPanel();
+
+					});
+				}
+				
+			})(i); //End of anonymous wrapper
+			
+		}
+    },
+	
+    createMessageBoxEndgame: function() {
+		
+		messageActive = true;
+        var x = 84 * scale;
+        var y = 7 * scale;
+        var panel;
+        slickUI.add(panel = new SlickUI.Element.Panel(x, y, 164 * scale, 84 * scale));
+		
+        messageBox.content = playState.swapNames(messageBox.content);
+        
+        panel.add(new SlickUI.Element.Text(2 * scale, 0, messageBox.title)).centerHorizontally();
+        panel.add(new SlickUI.Element.Text(2 * scale, 12 * scale, messageBox.content));
+        
 		for (var i = 0; i < messageBox.options.length; i++) {
 			var button;
 			var option = messageBox.options[i];
@@ -269,103 +436,19 @@ var playState = {
             }
 			button.add(new SlickUI.Element.Text(0,0, playState.swapNames(option.choice))).center();
 			
-			//Make the buttons do different stuff depending on what the JSON data says.
+			playState.refreshStatusPanel();
+				
+			button.events.onInputUp.add(function () {
+
+				sound_select.play();
+
+				panel.destroy();
+
+				messageActive = false;
+				
+				window.location.reload();
+			});
 			
-			if (option.diceRoll) {
-				
-				//Save the option for use in the callback later.
-				var selectedOption = option;
-				
-				button.events.onInputUp.add(function () {
-					//This event requires a roll of the dice to see the outcome.
-					//We grab the probability and the win/lose responses from the JSON data.
-					sound_select.play();
-					var response = "Response not set!";
-                    var effect = "Effect not set!";
-					var effectText = "";
-					
-					if (Math.random() < selectedOption.winChance) {
-						//win! :)
-						response = selectedOption.win.response;
-						effect = selectedOption.win.effect;
-						
-						effectText = JSON.stringify(effect);
-						effectText = effectText.substr(effectText.indexOf('_')+1);
-						effectText = effectText.replace('":',": ");
-						effectText = effectText.replace('}',"");
-						
-						if (effectText.includes(',')) {
-							var effectText2 = effectText.substr(effectText.indexOf(',')+1);
-							effectText = effectText.substr(0,effectText.indexOf(','));
-							effectText2 = effectText2.substr(effectText2.indexOf('_')+1);
-							effectText2 = effectText2.replace('":',": ");
-							effectText2 = effectText2.replace('}',"");
-							
-							effectText += "\n" + effectText2;
-						}
-						
-						response += "\n\n" + effectText;
-						
-                        ship.effectChange(effect);
-						
-					} else {
-						//fail! :(
-						response = selectedOption.fail.response;
-						effect = selectedOption.fail.effect;
-						
-						effectText = JSON.stringify(effect);
-						effectText = effectText.substr(effectText.indexOf('_')+1);
-						effectText = effectText.replace('":',": ");
-						effectText = effectText.replace('}',"");
-						
-						if (effectText.includes(',')) {
-							var effectText2 = effectText.substr(effectText.indexOf(',')+1);
-							effectText = effectText.substr(0,effectText.indexOf(','));
-							effectText2 = effectText2.substr(effectText2.indexOf('_')+1);
-							effectText2 = effectText2.replace('":',": ");
-							effectText2 = effectText2.replace('}',"");
-							effectText += "\n" + effectText2;
-						}
-						
-						response += "\n\n" + effectText;
-						
-                        ship.effectChange(effect);
-					}
-					
-					panel.destroy();
-					
-					messageActive = false;
-                    
-                    response = playState.swapNames(response);
-                    
-					playState.displayMessageNoChoice(messageBox.title, response);
-                    
-                    //Update the UI with the changes
-                    playState.initUI();
-				});
-				
-			} else {
-				
-				button.events.onInputUp.add(function () {
-					
-					sound_select.play();
-					
-					//There's no dice roll needed here. 
-					
-					panel.destroy();
-					
-					messageActive = false;
-					
-					if (!option.final) {
-						//option.final is just a flag to note whether this is the last dialog box in a sequence.
-						playState.displayMessageNoChoice(messageBox.title, option.response);
-					}
-                    
-                    //Update the UI with the changes
-                    playState.initUI();
-                    
-				});
-			}
 		}
     },
 	
@@ -437,7 +520,24 @@ var playState = {
 		
 		var encounter = data_eventsStory[selector];
 		
-		console.log("Firing story event: " + encounter.name);
+		if (testing) {
+			//This is for testing specific story events. Saves time.
+			
+			for (var i = 0; i < data_eventsStory.length; i++) {
+				if (data_eventsStory[i].name == eventToTest) {
+					encounter = data_eventsStory[i];
+				}
+			}
+			
+			if (encounter == undefined) {
+				console.log("Couldn't find test subject " + eventToTest + " in story events list.");
+			} else {
+				console.log("Testing story event: " + encounter.name);
+			}
+			
+		} else {
+			console.log("Firing story event: " + encounter.name);
+		}
 		
 		this.displayMessage(encounter.title, encounter.content, encounter.options);
         
@@ -465,6 +565,8 @@ var playState = {
 		}
 		
         ship.needsRecharge = false;
+		
+		messageActive = true;	//The message isn't active just yet, but we don't want anything to prevent it displaying.
 		
         playState.setWarning(warnings.sprite_driveReady);
 		
@@ -566,21 +668,31 @@ var playState = {
         var arseButton = statusPanel.add(new SlickUI.Element.Button(112 * scale, 13 * scale, 24 * scale, 10 * scale));
 		arseButton.add(new SlickUI.Element.Text(0, 0, "ARSE")).center();
         arseButton.events.onInputUp.add(this.manageCrew);
-
-        
-        statusPanel.add(new SlickUI.Element.Text(199 * scale, 0 * scale, "STAT"));
-        statusPanel.add(new SlickUI.Element.Text(164 * scale, 8 * scale, "FUEL: " + ship.fuel + "KT"));
-        statusPanel.add(new SlickUI.Element.Text(164 * scale, 14 * scale, "CREW: " + ship.crew));
-        statusPanel.add(new SlickUI.Element.Text(208 * scale, 8 * scale, "HAPP: " + ship.happiness + "%"));
-        statusPanel.add(new SlickUI.Element.Text(208 * scale, 14 * scale, "HULL: " + ship.hull + "%"));
+		
+        label_STAT = statusPanel.add(new SlickUI.Element.Text(199 * scale, 0 * scale, "STAT"));
+		label_FUEL = statusPanel.add(new SlickUI.Element.Text(164 * scale, 8 * scale, "FUEL: " + ship.fuel + "KT"));
+		label_CREW = statusPanel.add(new SlickUI.Element.Text(164 * scale, 14 * scale, "CREW: " + ship.crew));
+		label_HAPP = statusPanel.add(new SlickUI.Element.Text(208 * scale, 8 * scale, "HAPP: " + ship.happiness + "%"));
+		label_HULL = statusPanel.add(new SlickUI.Element.Text(208 * scale, 14 * scale, "HULL: " + ship.hull + "%"));
     },
 	
 	win: function() {
 		console.log("WIN");
+		
+		this.displayMessageEndgame("SUCCESS", "The pods detach and begin their descent to the surface. You made it. " + ship.crew + " humans will have a chance to start over.\n\nGAME OVER", "Reflect on the journey.");
 	},
 	
 	lose: function() {
 		console.log("LOSE");
+		
+		this.displayMessageEndgame("FAILURE", "Through incompetence, malice or just plain bad luck, the human race has been extinguished. Good riddance.\n\nGAME OVER", "Reflect on your mistakes.");
+	},
+	
+	refreshStatusPanel: function() {
+        label_FUEL.text.text = "FUEL: " + ship.fuel + "KT";
+        label_CREW.text.text = "CREW: " + ship.crew;
+        label_HAPP.text.text = "HAPP: " + ship.happiness + "%";
+        label_HULL.text.text = "HULL: " + ship.hull + "%";
 	}
 	
 };
