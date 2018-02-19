@@ -56,6 +56,10 @@ var ship = {
         }
         if (effect.resource_happiness != null) {
             ship.happiness += effect.resource_happiness;
+        
+			if (ship.happiness > 100) {
+				ship.happiness = 100;
+			}
 			
 			if (ship.happiness <= 0) {
 				playState.lose();
@@ -63,6 +67,10 @@ var ship = {
         }
         if (effect.resource_hull != null) {
             ship.hull += effect.resource_hull;
+			
+			if (ship.hull > 100) {
+				ship.hull = 100;
+			}
 			
 			if (ship.hull <= 0) {
 				playState.lose();
@@ -87,6 +95,8 @@ var groupShip;
 var statusBar = {
 	bgSprite: null
 };
+
+var crewPanel;
 
 var warnings = {
 	sprite_driveCharge: null,
@@ -198,10 +208,6 @@ var playState = {
 	
 	update: function() {
 		this.scrollBackground();
-        
-        if (ship.happiness > 100) {
-            ship.happiness = 100;
-        }
 	},
 	
 	render: function() {
@@ -298,8 +304,13 @@ var playState = {
         messageBox.content = playState.swapNames(messageBox.content);
         
 		//Add title and content
+		var textSize_content = 16;
+		
+		if (messageBox.content.length > 190 && messageBox.options.length > 1)
+			textSize_content = 14;
+		
         panel.add(new SlickUI.Element.Text(2 * scale, 0, messageBox.title)).centerHorizontally();
-        panel.add(new SlickUI.Element.Text(2 * scale, 12 * scale, messageBox.content));
+        panel.add(new SlickUI.Element.Text(2 * scale, 12 * scale, messageBox.content, textSize_content));
         
 		//Add buttons
 		for (var i = 0; i < messageBox.options.length; i++) {
@@ -310,13 +321,16 @@ var playState = {
 				
 				var button;
 				var option = messageBox.options[i];
-
+				
+				var optionHeight = 14;
+				
 				if (messageBox.options.length == 1) {
-					panel.add(button = new SlickUI.Element.Button(0, 64 * scale + i * 14 * scale + 50, 164 * scale, 14 * scale));	//If there's only one button, shift it to the bottom of the panel.
+					panel.add(button = new SlickUI.Element.Button(0, 64 * scale + i * 14 * scale + 50, 164 * scale, optionHeight * scale));	//If there's only one button, shift it to the bottom of the panel.
 				} else if (messageBox.options.length == 2) {
-					panel.add(button = new SlickUI.Element.Button(0, 64 * scale + i * 14 * scale, 164 * scale, 14 * scale));
+					panel.add(button = new SlickUI.Element.Button(0, 64 * scale + i * 14 * scale, 164 * scale, optionHeight * scale));
 				} else if (messageBox.options.length == 3) {
-					panel.add(button = new SlickUI.Element.Button(0, (48 * scale) + (i * 14 * scale), 164 * scale, 14 * scale));
+					optionHeight = 12;
+					panel.add(button = new SlickUI.Element.Button(0, (58 * scale) + (i * optionHeight * scale), 164 * scale, optionHeight * scale));
 				}
 				button.add(new SlickUI.Element.Text(0,0, playState.swapNames(option.choice))).center();
 
@@ -360,9 +374,6 @@ var playState = {
 						response = playState.swapNames(response);
 
 						playState.displayMessageNoChoice(messageBox.title, response, "Continue the journey");
-
-						//Update the UI with the changes
-						playState.refreshStatusPanel();
 					});
 
 				} else {
@@ -396,6 +407,8 @@ var playState = {
 							response += "\n\n" + effectText;
 
 							ship.effectChange(effect);
+						} else {
+							console.log("Effect is null.");
 						}
 						
 						
@@ -403,9 +416,6 @@ var playState = {
 							//option.final is just a flag to note whether this is the last dialog box in a sequence.
 							playState.displayMessageNoChoice(messageBox.title, option.response, "Continue the journey");
 						}
-
-						//Update the UI with the changes
-						playState.refreshStatusPanel();
 
 					});
 				}
@@ -438,8 +448,6 @@ var playState = {
                 panel.add(button = new SlickUI.Element.Button(0, 50 * scale + i * 14 * scale, 164 * scale, 14 * scale));
             }
 			button.add(new SlickUI.Element.Text(0,0, playState.swapNames(option.choice))).center();
-			
-			playState.refreshStatusPanel();
 				
 			button.events.onInputUp.add(function () {
 
@@ -605,7 +613,14 @@ var playState = {
     
 	manageCrew: function() {
         
-        sound_selectFail.play();
+        sound_select.play();
+		
+		var crewPanelX = 32;
+		var crewPanelY = 32 + 8;
+		var crewPanelWidth = 256 * 2;
+		var crewPanelHeight = 180;
+		
+		//slickUI.add(crewPanel = new SlickUI.Element.Panel(crewPanelX, crewPanelY, crewPanelWidth, crewPanelHeight));
 		
 	},
     
