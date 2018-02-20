@@ -15,7 +15,7 @@ body {
 .card {
     width: 50%;
     background-color: #ffffff;
-    margin: 8% auto;
+    margin: 2% auto;
     padding: .5em 2em;
     transition: .3s ease;
 }
@@ -32,7 +32,11 @@ body {
     line-height: 1.5em;
 }
 
-.imageStrip {
+.card h3 {
+    text-align: center;
+}
+
+.imageWrapper {
     display: flex;
     flex-flow: wrap;
     width: 90%;
@@ -40,16 +44,36 @@ body {
     justify-content: center;
 }
 
-.imageStrip img {
-    margin: 4px;
+.promoImage {
     width: 40%;
     height: 40%;
-    border-radius: 2px;
     transition: .2s ease;
+    margin: 12px;
 }
 
-.imageStrip img:hover {
-    width: 45%;
+.promoImage img {
+    margin: 12px;
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    transition: .2s ease;
+    border: 1px solid #ccc;
+}
+
+.promoImage:hover img{
+    width: 105%;
+}
+
+.promoImage .promoLabel {
+    opacity: 0;
+    text-align: center;
+    transition: ease .2s;
+    font-weight: 800;
+    color: grey;
+}
+
+.promoImage:hover .promoLabel {
+    opacity: 1;
 }
 
 .contactDetails {
@@ -61,7 +85,8 @@ body {
     position: fixed;
     bottom: -100px;
     transition: ease .2s;
-    padding-bottom: 0px;
+    padding-left: 1em;
+    padding-bottom: 1em;
 }
 .contactDetails a {
     color: white;
@@ -81,14 +106,61 @@ body {
     bottom: 10px;
 }
 
-.slant{
-    top:0;
-    z-index:1;
-    position:absolute;
-    border-style:solid;
-    border-width:400px 0 0 100px;
-    border-color:rgba(223, 50, 50, 0) transparent transparent #06A763;
+.gitHub {
+    color: white;
+    background-color: #5a5a5a;
+    height: 100%;
+    width: 300px;
+    margin: -10px;
+    position: fixed;
+    right: -180px;
+    top: 0px;
+    transition: ease .2s;
+    padding-left: 1em;
+    padding-right: 1em;
 }
+.gitHub a {
+    color: white;
+    font-weight: 800;
+    text-decoration: none;
+    color: #eee;
+}
+.gitHub img {
+    height: 32px;
+    vertical-align: middle;
+    margin: 0px 12px 0px 0px;
+}
+.gitHub h1 {
+    font-size: 1.4em;
+    line-height: .1em;
+}
+.gitHub p {
+    font-size: 1em;
+    font-weight: 200;
+    color: #ddd;
+}
+.gitHub:hover {
+    right: 0px;
+}
+.gitHub .repo {
+    transition: .2s ease;
+    border: 2px solid #888;
+    border-radius: 2px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    padding: 6px;
+}
+
+.gitHub .repo:hover {
+    border: 2px dashed #888;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 6px;
+    background-color: #298495;
+}
+
+
+
 
 
 /* MEDIA QUERIES */
