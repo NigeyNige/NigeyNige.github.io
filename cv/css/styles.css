@@ -2,7 +2,8 @@ body {
 	font-family: Montserrat, sans-serif;
 	background-color: #eaf9ff;
     background-image: url("../img/london.jpg");
-    background-position: center;
+    background-position: top;
+    background-size: cover;
 }
 
 .breadcrumb a {
@@ -33,14 +34,51 @@ body {
 
 .imageStrip {
     display: flex;
+    flex-flow: wrap;
     width: 90%;
-    margin: auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .imageStrip img {
     margin: 4px;
-    width: 30%;
-    height: 30%;
+    width: 40%;
+    height: 40%;
+    border-radius: 2px;
+    transition: .2s ease;
+}
+
+.imageStrip img:hover {
+    width: 45%;
+}
+
+.contactDetails {
+    font-weight: 800;
+    color: white;
+    background-color: #5a5a5a;
+    width: 100%;
+    margin: -10px;
+    position: fixed;
+    bottom: -100px;
+    transition: ease .2s;
+    padding-bottom: 0px;
+}
+.contactDetails a {
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+}
+.contactDetails img {
+    height: 32px;
+    vertical-align: middle;
+    margin: 0px 12px 0px 0px;
+}
+.contactDetails h1 {
+    line-height: .3em;
+}
+
+.contactDetails:hover {
+    bottom: 10px;
 }
 
 .slant{
@@ -50,12 +88,6 @@ body {
     border-style:solid;
     border-width:400px 0 0 100px;
     border-color:rgba(223, 50, 50, 0) transparent transparent #06A763;
-}
-
-.footer {
-	position: absolute;
-	right: 12px;
-	bottom: 12px;
 }
 
 
