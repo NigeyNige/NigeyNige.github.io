@@ -34,7 +34,8 @@ body {
 }
 
 .card h3 {
-    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 1.5em;
 }
 
 .imageWrapper {
@@ -201,10 +202,47 @@ body {
     line-height: .3em;
 }
 
+.experience {
+    padding: 1em;
+    border-radius: 4px;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.26);
+    border: 2px solid #fff;
+    background-color: rgba(255, 255, 255, 0.51);
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.experience ul{
+    line-height: 1.5em;
+}
+.experience li{
+    margin-top: .4em;
+}
+
+.experience h1 {
+    margin-top: 0px;
+    font-size: 1.5em;
+}
+
+.experience h2 {
+    font-size: 1.2em;
+}
+
+.experience h3 {
+    font-size: 1em;
+    text-align: left;
+}
 
 /* MEDIA QUERIES */
 
 /*For mobile*/
+
+
+@media only screen and (min-width: 1025px) and (max-width: 1400px) {
+    .card {
+        width: 70%;
+    }
+}
 
 @media only screen and (max-width: 1024px) {
     
