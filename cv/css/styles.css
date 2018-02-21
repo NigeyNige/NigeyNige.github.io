@@ -216,6 +216,7 @@ body {
     
     .card {
         width: 80%;
+        background-color: #fff;
     }
     
     .card h2 {
@@ -241,7 +242,9 @@ body {
 
     .promoImage .promoLabel {
         opacity: 1;
-        font-size: .8em;
+        font-size: 1em;
+        height: 40px;
+        color: #333;
     }
 
     .mobileFooter {
