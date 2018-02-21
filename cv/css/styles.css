@@ -321,5 +321,10 @@ body {
     
     .mobileFooter {
         display: block;
+        background-color: rgba(47, 50, 54, 0.75);
+        padding-top: 2px;
+        margin-left: -8px;
+        margin-right: -8px;
+        box-shadow: 0px 500px 0px 500px rgba(47, 50, 54, 0.75);
     }
 }
