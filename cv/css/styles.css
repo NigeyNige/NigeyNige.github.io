@@ -62,8 +62,19 @@ body {
 }
 
 .promoImage:hover img{
-    width: 105%;
+    width: 100%;
     box-shadow: -2px 2px 10px #aaa;
+}
+.promoTitle {
+    opacity: 1;
+    text-align: center;
+    transition: ease .3s;
+    font-weight: 800;
+	font-size: 1.2em;
+    margin: 0% 5% 0% 12%;
+	margin-bottom: 0px;
+    color: black;
+    height: 40px;
 }
 
 .promoLabel {
@@ -72,7 +83,7 @@ body {
     transition: ease .3s;
     font-weight: 800;
     color: grey;
-    height: 0px;
+    height: 40px;
     margin: 0% 5% 0% 12%;
 }
 
@@ -135,6 +146,7 @@ body {
     transition: ease .25s;
     padding-left: 1em;
     padding-right: 1em;
+    right: 0px;
 }
 .gitHub a {
     color: white;
@@ -147,9 +159,8 @@ body {
     line-height: .1em;
 }
 .gitHub h2 {
-    transform: rotate(-90deg);
-	transform-origin: left bottom 0;
-    margin: 80px 22px 15% 22px;
+	text-align: right;
+	margin: 6%;
 }
 .github h3 {
     margin-left: 10%;
@@ -160,6 +171,14 @@ body {
     color: #ddd;
     margin-left: 10%;
 }
+
+.gitHub img {
+    height: 32px;
+    vertical-align: middle;
+    margin: 0px 12px 0px 0px;
+}
+}
+
 .gitHub:hover {
     right: 0px;
 }
@@ -176,10 +195,10 @@ body {
 
 .gitHub .repo:hover {
     border: 2px dashed #fff;
-    margin-top: 24px;
-    margin-bottom: 24px;
-    padding: 6px;
+    text-align: left;
     background-color: #298495;
+    margin-left: 5%;
+	margin-right: 5%;
 }
 
 .mobileFooter {
@@ -244,8 +263,26 @@ body {
 
 @media only screen and (min-width: 1025px) and (max-width: 1400px) {
     .card {
-        width: 70%;
+        width: 60%;
+		margin-left: 2%;
     }
+	
+	.gitHub h1 {
+		font-size: 1em;
+	}
+}
+
+@media only screen and (max-height: 800px) {
+	
+	.gitHub p {
+		font-size: .85em;
+	}
+	.gitHub a {
+		font-size: .7em;
+	}
+	.gitHub img {
+		height: 14px;
+	}
 }
 
 @media only screen and (max-width: 1024px) {
@@ -281,6 +318,10 @@ body {
 
     .promoImage:hover img{
         width: 100%;
+    }
+
+    .promoImage .promoTitle {
+        display: none;
     }
 
     .promoImage .promoLabel {
