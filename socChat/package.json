@@ -1,9 +1,0 @@
-{
-  "name": "socChat",
-  "version": "0.0.1",
-  "description": "A chat app for the SoA.",
-  "dependencies": {
-    "express": "^4.15.2",
-    "socket.io": "^2.0.4"
-  }
-}
