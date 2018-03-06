@@ -134,6 +134,53 @@ body {
     left: 0px;
 }
 
+.skills {
+    color: white;
+    background-color: rgba(90, 90, 90, 0.75);
+    height: 110%;
+    width: 300px;
+    margin: -10px;
+    position: fixed;
+    top: 0px;
+    padding-left: 1em;
+    padding-right: 1em;
+    left: 0px;
+    transition: ease .25s;
+}
+.skills a {
+    color: white;
+    font-weight: 800;
+    text-decoration: none;
+    color: #eee;
+}
+.skills h1 {
+    font-size: 1.4em;
+    line-height: .1em;
+}
+.skills h2 {
+	text-align: left;
+	margin: 6%;
+    margin-top: 20%;
+}
+.skills h3 {
+    font-size: 1.4em;
+    margin-left: 10%;
+    font-weight: 200;
+}
+.skills p {
+    font-size: 1em;
+    font-weight: 200;
+    color: #ddd;
+    margin-left: 10%;
+}
+.skills ul {
+    font-size: 1.2em;
+    font-weight: 200;
+    color: #ddd;
+    line-height: 1.4em;
+    transition: ease .25s;
+}
+
 .gitHub {
     color: white;
     background-color: rgba(90, 90, 90, 0.75);
@@ -176,7 +223,6 @@ body {
     height: 32px;
     vertical-align: middle;
     margin: 0px 12px 0px 0px;
-}
 }
 
 .gitHub:hover {
@@ -270,6 +316,10 @@ body {
 	.gitHub h1 {
 		font-size: 1em;
 	}
+    
+    .skills {
+        display: none;
+    }
 }
 
 @media only screen and (max-height: 800px) {
@@ -283,6 +333,13 @@ body {
 	.gitHub img {
 		height: 14px;
 	}
+    
+    .skills h2 {
+        margin-top: 10%;
+    }
+    .skills ul {
+        font-size: .9em;
+    }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -367,5 +424,9 @@ body {
         margin-left: -8px;
         margin-right: -8px;
         box-shadow: 0px 500px 0px 500px rgba(47, 50, 54, 0.75);
+    }
+    
+    .skills {
+        display: none;
     }
 }
