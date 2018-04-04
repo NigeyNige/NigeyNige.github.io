@@ -64,6 +64,7 @@ body {
 .promoImage:hover img{
     width: 100%;
     box-shadow: -2px 2px 10px #aaa;
+    transform: scale(1.1);
 }
 .promoTitle {
     opacity: 1;
