@@ -16,6 +16,17 @@ var loadState = {
 		//Scenery & Objects
 		game.load.image('bg_starField', 'res/scenery/bg_starField.png');
 		game.load.image('img_ship', 'res/ships/img_ship.png');
+		game.load.image('img_enemy', 'res/ships/img_enemy.png');
+		
+		
+		game.load.image('img_ship_gib0', 'res/ships/gibs/img_ship_gib0.png');
+		game.load.image('img_ship_gib1', 'res/ships/gibs/img_ship_gib1.png');
+		game.load.image('img_ship_gib2', 'res/ships/gibs/img_ship_gib2.png');
+		
+		game.load.image('img_laser', 'res/ships/img_laser.png');
+		game.load.image('img_missile', 'res/ships/img_missile.png');
+		game.load.image('img_reticle', 'res/ships/img_reticle.png');
+		game.load.image('img_rail', 'res/ships/img_rail.png');
 		
         game.load.image('hud_driveReady', 'res/ui/hud_driveReady.png');
         game.load.image('hud_driveCharge', 'res/ui/hud_driveCharge.png');
@@ -43,6 +54,7 @@ var loadState = {
         
         //Animations
         game.load.spritesheet('anim_ship', 'res/ships/anim_ship_32x16.png', 32, 16);
+        game.load.spritesheet('anim_explosion', 'res/ships/anim_explosion_32x32.png', 32, 32);
         
 		/* AUDIO */
 		game.load.audio('music_airshipSerenity', 'res/audio/Airship Serenity.mp3');
@@ -55,6 +67,9 @@ var loadState = {
 		game.load.audio('sound_beep', 'res/audio/beep.ogg');
 		game.load.audio('sound_land', 'res/audio/land.ogg');
 		game.load.audio('sound_beam', 'res/audio/beam.ogg');
+		game.load.audio('sound_laserExplosion0', 'res/audio/laserExplosion0.ogg');
+		game.load.audio('sound_laserExplosion1', 'res/audio/laserExplosion1.ogg');
+		
 		
 		/* UI */
 		
