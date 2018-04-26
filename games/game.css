@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'sm';
+    src: url('./boys/font_sm.ttf');
+}
+
+.scale2 {
+	width: 512px;
+}
+
+canvas, img {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: pixelated;
+}
+
+.game {
+	margin: auto;
+}
+
+.jumbotron {
+	padding-bottom: .5em;
+}
+
+#game {
+    width: 512px;
+}

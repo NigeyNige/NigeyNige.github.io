@@ -7,13 +7,26 @@
         <meta name="author" content="">
         <link rel="icon" href="../favicon.ico">
 
-        <title>Websites | Niall Slater</title>
+        <title>MLS5 | Niall Slater</title>
 
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
         <!-- Custom styles for this template -->
-        <link href="../css/album.css" rel="stylesheet">
+        <link href="../game.css" rel="stylesheet">
+        
+        
+        <script src="js/phaser.min.js"></script>
+		<script src="js/slick-ui.min.js"></script>
+		
+		<script src="js/boot.js"></script>
+		<script src="js/load.js"></script>
+		<script src="js/menu.js"></script>
+		<script src="js/play.js"></script>
+		<script src="js/map.js"></script>
+		<script src="js/combat.js"></script>
+		<script src="js/win.js"></script>
+		<script src="js/game.js"></script>
     </head>
 
     <body>
@@ -26,7 +39,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="../../">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://unbound.com/books/the-second-death-of-daedalus-mole/updates" target="_blank">Updates</a>
@@ -35,10 +48,10 @@
                             <a class="nav-link" href="https://unbound.com/authors/niall-slater" target="_blank">Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../websites">Websites</a>
+                            <a class="nav-link" href="../../websites">Websites</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="../games">Games</a>
+                            <a class="nav-link active" href="../">Games</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#">Subscriber Login</a>
@@ -52,56 +65,20 @@
 
             <section class="jumbotron text-center">
                 <div class="container">
-                    <h1 class="jumbotron-heading">Games I've made</h1>
-                    <p class="lead text-muted">I make small browser games using Phaser and larger projects for desktop in Unity. Try some below.</p>
+                    <h1 class="jumbotron-heading">Miserable Life, Space</h1>
+                    <p class="lead text-muted">A WIP narrative experiment.</p>
                 </div>
             </section>
-
-            <div class="album py-5 bg-light">
-                <div class="container">
-
-                    <div class="row">
-                        
-                        <div class="col-md-4">
-                            <div class="card mb-4 box-shadow">
-                                <img class="card-img-top" src="./img/boys-786x392.png" alt="Card image cap">
-                                <div class="card-body">
-                                    <a href="boys" class="lead">Picking Up Boys</a>
-                                    <p class="card-text">Dodge asteroids and rescue astro-boys. Pure Javascript in HTML5 canvas.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="card mb-4 box-shadow">
-                                <img class="card-img-top" src="./img/mls5-786x392.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <a href="mls5" class="lead">Miserable Life, Space</a>
-                                    <p class="card-text">A WIP narrative experiment about an unhappy journey through space.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="card mb-4 box-shadow">
-                                <img class="card-img-top" src="./img/placeholder-786x392.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <a href="#" class="lead">Mystery Project</a>
-                                    <p class="card-text">Some things aren't quite ready to be shown off yet.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-
+			
+			<div class="container game">
+                <div id="game"></div>
+			</div>
+			
         </main>
 
         <footer class="text-muted">
             <div class="container">
                 <p class="float-right">
-                    <a href="#">Back to top</a>
                 </p>
             </div>
         </footer>
@@ -110,7 +87,8 @@
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>    
+        <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+        
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
