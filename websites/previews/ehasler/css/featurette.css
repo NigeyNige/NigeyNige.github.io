@@ -1,0 +1,21 @@
+.reversal {
+    
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.26);
+    padding: 2em;
+    color: #333;
+}
+
+.reversal a {
+    color: #337;
+}
+
+.reversal img {
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.reversal .featurette-heading {
+    margin-top: 10%;
+}
