@@ -97,7 +97,7 @@ class Customer extends Phaser.Sprite {
 						bookStock.splice(bookStock.indexOf(book), 1);
 					}
 					
-					this.say(':D');
+					this.say('Thank you!');
 					playState.buildStock();
 //					console.log(this.name + " bought a copy of " + book.title);
 					
@@ -154,7 +154,7 @@ class Customer extends Phaser.Sprite {
 	}
 	
 	say(text) {
-		let bubble = new SpeechBubble(game, this.x - 25, this.y - 30, text);
+		let bubble = new SpeechBubble(game, this.x - 15, this.y - 30, text);
 		groupEffects.add(bubble);
 	}
     
