@@ -17,6 +17,7 @@
         
         <!-- Custom styling -->
         <link href="css/carousel.css" rel="stylesheet">
+        <link href="css/countdown.css" rel="stylesheet">
     </head>
     
     <body>
@@ -117,8 +118,25 @@
             ================================================== -->
             <!-- Wrap the rest of the page in another container to center all the content. -->
 
-            <div class="container marketing">
+			<!-- Countdown to publication day -->
+			
+			<div class="row featurette">
+				<div id="countdown">
+					<p class="lead"><em>The Second Death of Daedalus Mole</em><br/>will be published in:</p>
+					<div id='tiles'></div>
+					<div class="labels">
+						<li>Days</li>
+						<li>Hours</li>
+						<li>Mins</li>
+						<li>Secs</li>
+					</div>
+				</div>
+			</div>
 
+			<hr class="featurette-divider">
+			
+            <div class="container marketing">
+				
                 <!-- Three columns of text below the carousel -->
                 <div class="row">
                     <div class="col-lg-4">
@@ -253,6 +271,7 @@
 
         <script type="text/javascript" src="js/quoteSelector.js"></script>
         <script type="text/javascript" src="js/progressBar.js"></script>
+        <script type="text/javascript" src="js/countdown.js"></script>
 
         
         <!-- Start of StatCounter Code -->
