@@ -15,14 +15,31 @@ canvas, img {
     image-rendering: pixelated;
 }
 
+body {
+	background-color: #e2e2e2;
+}
+
+.jumbotron {
+	border-bottom: 2px inset #dbdbdb;
+}
+
 .game {
+	width: 512px;
 	margin: auto;
+	margin-top: 4%;
+}
+
+canvas {
+	border-radius: 8px;
+	border: 5px inset rgb(255, 255, 255);
 }
 
 .jumbotron {
 	padding-bottom: .5em;
 }
 
-#game {
-    width: 512px;
+.mls5 {
+	width: 768px;
+	margin: auto;
+	margin-top: 4%;
 }

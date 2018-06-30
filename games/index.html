@@ -54,7 +54,7 @@
             <section class="jumbotron text-center">
                 <div class="container">
                     <h1 class="jumbotron-heading">Games I've made</h1>
-                    <p class="lead text-muted">I make small browser games using Phaser and larger projects for desktop in Unity. Try some below.</p>
+                    <p class="lead text-muted">I make small browser games using Phaser and<br/>larger projects for desktop in Unity. Try some below.</p>
                 </div>
             </section>
 
@@ -65,11 +65,23 @@
                         
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <a href="" onclick="onClick()">
+                                <a href="" onclick="onClick('bookshop')">
                                 <img class="card-img-top" src="./img/bookshop-786x392.jpg" alt="Book ordering menu"></a>
                                 <div class="card-body">
-                                    <a href="bookshop" class="lead">Super Sim Bookshop</a>
+                                    <a href="" onclick="onClick('bookshop')" class="lead">Super Sim Bookshop</a>
                                     <p class="card-text">Manage your own bookshop (opens in new window).</p>
+                                </div>
+                            </div>
+                        </div>
+						
+						
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <a href="https://niall-slater.itch.io/pizza-crash" target="_blank">
+                                <img class="card-img-top" src="./img/pizza-786x392.jpg" alt="Book ordering menu"></a>
+                                <div class="card-body">
+                                    <a href="https://niall-slater.itch.io/pizza-crash" target="_blank" class="lead">Pizza Crash | itch.io</a>
+                                    <p class="card-text">Deliver pizza and fend off rival hotdog vendors. Made with Unity.</p>
                                 </div>
                             </div>
                         </div>
@@ -99,11 +111,11 @@
                         
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <a href="web-mech">
+                                <a href="" onclick="onClick('web-mech')">
                                 <img class="card-img-top" src="./img/mech-786x392.jpg" alt="Mech control panel"></a>
                                 <div class="card-body">
-                                    <a href="web-mech" class="lead">MechOS</a>
-                                    <p class="card-text">A WIP mech roguelike using pure Javascript and CSS.</p>
+                                    <a href="" onclick="onClick('web-mech')" class="lead">MechOS</a>
+                                    <p class="card-text">A WIP mech roguelike using pure Javascript and CSS (opens in new window).</p>
                                 </div>
                             </div>
                         </div>
