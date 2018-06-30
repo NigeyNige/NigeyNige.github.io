@@ -49,7 +49,7 @@ class Customer extends Phaser.Sprite {
 					//Randomly choose whether to buy this book or browse for another
 					if (Math.random() < decisiveness) {
 						//BUY!
-    					if (bookStock.length < 1) {
+    					if (gameData.bookStock.length < 1) {
 							this.say('No new books?');
 							playState.popularityDecrease(2);
 							if (Math.random() > 0.5) {
@@ -86,19 +86,15 @@ class Customer extends Phaser.Sprite {
 					let book = this.selectBook();
 					if (book === undefined) {
 						game.time.events.add(500, this.makeMess, this);
-						this.say(':(')
+						this.say('Not for sale?')
 						console.log(this.name + " couldn't find the book they wanted.");
 						playState.popularityDecrease(2);
+						this.behaviour_current = this.behaviours.LEAVE;
 						break;
 					}
-					playState.changeCash(book.cost);
-					book.amount--;
-					if (book.amount < 1) {
-						bookStock.splice(bookStock.indexOf(book), 1);
-					}
+					playState.makeSale(book);
 					
 					this.say('Thank you!');
-					playState.buildStock();
 //					console.log(this.name + " bought a copy of " + book.title);
 					
                     game.time.events.add(1000, function(){this.behaviour_current = this.behaviours.LEAVE}, this);
@@ -122,23 +118,33 @@ class Customer extends Phaser.Sprite {
     }
     
 	selectBook() {
-		let result = bookStock[Math.floor(Math.random() * bookStock.length)];
+		let result = gameData.bookStock[Math.floor(Math.random() * gameData.bookStock.length)];
 		
 		//Loop through stocked books and *probably* pick the one with the highest current interest
 		let bestInterest = 0;
 		let peerPressureCoefficient = 0.9;
 		
 		//get the most popular book
-		for (var b in bookStock) {
+		for (var b in gameData.bookStock) {
 			if (currentInterests[b.tag] > bestInterest) {
 				bestInterest = currentInterests[b.tag];
 				result = b;
 			}
 		}
 		
+		if (result === undefined) {
+			//The book has vanished on the way to the till, probably because the player returned the stock
+			//this shouldn't really happen unless there's only like one book in stock
+			return undefined;
+			
+		}
+		
 		//test against peer pressure to try and buy a random book instead
-		if (Math.random() > peerPressureCoefficient) {
-			result = bookStock[Math.floor(Math.random() * bookStock.length)];
+		//if the book's demand is low (it reduces over time while in stock) then try to find another
+		//this makes unpopular books stay on the shelf forever until you return them at a loss
+		let cantShiftThisBookDemandThreshold = 5;
+		if (Math.random() > peerPressureCoefficient || result.demand < cantShiftThisBookDemandThreshold) {
+			result = gameData.bookStock[Math.floor(Math.random() * gameData.bookStock.length)];
 		}
 		
 		return result;
