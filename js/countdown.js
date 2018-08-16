@@ -1,6 +1,6 @@
-var active = false;
+var active = true;
 
-var target_date = new Date().getTime() + (15000*3600*48); // set the countdown date
+var target_date = new Date("2018-08-30T08:00:00Z"); // set the countdown date
 var days, hours, minutes, seconds; // variables for time units
 
 var countdown = document.getElementById("tiles"); // get tag element
