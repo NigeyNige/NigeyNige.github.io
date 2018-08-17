@@ -110,7 +110,7 @@ body {
     }
 }
 
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1320px) {
 
     .flip {
         text-align: left;
@@ -118,7 +118,7 @@ body {
         left: 5%;
     }
 }
-@media only screen and (min-width: 1251px) {
+@media only screen and (min-width: 1321px) {
 
     .flip {
         text-align: right;
