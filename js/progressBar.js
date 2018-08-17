@@ -1,4 +1,10 @@
-var bar = document.getElementById("progressBar");
-var label = document.getElementById("progressLabel");
+var enabled = false;
 
-bar.style.width = "100%";
+if (enabled) {
+    
+
+    var bar = document.getElementById("progressBar");
+    var label = document.getElementById("progressLabel");
+
+    bar.style.width = "100%";
+}
