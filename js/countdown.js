@@ -1,4 +1,4 @@
-var active = true;
+var active = false;
 
 var target_date = new Date("2018-08-30T08:00:00Z"); // set the countdown date
 var days, hours, minutes, seconds; // variables for time units
