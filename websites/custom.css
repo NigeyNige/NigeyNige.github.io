@@ -1,0 +1,15 @@
+.list-features {
+	background-color: #fffbc9;
+	padding: 1.4em;
+	padding-left: 3em;
+	text-align: left;
+	width: 80%;
+	margin: auto;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.jumbotron {
+	padding-bottom: 12px;
+}
